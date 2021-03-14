@@ -2,7 +2,7 @@ from pymongo import MongoClient
 import datetime
 
 client = MongoClient(
-    "mongodb+srv://yue:mwzlypje@cluster0.u2arb.mongodb.net/test")
+    "mongodb+srv://yue:<password>@cluster0.u2arb.mongodb.net/test")
 mydb = client["micblog"]  # get db
 histories = mydb["histories"]  # create or get a new collection from db
 
