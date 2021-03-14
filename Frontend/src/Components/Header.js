@@ -14,9 +14,9 @@ import Login from '../Pages/Login';
 import Menu from './Menu';
 
 /* Pages: 
-// Home (logo)  
-// Equipment
-// Data
+// Home   
+// Demo
+// Datasets
 // Login / Logout
 // User Menu (if logged in)
 */
@@ -24,8 +24,12 @@ import Menu from './Menu';
 
 function Header() { 
 
-    // TODO: if user is logged in, display menu
-    const userOrGuest = true; // change to GET actual user state
+    const userOrGuest = false; // TODO: change to GET actual user state
+    
+    var logUser = "Sign In";
+    if(userOrGuest) {
+        logUser = "Sign Out"
+    }
 
     // if menu is clicked, open it
     const [click, setClick] = useState(0);
@@ -52,7 +56,7 @@ function Header() {
                         Datasets
                     </Link>
                     <Link to="../Pages/Login" className="headerLink">
-                        Login
+                        { logUser }
                     </Link>
                 </nav>
 
