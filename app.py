@@ -1,5 +1,5 @@
 from flask import Flask
-
+# resource: https://www.youtube.com/watch?v=Z1RJmh_OqeA
 
 app = Flask(__name__) #referencing this file
 
