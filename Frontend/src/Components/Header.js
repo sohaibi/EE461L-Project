@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router,
-    Switch,
-    Route,
     Link 
 } from 'react-router-dom';
 import Slide from '@material-ui/core/Slide';
@@ -89,15 +87,6 @@ function Header() {
                     <div><Menu /></div>
                 </Slide>
             </div>
-
-            {/* TODO: Assign Routes */}
-            <Switch>
-                <Route path="/"><Home /></Route>
-                {/* 
-                <Route path="../Pages/Datasets"><Datasets /></Route>
-                <Route path="../Pages/Login"><Login /></Route> 
-                */}
-            </Switch>
         </Router>
     );
 }

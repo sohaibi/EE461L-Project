@@ -1,7 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router,
-    Switch,
-    Route,
     Link 
 } from 'react-router-dom';
 import './Menu.css';
@@ -30,13 +28,6 @@ function Menu() {
                 </Link>
             </li>
         </ul>
-
-        <Switch>
-            {/* TO-DO: assign routes
-            <Route path="../Pages/Account"><Account /></Route>
-            <Route path="../Pages/Projects"><Projects /></Route>
-            */}
-        </Switch>
         </Router>
     );
 }
