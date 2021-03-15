@@ -112,4 +112,4 @@ def add_projects(username: str, project_id: str) -> int:
     return 0
 
 
-print(add_projects("Yue", "123456"))
+# print(add_projects("Yue", "123456"))
