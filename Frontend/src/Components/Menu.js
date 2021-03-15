@@ -6,9 +6,9 @@ import { BrowserRouter as Router,
 } from 'react-router-dom';
 import './Menu.css';
 
-// Pages //
-import Account from '../Pages/Account';
-import Projects from '../Pages/Projects';
+// TO-DO: Pages //
+// import Account from '../Pages/Account';
+// import Projects from '../Pages/Projects';
 
 function Menu() {
 
@@ -16,20 +16,26 @@ function Menu() {
         <Router>
         <ul>
             <li>
-                <div className="list_item_div">
-                    <Link to="/account" className="menu_link">Account Settings</Link>
-                </div>
+                <Link to="/" className="menu_link">
+                    <div className="list_item_div">
+                        Account Settings
+                    </div>
+                </Link>
             </li>
             <li>
-                <div  className="list_item_div">
-                <Link to="/projects" className="menu_link">Projects Page</Link>
-                </div>
+                <Link to="/" className="menu_link">
+                    <div className="list_item_div">
+                        My Projects
+                    </div>
+                </Link>
             </li>
         </ul>
 
         <Switch>
+            {/* TO-DO: assign routes
             <Route path="../Pages/Account"><Account /></Route>
             <Route path="../Pages/Projects"><Projects /></Route>
+            */}
         </Switch>
         </Router>
     );

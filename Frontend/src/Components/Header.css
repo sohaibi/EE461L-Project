@@ -2,6 +2,20 @@
 *   Orange:   #ff9300
 *   Dark Grey: #333f48
 **/
+header {
+    position: sticky;
+    top:0;
+    z-index: 5;
+    background-color: #ffffff;
+    color: #333f48;
+    display: inline-flex;
+    width: 100%;
+    margin: 0;
+    height: 8vh;
+    clear: both;
+    border-bottom: 1px solid #333f48;
+    box-sizing: border-box;
+} 
 
 .headerLink {
     margin: auto 0px;
@@ -9,19 +23,6 @@
     color: #333f48;
     text-decoration: none;
 }
-
-header {
-    background-color: #ffffff;
-    color: #333f48;
-    display: inline-flex;
-    max-width: 100%;
-    width: 100%;
-    margin: 0;
-    height: fit-content;
-    padding: 8px 4px 4px 4px;
-    left: 0;
-    border-bottom: 1px solid #333f48;
-} 
 
 .headerLink:nth-child(1) {
     display: inline-flex;
@@ -73,7 +74,7 @@ nav > .headerLink {
 }
 
 nav > .headerLink:hover {
-    color: #ff9300;
+    color: #f8971f;
 }
 
 #displayButton {
@@ -100,13 +101,25 @@ button {
 }
 
 #menuClose {
-    background-image: url('../Media/menu.svg');;
+    background-image: url('../Media/menu.svg');
+    transition: 0.2s;
+}
+
+#menuClose:hover {
+    background-image: url('../Media/menu_hover.svg');
 }
 
 #menuOpen {
     background-image: url('../Media/close.svg');
+    transition: 0.2s;
 }
 
-#menuDivOpen {
-    display: block;
+#menuOpen:hover {
+    background-image: url('../Media/close_hover.svg');
+}
+
+#MenuDivOpen {
+    position: sticky;
+    z-index: 1;
+    top:8vh;
 }

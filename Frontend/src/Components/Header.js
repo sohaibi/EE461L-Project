@@ -9,11 +9,11 @@ import './Header.css';
 
 // Pages and Components //
 import Home from '../Pages/Home';
-import Datasets from '../Pages/Datasets';
-import Login from '../Pages/Login';
+// import Datasets from '../Pages/Datasets';
+// import Login from '../Pages/Login';
 import Menu from './Menu';
 
-/* Pages: 
+/* Header Pages: 
 // Home   
 // Demo
 // Datasets
@@ -24,16 +24,25 @@ import Menu from './Menu';
 
 function Header() { 
 
-    const userOrGuest = false; // TODO: change to GET actual user state
+    // TODO: method to determine if user is logged in 
+    const [userOrGuest, setUser] = useState(0);
+    const handleSignOut = () => setUser(!userOrGuest);    // if Sign Out is clicked, set to Guest Mode
     
     var logUser = "Sign In";
+    var logLink = "../Pages/Login";
     if(userOrGuest) {
         logUser = "Sign Out"
+        logLink = "../Pages/Logout";
     }
 
     // if menu is clicked, open it
     const [click, setClick] = useState(0);
     const handleClick = () => setClick(!click);
+
+    /** TODO:
+     *  1. Notify about successful log out 
+     *  2. 
+     */
 
 
     return (
@@ -49,13 +58,15 @@ function Header() {
 
                 {/* Navigation */}
                 <nav>
-                    <Link to="../Pages/Datasets" className="headerLink">
-                        Demo
+                    <Link to="/" className="headerLink">
+                        Link 1
                     </Link>
-                    <Link to="../Pages/Datasets" className="headerLink">
-                        Datasets
+                    <Link to="/"className="headerLink">
+                        Link 2
                     </Link>
-                    <Link to="../Pages/Login" className="headerLink">
+                    <Link to={ logLink } 
+                        className="headerLink" 
+                        onClick={ handleSignOut }> 
                         { logUser }
                     </Link>
                 </nav>
@@ -69,19 +80,23 @@ function Header() {
 
             </header>
 
+            {/* Menu component slides into the screen */}
             <div id='MenuDivOpen'>
-                <Slide direction="left" 
-                    in={(userOrGuest && click)} 
+                <Slide direction="down" 
+                    in={(userOrGuest && click==1)} 
                     mountOnEnter 
                     unmountOnExit>
                     <div><Menu /></div>
                 </Slide>
             </div>
 
+            {/* TODO: Assign Routes */}
             <Switch>
                 <Route path="/"><Home /></Route>
+                {/* 
                 <Route path="../Pages/Datasets"><Datasets /></Route>
-                <Route path="../Pages/Login"><Login /></Route>
+                <Route path="../Pages/Login"><Login /></Route> 
+                */}
             </Switch>
         </Router>
     );
