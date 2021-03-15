@@ -4,7 +4,7 @@ from bson.json_util import dumps
 
 
 client = MongoClient(
-    "mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/test")
+    "mongodb+srv://ProjectGroup3:<password>@semesterprojectcluster.nmjzk.mongodb.net/test")
 # get database
 mydb = client["SemesterProject"]
 # get projects collection
