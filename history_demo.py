@@ -2,8 +2,15 @@ from pymongo import MongoClient
 import datetime
 
 client = MongoClient(
-    "mongodb+srv://yue:<password>@cluster0.u2arb.mongodb.net/test")
-mydb = client["micblog"]  # get db
+    "mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/test")
+
+# get database
+mydb = client["SemesterProject"]
+# get projects collection
+projects = mydb["Project"]
+# get users collection
+users = mydb["User"]
+
 histories = mydb["histories"]  # create or get a new collection from db
 
 # here project_id should be mongoDB's created project's _id value, I use integer as an example
