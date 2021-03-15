@@ -1,11 +1,13 @@
+import React from 'react'
 import './App.css';
+import Header from './Components/Header'
 
 function App() {
 
-  // GET Requests to Python backend - Lian 
-
   return (
-    // home page object with nav
+    <div className='App'>
+      <Header />
+    </div>
   );
 }
 
