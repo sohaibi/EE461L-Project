@@ -9,7 +9,7 @@ user = database["User"]
 
 
 #create hardware  #?? should we add timestamp to when new hardware is created?
-def add_new_hardware(hardware_name, capacity):
+def set_new_hardware(hardware_name, capacity):
     if(capacity>0): #ensure at least 1 hardware
         project_dictionary={}
         post ={"hardware_name": hardware_name, "capacity": capacity, "availability": capacity, "project":project_dictionary}
@@ -17,7 +17,7 @@ def add_new_hardware(hardware_name, capacity):
     else:
         error_msg="Invalid input: Capacity is <= 0."
         return error_msg
-#add_new_hardware(hardware_name="test", capacity=100)    #DEMO: only need haedware name and capacity!
+#set_new_hardware(hardware_name="test", capacity=100)    #DEMO: only need haedware name and capacity!
 
 
 #SET & GET ID-------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ def update_hardware_capacity(hardware_name,amt_of_hardware): # '+' for addition 
     old_availability = hardware_set.find_one({"hardware_name":hardware_name})["availability"]
     if( old_availability + amt_of_hardware < 0): #check valid deletion amt
         error_msg="Invalid input: hardware deletion amount exceeds available amount."
-        print(error_msg)
+        #print(error_msg)
         return error_msg    
 
     new_capacity = old_capacity + amt_of_hardware
@@ -51,39 +51,47 @@ def update_hardware_capacity(hardware_name,amt_of_hardware): # '+' for addition 
 
 def get_hardware_capacity(hardware_name):
     capacity = hardware_set.find_one({"hardware_name": hardware_name})["capacity"]
-    print("capacity: ", capacity)    #DEBUG
+    #print("capacity: ", capacity)    #DEBUG
     return capacity
 #get_hardware_capacity("test")  #DEMO
 
 
 #set & get availability-------------------------------------------------------------------------------------------------
-def set_hardware_availability(hardware_name, availability):
-    
+def set_hardware_availability(hardware_name, avilability): 
+    hardware_set.update_one({"hardware_name":hardware_name,},{"$set":{"availability":avilability}})
     return
 
 def get_hardware_availability(hardware_name):
     availability = hardware_set.find_one({"hardware_name": hardware_name})["availability"]
-    print("availability: ", availability)    #DEBUG
+    #print("availability: ", availability)    #DEBUG
     return availability
 #get_hardware_availability("test")  #DEMO
 
 
-#set & get project
-def set_hardware_project(self,project_id):
-#?? is this redundent since proj is added in hardware_checkin()??
-    self.__project.append(project_id) #appened project ID to hardware's project list
-    return 
+#set & get project-----------------------------------------------------------------------------------------------------
+def set_hardware_project(hardware_name,project_id,hardware_amt):
+    hardware_set.update_one({"hardware_name":hardware_name},{"$addToSet":{"project":{str(project_id):hardware_amt}}}) #ISSUE!!
+    return  #appened project ID to hardware's project list
+#set_hardware_project("Device5",9089,25) #DEMO
 
-def get_hardware_project(self):
-    return self.__project # return a list of project ids that checked out this hardware
+def get_hardware_project(hardware_name):
+    project = hardware_set.find_one({"hardware_name": hardware_name})["project"]
+    print("project: ", project)    #DEBUG
+    return project  # return a list of project ids that checked out this hardware
+#get_hardware_project("Device5")  #DEMO
+ 
 
 
 #check in/out hardwares
-def hardware_checkin(self,project_id, checkedout_amt,checkin_amount):
-    if(checkedout_amt >= checkin_amount):   #check valid check in amt
-        self.__availability+= checkin_amount
-    elif(checkedout_amt == checkin_amount): 
-        self.__project.remove(project_id) #if returning all hardwares checked out, remove this proj id from hardware's proj list
+def hardware_checkin(hardware_name,project_id, checkedout_amt,checkin_amount):
+    if(checkedout_amt >= checkin_amount):   #check valid check in amt; check in and out amt may differ
+        availability = get_hardware_availability(hardware_name) #availability before checkin
+        availability+= checkin_amount #availability after checkin
+        set_hardware_availability(hardware_name, availability)
+
+    if(checkedout_amt == checkin_amount): 
+        hardware_set.update({"hardware_name":hardware_name},{"$pull":{project_id}}) #ISSUE!!
+        #if returning all hardwares checked out, remove this proj id from hardware's proj list
     return
 
 def hardware_checkout(self,project_id,checkout_amount):
@@ -94,7 +102,9 @@ def hardware_checkout(self,project_id,checkout_amount):
 
 
 #DEMO:
-#add_new_hardware(hardware_name="test", capacity=100)    #DEMO: only need haedware name and capacity!
+#set_new_hardware(hardware_name="test", capacity=100)    #DEMO: only need haedware name and capacity!
 #get_hardware_id("Device5")  
 #update_hardware_capacity("test",-20)
 #get_hardware_capacity("test")  #DEMO
+#get_hardware_availability("test")  #DEMO
+#set_hardware_project("Device2",222,30)
