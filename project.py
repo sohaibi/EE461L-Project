@@ -12,7 +12,7 @@ def handle_project_creation(creation_date, project_name, user_id ):
     history_dict = {creation_date:"Project Created"}
     hardware_set_dict = {}
     status = "ongoing"
-    post = {"_id": 0, "creation_date": creation_date, "project_name": project_name, "user_id": user_id, "status": status, "hardware_set_dict": hardware_set_dict, "history_dict": history_dict}
+    post = { "creation_date": creation_date, "project_name": project_name, "user_id": user_id, "status": status, "hardware_set_dict": hardware_set_dict, "history_dict": history_dict}
     print("post created")
     collection.insert_one(post)
     print("post added")
@@ -36,9 +36,6 @@ def handlle_get_project_name(project_id):
         project_name = result["project_name"]
     return project_name 
 
-def handle_get_project_user(project_id, user_id):
-    collection.update_one({"_id": project_id}, {"$set": {"user_id": user_id}})
-
 def handle_update_hardware(project_id, key, data):
     results = collection.find({"project_id": project_id})
     for result in results:
@@ -46,14 +43,8 @@ def handle_update_hardware(project_id, key, data):
     hardware_dict[key] = data
     collection.update_one({"_id": project_id}, {"$set": {"hardware_set_dict": hardware_dict}})
 
-def handle_update_history(project_id, key, data):
-    results = collection.find({"project_id": project_id})
-    for result in results:
-        history_dict = result["history_dict"]
-    history_dict[key] = data
-    collection.update_one({"_id": project_id}, {"$set": {"history_dict": history_dict}})
 
 
-#handle_project_creation("today", "TestPost", "Mona")
+#handle_project_creation("today", "TestPost", "Sheila")
 #handle_status("completed", 0)
 #print(handle_get_project_id("TestPost", "Mona"))
