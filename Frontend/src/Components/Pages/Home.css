@@ -1,0 +1,47 @@
+#home_container {
+    max-width: 100%;
+    width: 100%;
+    display: flexbox;
+    margin: 0px;
+    z-index: 0;
+    top:0;
+}
+
+.home_content {
+    width: 100%;
+    text-align: left;
+    padding: 100px 0px;
+    height: 67.5vh;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.home_content:nth-of-type(2n+1) {
+    background-color: #f8971f;
+    color: white;
+}
+
+.home_content:nth-of-type(2n) {
+    background-color: white;
+    color: #333f48;
+}
+
+.home_content > h1 {
+    font-size: 48px;
+    margin: -50px 100px 0px 100px;
+}
+
+.home_content > h1:nth-child(1) {
+    text-align: center;
+}
+
+.home_content > p {
+    font-size: 24px;
+    margin: 0px 100px;
+}
+
+.home_content > div {
+    margin: 0px 100px;
+}
+
+/* TABLE CSS */
