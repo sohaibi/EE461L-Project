@@ -56,10 +56,10 @@ function Header() {
 
                 {/* Navigation */}
                 <nav>
-                    <Link to="/" className="headerLink">
+                    <Link to="/link1" className="headerLink">
                         Link 1
                     </Link>
-                    <Link to="/"className="headerLink">
+                    <Link to="/link2" className="headerLink">
                         Link 2
                     </Link>
                     <Link to={ logLink } 
