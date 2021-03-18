@@ -8,16 +8,17 @@ project = database["Project"]
 user = database["User"]
 
 
-#create hardware  #?? should we add timestamp to when new hardware is created?-------------------------------------------------------------------
+#create hardware -----------------------------------------------------------------------------------------
 def set_new_hardware(hardware_name, capacity):
-    if(capacity>0): #ensure at least 1 hardware
+    
+    if(capacity>0 and hardware_set.find_one({"hardware_name": hardware_name})): #ensure at least 1 hardware
         project_dictionary={}
         post ={"hardware_name": hardware_name, "capacity": capacity, "availability": capacity, "project":project_dictionary}
         hardware_set.insert_one(post)
     else:
         error_msg="Invalid input: Capacity is <= 0."
         return error_msg
-#set_new_hardware(hardware_name="test", capacity=100)    #DEMO: only need haedware name and capacity!
+#set_new_hardware(hardware_name="test", capacity=100)    #DEMO
 
 
 #SET & GET ID-------------------------------------------------------------------------------------------------
@@ -28,10 +29,15 @@ def set_new_hardware(hardware_name, capacity):
 #{above function kept for now}
 
 def get_hardware_id(hardware_name):
-    id = hardware_set.find_one({"hardware_name": hardware_name})["_id"]
-    #print("id: ", id)    #DEBUG
-    return id
-#get_hardware_id("test")  #DEMO
+    hardware = hardware_set.find_one({"hardware_name": hardware_name})
+    if hardware is None:
+        print("Hardware does not exist!") #DEBUG
+        return -1
+    else: 
+        id = hardware["_id"]
+        print("id: ", id)    #DEBUG
+        return id
+#get_hardware_id("test1")  #DEMO
 
 
 #set & get capacity-------------------------------------------------------------------------------------------------
@@ -94,26 +100,7 @@ def get_hardware_projectlist(hardware_name):
 #get_hardware_proj_checkout("test1",3232145)
 
 
-
-#check in/out hardwares-----------------------------------------------------------------------------------------------------
-def hardware_checkin(hardware_name,project_id,checkedout_amt,checkin_amount):
-    if(checkedout_amt >= checkin_amount):   #check valid check in amt; check in and out amt may differ
-        set_hardware_availability(hardware_name, checkin_amount)
-    if(checkedout_amt == checkin_amount): #if returning all hardwares checked out, remove this proj id from hardware's proj list
-        hardware_set.update_one({"hardware_name":hardware_name},{"$pull":{"project":{str(project_id):checkin_amount}}}) #note: str key
-    return
-#hardware_checkin("test1",3232145,5) #DEMO
-
-def hardware_checkout(hardware_name,project_id,checkout_amount):
-    checkout = checkout_amount * -1      # negative number for check out
-    availability = get_hardware_availability(hardware_name) #availability before checkout
-    if (availability >= checkout_amount): #check hardware amount is available
-        set_hardware_project(hardware_name,project_id,checkout_amount) #appened project ID to hardware's project list
-        set_hardware_availability(hardware_name,checkout)
-    return
-#hardware_checkout("test1",8765432,10) #DEMO
-
-#DEMOs:
+#DEMOs:-----------------------------------------------------------------------------------------------------------
 #set_new_hardware(hardware_name="test", capacity=100)    #DEMO: only need haedware name and capacity!
 #get_hardware_id("Device5")  
 
@@ -127,5 +114,30 @@ def hardware_checkout(hardware_name,project_id,checkout_amount):
 #get_hardware_projectlist("test1")
 #get_hardware_proj_checkout("test1",3232145)
 
-#hardware_checkin("test1",3232145,5)
-#hardware_checkout("test1",8765432,10)
+
+
+#---------------------------------------#check in/out hardwares----------------------------------------------------
+# def hardware_checkin(hardware_name,project_id,checkedout_amt,checkin_amount):
+#     if(checkedout_amt >= checkin_amount):   #check valid check in amt; check in and out amt may differ
+#         set_hardware_availability(hardware_name, checkin_amount)
+#     if(checkedout_amt == checkin_amount): #if returning all hardwares checked out, remove this proj id from hardware's proj list
+#         hardware_set.update_one({"hardware_name":hardware_name},{"$pull":{"project":{str(project_id):checkin_amount}}}) #note: str key
+#     return
+# #hardware_checkin("test1",3232145,5) #DEMO
+
+# def hardware_checkout(hardware_name,project_id,checkout_amount):
+#     checkout = checkout_amount * -1      # negative number for check out
+#     availability = get_hardware_availability(hardware_name) #availability before checkout
+#     if (availability >= checkout_amount): #check hardware amount is available
+#         set_hardware_project(hardware_name,project_id,checkout_amount) #appened project ID to hardware's project list
+#         set_hardware_availability(hardware_name,checkout)
+#     return
+# #hardware_checkout("test1",8765432,10) #DEMO
+
+#---------------------------------------#CODE FOR ANOTHER SECTION----------------------------------------------------
+
+
+
+
+
+
