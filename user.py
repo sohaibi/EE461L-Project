@@ -97,13 +97,13 @@ def add_projects(username: str, project_id: str) -> int:
     """
     # get user_id
     user_id = users.find_one({"username": username})["_id"]
-    # check if project_id already exists in projects list
-    projects = users.find_one({"_id": user_id})["projects"]
-    if project_id in projects:
-        return -1
+    # # check if project_id already exists in projects list
+    # projects = users.find_one({"_id": user_id})["projects"]
+    # if project_id in projects:
+    #     return -1
     users.update_one({"_id": user_id}, update={
-        '$push': {'projects': project_id}}, upsert=False)
+        '$addToSet': {'projects': project_id}}, upsert=False)
     return 0
 
 
-# print(add_projects("Yue", "123456"))
+# print(add_projects("Yue", "4321"))
