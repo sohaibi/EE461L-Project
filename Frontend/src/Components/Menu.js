@@ -5,8 +5,8 @@ import { BrowserRouter as Router,
 import './Menu.css';
 
 // TO-DO: Pages //
-// import Account from '../Pages/Account';
-// import Projects from '../Pages/Projects';
+// import Account from './Pages/Account';
+// import Projects from './Pages/Projects';
 
 function Menu() {
 

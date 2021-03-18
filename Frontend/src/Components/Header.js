@@ -6,9 +6,9 @@ import Slide from '@material-ui/core/Slide';
 import './Header.css';
 
 // Pages and Components //
-import Home from '../Pages/Home';
-// import Datasets from '../Pages/Datasets';
-// import Login from '../Pages/Login';
+// import Home from './Pages/Home';
+// import Datasets from './Pages/Datasets';
+// import Login from './Pages/Login';
 import Menu from './Menu';
 
 /* Header Pages: 
@@ -27,10 +27,10 @@ function Header() {
     const handleSignOut = () => setUser(!userOrGuest);    // if Sign Out is clicked, set to Guest Mode
     
     var logUser = "Sign In";
-    var logLink = "../Pages/Login";
+    var logLink = "";
     if(userOrGuest) {
         logUser = "Sign Out"
-        logLink = "../Pages/Logout";
+        logLink = "";
     }
 
     // if menu is clicked, open it
@@ -45,48 +45,48 @@ function Header() {
 
     return (
         <Router>
-            <header>
-                {/* Website Logo and Title */}
-                <div id="header_icon">
-                    <Link to="/" className="headerLink">
-                        <div id="homeLogo"/>
-                        <h1>WIRE Powderless</h1>
-                    </Link>
-                </div> 
+        <header>
+            {/* Website Logo and Title */}
+            <div id="header_icon">
+                <Link to="/" className="headerLink">
+                    <div id="homeLogo"/>
+                    <h1>WIRE Powderless</h1>
+                </Link>
+            </div> 
 
-                {/* Navigation */}
-                <nav>
-                    <Link to="/link1" className="headerLink">
-                        Link 1
-                    </Link>
-                    <Link to="/link2" className="headerLink">
-                        Link 2
-                    </Link>
-                    <Link to={ logLink } 
-                        className="headerLink" 
-                        onClick={ handleSignOut }> 
-                        { logUser }
-                    </Link>
-                </nav>
+            {/* Navigation */}
+            <nav>
+                <Link to="/" className="headerLink">
+                    Link 1
+                </Link>
+                <Link to="/"className="headerLink">
+                    Link 2
+                </Link>
+                <Link to={ logLink } 
+                    className="headerLink" 
+                    onClick={ handleSignOut }> 
+                    { logUser }
+                </Link>
+            </nav>
 
-                {/* User Menu (if logged in) */}
-                <div id={userOrGuest ? 'displayButton' : 'hideButton'}>
-                    <button type="button" 
-                        id={!click ? 'menuClose' : 'menuOpen'} 
-                        onClick={handleClick} />
-                </div> 
+            {/* User Menu (if logged in) */}
+            <div id={userOrGuest ? 'displayButton' : 'hideButton'}>
+                <button type="button" 
+                    id={!click ? 'menuClose' : 'menuOpen'} 
+                    onClick={handleClick} />
+            </div> 
 
-            </header>
+        </header>
 
-            {/* Menu component slides into the screen */}
-            <div id='MenuDivOpen'>
-                <Slide direction="down" 
-                    in={(userOrGuest && click==1)} 
-                    mountOnEnter 
-                    unmountOnExit>
-                    <div><Menu /></div>
-                </Slide>
-            </div>
+        {/* Menu component slides into the screen */}
+        <div id='MenuDivOpen'>
+            <Slide direction="down" 
+                in={(userOrGuest && click==1)} 
+                mountOnEnter 
+                unmountOnExit>
+                <div><Menu /></div>
+            </Slide>
+        </div>
         </Router>
     );
 }
