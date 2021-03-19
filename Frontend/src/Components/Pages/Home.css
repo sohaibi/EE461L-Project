@@ -11,7 +11,7 @@
     width: 100%;
     text-align: left;
     padding: 100px 0px;
-    height: 67.5vh;
+    height: fit-content;
     flex-direction: column;
     flex-wrap: wrap;
 }
@@ -52,7 +52,7 @@
 #timeline {
     margin: 50px auto;
     width: fit-content;
-    height: 6vw;
+    height: 4vw;
     padding: 0;
     display: flex;
 }
@@ -64,21 +64,20 @@
 
 .time_node {
     text-align: center;
-    font-size: 2vw;
+    font-size: 1vw;
     border-radius: 50%;
-    width: 6vw;
-    height: 6vw;
+    width: 4vw;
+    height: 4vw;
 }
 
 
 .time_node > p {
     margin: 1.5vw auto;
-
 }
 
 .time_edge {
     margin: 0px;
-    width: 6vw;
+    width: 4vw;
     height: 5px;
     margin: auto 0px;
 }
@@ -90,10 +89,6 @@
 }
 
 .time_node:nth-child(n):hover {
-    background-color: #333f48;
-}
-
-.time_node:nth-child(1n):hover ~.time_edge:nth-child(1n) {
     background-color: #333f48;
 }
 

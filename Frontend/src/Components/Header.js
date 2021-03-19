@@ -27,7 +27,7 @@ function Header() {
     const handleSignOut = () => setUser(!userOrGuest);    // if Sign Out is clicked, set to Guest Mode
     
     var logUser = "Sign In";
-    var logLink = "";
+    var logLink = ""; // add link to sign in 
     if(userOrGuest) {
         logUser = "Sign Out"
         logLink = "";
@@ -56,11 +56,11 @@ function Header() {
 
             {/* Navigation */}
             <nav>
-                <Link to="/" className="headerLink">
-                    Link 1
+                <Link to="/guide" className="headerLink">
+                    User Guide
                 </Link>
-                <Link to="/"className="headerLink">
-                    Link 2
+                <Link to="/datasets"className="headerLink">
+                    Datasets
                 </Link>
                 <Link to={ logLink } 
                     className="headerLink" 

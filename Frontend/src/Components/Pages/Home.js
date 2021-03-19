@@ -2,11 +2,13 @@ import React from 'react';
 import './Home.css';
 
 /* Pages and Components */
-import H_W_Table from '../HW_Table';
+import HwTable from '../HW_Table';
+
+/** TODO
+ *  - if user is signed in, direct to page to checkout datasets
+ */
 
 function Home() {
-
-    /* TODO: get hardware availabilities */
 
     return(
         <>
@@ -22,7 +24,6 @@ function Home() {
                 {/* Timeline */}
                 <p>Notable Dates, 2021</p>
                 <div id="timeline">
-                    <div class="time_edge"></div>
                     <div class="time_node">
                         <p>JAN</p>
                     </div>
@@ -34,7 +35,6 @@ function Home() {
                     <div class="time_node">
                         <p>MAR</p>
                     </div>
-                    <div class="time_edge"></div>
                 </div>
                 <p class="time_desc">
                     January 2021: The idea of WIRE was created and project-
@@ -55,7 +55,7 @@ function Home() {
                 <h1>Equipment Availability</h1>
 
                 <div id="tableContainer">
-                    <H_W_Table />
+                    <HwTable />
                 </div>
 
             </div>

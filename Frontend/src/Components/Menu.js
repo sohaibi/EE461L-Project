@@ -27,6 +27,13 @@ function Menu() {
                     </div>
                 </Link>
             </li>
+            <li>
+                <Link to="/" className="menu_link">
+                    <div className="list_item_div">
+                        Hardware
+                    </div>
+                </Link>
+            </li>
         </ul>
         </Router>
     );
