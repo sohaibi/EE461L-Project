@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router,
-    Link 
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Slide from '@material-ui/core/Slide';
 import './Header.css';
 
@@ -44,7 +42,7 @@ function Header() {
 
 
     return (
-        <Router>
+        <>
         <header>
             {/* Website Logo and Title */}
             <div id="header_icon">
@@ -87,7 +85,7 @@ function Header() {
                 <div><Menu /></div>
             </Slide>
         </div>
-        </Router>
+        </>
     );
 }
 

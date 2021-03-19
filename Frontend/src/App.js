@@ -12,23 +12,19 @@ import Footer from './Components/Footer';
 function App() {
 
   // helper function to communicate to backend 
-  function getData() {
-
-  }
 
   return (
     <>
-      <Router>
-        <Header />
-        <Switch>
-          <Route path="/"><Home /></Route>
-          <Route path ="/" exact component={Home} />
-          <Route path = '/guide'  component={UserGuide} />
-          <Route path = '/datasets'  component={Datasets} />
-        </Switch>
-        <Footer />
-      </Router>
-      </>
+    <Router>
+      <Header />
+      <Switch>
+        <Route exact path ='/' component={Home} />
+        <Route path = '/guide' component={UserGuide} /> 
+        <Route path = '/datasets' component={Datasets} />
+      </Switch>
+      <Footer />
+    </Router>
+    </>
   );
 }
 
