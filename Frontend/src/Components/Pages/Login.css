@@ -5,7 +5,7 @@
     flex-direction: column;
     justify-content: space-evenly;
     margin: 0 auto;
-    border: 1px solid #dbdbdb;
+    /* border: 1px solid #dbdbdb; */
     border-radius: 5px;
     padding: 10px;
     margin-top: 10vh;
@@ -25,7 +25,7 @@ input {
 button {
     width: 100%;
     margin: 5px 0;
-    background-color: dodgerblue;
+    background-color: #f8971f;
     font-family: 'Open Sans Condensed', sans-serif;
     padding: 5px;
 }
