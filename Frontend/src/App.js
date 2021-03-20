@@ -1,6 +1,6 @@
 import React from 'react'
 import './App.css';
-import { BrowserRouter as Router,Switch,Route} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 // Pages and Components //
 import Header from './Components/Header';
@@ -19,19 +19,17 @@ function App() {
     <>
       <Router>
         <Header />
-        <Login />   /* This is the login form - Choose to comment this statement to have only the registration form */
-        <Register/>  /* This is the registration form - Choose to comment this statement to have only the login form */
         <Switch>
           <Route path="/"><Home /></Route>
-          <Route path ="/" exact component={Home} />
-          <Route path = '/guide'  component={UserGuide} />
-          <Route path = '/datasets'  component={Datasets} />
-          <Route path = '/Login' component={Login} />
-          <Route path ='/Register' component={Register} />
+          <Route path="/" exact component={Home} />
+          <Route path='/guide' component={UserGuide} />
+          <Route path='/datasets' component={Datasets} />
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
         </Switch>
         <Footer />
       </Router>
-      </>
+    </>
   );
 }
 
