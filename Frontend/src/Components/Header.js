@@ -4,36 +4,24 @@ import Slide from '@material-ui/core/Slide';
 import './Header.css';
 
 // Pages and Components //
-// import Home from './Pages/Home';
-// import Datasets from './Pages/Datasets';
-// import Login from './Pages/Login';
 import Menu from './Menu';
-
-/* Header Pages: 
-// Home   
-// Demo
-// Datasets
-// Login / Logout
-// User Menu (if logged in)
-*/
-
 
 function Header() { 
 
     // TODO: method to determine if user is logged in 
-    const [userOrGuest, setUser] = useState(0);
-    const handleSignOut = () => setUser(!userOrGuest);    // if Sign Out is clicked, set to Guest Mode
+    const [isUser, setUser] = useState(false);
+    const handleSignOut = () => setUser(!isUser);    // if Sign Out is clicked, set to Guest Mode
     
     var logUser = "Sign In";
-    var logLink = ""; // add link to sign in 
-    if(userOrGuest) {
+    var logLink = "/login"; // add link to sign in 
+    if(isUser) {
         logUser = "Sign Out"
-        logLink = "";
+        logLink = "/";
     }
 
     // if menu is clicked, open it
-    const [click, setClick] = useState(0);
-    const handleClick = () => setClick(!click);
+    const [clickMenu, setClick] = useState(true);
+    const handleClick = () => setClick(!clickMenu);
 
     /** TODO:
      *  1. Notify about successful log out 
@@ -68,9 +56,9 @@ function Header() {
             </nav>
 
             {/* User Menu (if logged in) */}
-            <div id={userOrGuest ? 'displayButton' : 'hideButton'}>
+            <div id={isUser ? 'displayButton' : 'hideButton'}>
                 <button type="button" 
-                    id={!click ? 'menuClose' : 'menuOpen'} 
+                    id={!clickMenu ? 'menuClose' : 'menuOpen'} 
                     onClick={handleClick} />
             </div> 
 
@@ -79,7 +67,7 @@ function Header() {
         {/* Menu component slides into the screen */}
         <div id='MenuDivOpen'>
             <Slide direction="down" 
-                in={(userOrGuest && click==1)} 
+                in={(isUser && clickMenu)} 
                 mountOnEnter 
                 unmountOnExit>
                 <div><Menu /></div>

@@ -77,6 +77,8 @@ nav > .headerLink:hover {
     color: #f8971f;
 }
 
+/** User Menu */
+
 #displayButton {
     display: block;
     margin: auto 20px;
@@ -86,7 +88,7 @@ nav > .headerLink:hover {
     display: none;
 }
 
-button {
+#menuClose, #menuOpen {
     width: 32px;
     height: 32px;
     margin: auto 20px;
