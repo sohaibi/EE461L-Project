@@ -8,6 +8,8 @@ import Home from './Components/Pages/Home';
 import UserGuide from './Components/Pages/UserGuide';
 import Datasets from './Components/Pages/Datasets';
 import Footer from './Components/Footer';
+import Login from './Components/Pages/Login';
+import Register from './Components/Pages/Register';
 
 function App() {
 
@@ -15,16 +17,21 @@ function App() {
 
   return (
     <>
-    <Router>
-      <Header />
-      <Switch>
-        <Route exact path ='/' component={Home} />
-        <Route path = '/guide' component={UserGuide} /> 
-        <Route path = '/datasets' component={Datasets} />
-      </Switch>
-      <Footer />
-    </Router>
-    </>
+      <Router>
+        <Header />
+        <Login />   /* This is the login form - Choose to comment this statement to have only the registration form */
+        <Register/>  /* This is the registration form - Choose to comment this statement to have only the login form */
+        <Switch>
+          <Route path="/"><Home /></Route>
+          <Route path ="/" exact component={Home} />
+          <Route path = '/guide'  component={UserGuide} />
+          <Route path = '/datasets'  component={Datasets} />
+          <Route path = '/Login' component={Login} />
+          <Route path ='/Register' component={Register} />
+        </Switch>
+        <Footer />
+      </Router>
+      </>
   );
 }
 
