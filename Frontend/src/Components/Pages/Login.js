@@ -37,6 +37,15 @@ class Login extends React.Component {
                         <button Link>Register</button>
                     </Link>
 
+                    {/* <Router>
+     
+        <Switch>
+ 
+          <Route path='/register' component={Register} />
+        </Switch>
+ 
+      </Router> */}
+
                 </div>
             </div>
         )

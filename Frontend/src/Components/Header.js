@@ -18,17 +18,17 @@ import Menu from './Menu';
 */
 
 
-function Header() { 
+function Header(props) {
 
     // TODO: method to determine if user is logged in 
     const [userOrGuest, setUser] = useState(0);
-    const handleSignOut = () => setUser(!userOrGuest);    // if Sign Out is clicked, set to Guest Mode
-    
+    const handleSignOut = () => setUser(0);    // if Sign Out is clicked, set to Guest Mode
+
     var logUser = "Sign In";
-    var logLink = ""; // add link to sign in 
-    if(userOrGuest) {
+    var logLink = "/login"; // add link to sign in 
+    if (userOrGuest) {
         logUser = "Sign Out"
-        logLink = "";
+        logLink = "/";
     }
 
     // if menu is clicked, open it
@@ -40,51 +40,50 @@ function Header() {
      *  2. 
      */
 
-
     return (
         <>
-        <header>
-            {/* Website Logo and Title */}
-            <div id="header_icon">
-                <Link to="/" className="headerLink">
-                    <div id="homeLogo"/>
-                    <h1>WIRE Powderless</h1>
-                </Link>
-            </div> 
+            <header>
+                {/* Website Logo and Title */}
+                <div id="header_icon">
+                    <Link to="/" className="headerLink">
+                        <div id="homeLogo" />
+                        <h1>WIRE Powderless</h1>
+                    </Link>
+                </div>
 
-            {/* Navigation */}
-            <nav>
-                <Link to="/guide" className="headerLink">
-                    User Guide
+                {/* Navigation */}
+                <nav>
+                    <Link to="/guide" className="headerLink">
+                        User Guide
                 </Link>
-                <Link to="/datasets"className="headerLink">
-                    Datasets
+                    <Link to="/datasets" className="headerLink">
+                        Datasets
                 </Link>
-                <Link to={ logLink } 
-                    className="headerLink" 
-                    onClick={ handleSignOut }> 
-                    { logUser }
-                </Link>
-            </nav>
+                    <Link to={logLink}
+                        className="headerLink"
+                        onClick={handleSignOut}>
+                        {logUser}
+                    </Link>
+                </nav>
 
-            {/* User Menu (if logged in) */}
-            <div id={userOrGuest ? 'displayButton' : 'hideButton'}>
-                <button type="button" 
-                    id={!click ? 'menuClose' : 'menuOpen'} 
-                    onClick={handleClick} />
-            </div> 
+                {/* User Menu (if logged in) */}
+                <div id={userOrGuest ? 'displayButton' : 'hideButton'}>
+                    <button type="button"
+                        id={!click ? 'menuClose' : 'menuOpen'}
+                        onClick={handleClick} />
+                </div>
 
-        </header>
+            </header>
 
-        {/* Menu component slides into the screen */}
-        <div id='MenuDivOpen'>
-            <Slide direction="down" 
-                in={(userOrGuest && click==1)} 
-                mountOnEnter 
-                unmountOnExit>
-                <div><Menu /></div>
-            </Slide>
-        </div>
+            {/* Menu component slides into the screen */}
+            <div id='MenuDivOpen'>
+                <Slide direction="down"
+                    in={(userOrGuest && click == 1)}
+                    mountOnEnter
+                    unmountOnExit>
+                    <div><Menu /></div>
+                </Slide>
+            </div>
         </>
     );
 }

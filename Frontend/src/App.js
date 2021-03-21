@@ -17,6 +17,7 @@ function App() {
 
   return (
     <>
+
       <Router>
         <Header />
         <Switch>
@@ -24,9 +25,11 @@ function App() {
           <Route path='/guide' component={UserGuide} />
           <Route path='/datasets' component={Datasets} />
           <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
         </Switch>
         <Footer />
       </Router>
+
     </>
   );
 }
