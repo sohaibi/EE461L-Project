@@ -10,6 +10,7 @@ import Datasets from './Components/Pages/Datasets';
 import Footer from './Components/Footer';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
+import DownloadDatasets from './Components/Pages/DownloadDatasets';
 
 function App() {
 
@@ -26,6 +27,7 @@ function App() {
           <Route path='/datasets' component={Datasets} />
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
+          <Route path='/download' component={DownloadDatasets}/>
         </Switch>
         <Footer />
       </Router>
