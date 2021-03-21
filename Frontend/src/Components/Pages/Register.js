@@ -22,6 +22,7 @@ class Register extends React.Component {
         return (
             <div className='div-login'>
                 <div className>
+                    <div id="homeLogo-login"></div>
                     <form onSubmit={this.handleSubmit}>
                         <label for='new_username'>Username:</label>
                         <input id='new_username' type='Username' name='Username' placeholder='Username' required onChange={this.handleChange} />

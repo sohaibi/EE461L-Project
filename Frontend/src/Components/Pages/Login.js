@@ -25,6 +25,7 @@ class Login extends React.Component {
         return (
             <div className='div-login'>
                 <div className>
+                    <div id="homeLogo-login"></div>
                     <form onSubmit={this.handleSubmit}>
                         <label for='username'>Username</label>
                         <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />

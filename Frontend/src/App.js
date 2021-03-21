@@ -2,6 +2,7 @@ import React from 'react'
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
+
 // Pages and Components //
 import Header from './Components/Header';
 import Home from './Components/Pages/Home';
@@ -10,7 +11,6 @@ import Datasets from './Components/Pages/Datasets';
 import Footer from './Components/Footer';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
-
 function App() {
 
   // helper function to communicate to backend 
@@ -27,7 +27,9 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
         </Switch>
+
         <Footer />
+        {/* <BarChart /> */}
       </Router>
 
     </>
