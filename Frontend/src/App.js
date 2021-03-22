@@ -11,6 +11,7 @@ import Footer from './Components/Footer';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
 import DownloadDatasets from './Components/Pages/DownloadDatasets';
+import EditUserProfile from './Components/Pages/EditUserProfile';
 
 function App() {
 
@@ -28,6 +29,7 @@ function App() {
           <Route path='/login' component={Login} />
           <Route path='/register' component={Register} />
           <Route path='/download' component={DownloadDatasets}/>
+          <Route path='/editProfile' component={EditUserProfile}/>
         </Switch>
         <Footer />
       </Router>

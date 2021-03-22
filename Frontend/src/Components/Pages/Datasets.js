@@ -61,6 +61,7 @@ export default function Datasets(){
         </table>
 
         <Link to='/download'><button onClick = "download_datasets()">Download Selected Datasets</button></Link>
+        <Link to='/editProfile'><button >Test Button for Edit Profile</button></Link>
         </div>
     )
     
