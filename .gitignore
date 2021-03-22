@@ -1,8 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-**/__pycache__/
-# */*/__pycache__/
-# data_service/
-# .vscode/
+*/__pycache__/
 
+
+node_modules/
 .venv/
