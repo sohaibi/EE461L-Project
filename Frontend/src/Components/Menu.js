@@ -1,15 +1,6 @@
 import React from 'react';
-import {
-    BrowserRouter as Router,
-    Link,
-    Route
-} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './Menu.css';
-import Projects from './Pages/Projects'
-
-// TO-DO: Pages //
-// import Account from './Pages/Account';
-// import Projects from './Pages/Projects';
 
 function Menu() {
 
@@ -17,7 +8,7 @@ function Menu() {
 
         <ul>
             <li>
-                <Link to="/" className="menu_link">
+                <Link to="/editProfile" className="menu_link">
                     <div className="list_item_div">
                         Account Settings
                     </div>
@@ -32,14 +23,13 @@ function Menu() {
 
             </li>
             <li>
-                <Link to="/" className="menu_link">
+                <Link to="/hardware" className="menu_link">
                     <div className="list_item_div">
                         Hardware
                     </div>
                 </Link>
             </li>
         </ul>
-
     );
 }
 

@@ -1,0 +1,12 @@
+#changes_page {
+    width: 300px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    /* border: 1px solid #dbdbdb; */
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10vh;
+}

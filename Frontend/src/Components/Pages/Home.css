@@ -10,7 +10,7 @@
 .home_content {
     width: 100%;
     text-align: left;
-    padding: 100px 0px;
+    padding: 100px 0px 40px 0px;
     height: fit-content;
     flex-direction: column;
     flex-wrap: wrap;
@@ -50,10 +50,14 @@
 
 /* TIMELINE CSS */
 #timeline {
-    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#timeNodes {
+    margin: 25px auto;
     width: fit-content;
     height: 4vw;
-    padding: 0;
     display: flex;
 }
 
@@ -68,8 +72,8 @@
     border-radius: 50%;
     width: 4vw;
     height: 4vw;
+    cursor: pointer;
 }
-
 
 .time_node > p {
     margin: 1.5vw auto;
@@ -82,20 +86,115 @@
     margin: auto 0px;
 }
 
-.time_desc {
+#time_desc {
     font-style: italic;
-    font-size: 14px;
-    visibility: hidden;
+    font-size: 24px;
+    height: 50px;
+    text-align: center;
 }
 
 .time_node:nth-child(n):hover {
     background-color: #333f48;
 }
 
-.time_node:nth-child(1n):hover ~ .time_desc {
-    visibility: visible;
+/* TABLE CSS */
+#tableContainer {
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: 0px auto;
 }
 
-/* TABLE CSS */
+#tableContainer > h4 {
+    text-align: center;
+    margin: 0px auto;
+}
+
+#homeCheckout {
+    margin: 5px auto 0px auto;
+}
+
+#checkout {
+    width: fit-content;
+    height: fit-content;
+    border: none;
+    outline: none;
+    background-color: #f8971f;
+    color: white;
+    padding: 10px;
+    font-size: 2vw;
+    margin: 0px auto;
+    cursor: pointer;
+}
+
+#checkout:hover {
+    background-color: #bf5700;
+    transition: 0.2s;
+}
 
 
+/* Team Information */
+#profile-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 75%;
+    margin: 0px auto;
+}
+
+.profile {
+    display: flex;
+    flex-direction: row;
+    margin: 25px auto;
+}
+
+.profile-pic {
+    width: 60px;
+    height: 60px;
+    background-color: white;
+    margin: auto 0px;
+    border-radius: 50%;
+    background-image: url("../../Media/user.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+    cursor: pointer;
+}
+
+.profile-pic:nth-child(odd) {
+    margin-right: 10px;
+}
+
+.profile-pic:nth-child(even) {
+    margin-left: 10px;
+}
+
+.profile-desc {
+    font-size: 20px;
+    margin: auto 0px;
+}
+
+.profile-desc:nth-child(odd) {
+    margin-right: 20px;
+}
+
+.profile-desc:nth-child(even) {
+    margin-left: 20px;
+}
+
+.profile-linked {
+    z-index: 10;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-image: none;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 60px 60px;
+}
+
+.profile-linked:hover {
+    background-image: url("../../Media/linkedin.svg") ;
+    transition: 0.3s;
+    background-color: rgba(255, 255, 255, 0.75);
+}
