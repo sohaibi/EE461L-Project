@@ -11,3 +11,4 @@ data_service/hardware.py
 data_service/test.py
 data_service/user.py
 data_service/__pycache__/hardware.cpython-39.pyc
+.DS_Store
