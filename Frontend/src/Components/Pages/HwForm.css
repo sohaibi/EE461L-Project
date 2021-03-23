@@ -1,0 +1,113 @@
+/** Hardware Prompt **/
+#hardware-container {
+    margin: 50px 0px;
+}
+
+#hardware-container > h1 {
+    margin: 0px auto;
+    width: fit-content;
+}
+
+#hardware-prompt {
+    display: flex;
+    flex-direction: column;
+    margin: 0px auto;
+}
+
+/** Form Part 1 **/
+#hardware-form {
+    margin: 0px auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.hardware-form-el {
+    width: fit-content;
+    padding: 5px;
+    margin: 0px auto;
+}
+
+.hardware-form-el > input, .hardware-form-el > label {
+    margin: 0px 5px;
+}
+
+.hardware-form-el > input {
+    cursor: pointer;
+}
+
+.hardware-form-el:nth-child(4) {
+    background-color: #f8971f;
+    color: white;
+    outline: none;
+    border: none;
+    font-size: 24px;
+    width: 50px;
+    cursor: pointer;
+    margin: 10px auto;
+}
+
+#inBox:disabled, #outBox:disabled {
+    cursor: default;
+}
+
+#inBox:disabled ~ #inBox-label {
+    transition: 0.2s;
+    color: gray;
+    font-style: italic;
+}
+
+#outBox:disabled ~ #outBox-label { 
+    transition: 0.2s;
+    color: gray;
+    font-style: italic;
+}
+
+/** Error **/
+#errorDiv {
+    width: fit-content;
+    height: fit-content;
+    margin: 0px auto;
+}
+
+#hideError, #showError {
+    margin: 0px auto;
+}
+
+#hideError {
+    visibility: collapse;
+}
+
+#showError {
+    visibility: visible;
+    color: red;
+}
+
+/** Go Button **/
+#part1-submit:disabled {
+    background-color: gray;
+    cursor: default;
+}
+
+/** Part 2 **/
+#showCheckIn, #showCheckOut {
+    margin: 0px auto;
+    width: 80%;
+}
+
+/** Checkin Form **/
+#hideCheckIn {
+    visibility: collapse;
+}
+
+#showCheckIn {
+    visibility: visible;
+}
+
+/** Checkout Form **/
+#hideCheckOut {
+    visibility: collapse;
+}
+
+#showCheckOut {
+    visibility: visible;
+}

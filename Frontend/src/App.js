@@ -12,6 +12,7 @@ import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
 import DownloadDatasets from './Components/Pages/DownloadDatasets';
 import EditUserProfile from './Components/Pages/EditUserProfile';
+import Hardware from './Components/Pages/HwForm';
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
           <Route path='/register' component={Register} />
           <Route path='/download' component={DownloadDatasets}/>
           <Route path='/editProfile' component={EditUserProfile}/>
+          <Route path='/hardware' component={Hardware}/>
         </Switch>
         <Footer />
       </Router>
