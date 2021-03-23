@@ -10,6 +10,14 @@
     background-repeat: no-repeat;
 }
 
+#error_message{
+    color: crimson;
+
+}
+
+
+
+
 .div-login {
     width: 300px;
     height: 400px;

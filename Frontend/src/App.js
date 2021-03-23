@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
@@ -11,25 +11,91 @@ import Datasets from './Components/Pages/Datasets';
 import Footer from './Components/Footer';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
+import Projects from './Components/Pages/Projects'
 function App() {
 
-  // helper function to communicate to backend 
+  const [isLogin, setIsLogin] = useState(false);
+  const [userID, setUserID] = useState('-1')
+
+
+  // check login status from backend server when mount
+  useEffect(() => {
+
+    fetch('/login',
+      {
+        method: "GET",
+        cache: 'default',
+        credentials: 'include',
+        withCredentials: true,
+        headers: {
+          "content_type": "application/json",
+        },
+      }
+    ).then(res => res.json()).then(data => {
+      console.log(data);
+      if (data.ans === "Y") {
+        setIsLogin(true);
+        setUserID(data.userID);
+
+      } else {
+        setIsLogin(false);
+        console.log(isLogin);
+      }
+    }).catch((error) => {
+      console.error(error);
+    });
+  }, []);
+
+  // handle successful login from children
+  const handleSuccessfulAuth = (data) => {
+    // data = data.json();
+    setIsLogin(true);
+    setUserID(data.userID);
+
+    console.log("this is from App.js")
+
+    // this.props.history.push("/projects")   - does not work, don't know why
+  }
+
+  // handle logout from children
+  const handleLogout = () => {
+    // data = data.json();
+    setIsLogin(false);
+    setUserID('-1');
+
+    console.log("this is Logout from App.js")
+
+
+  }
+
+
 
   return (
     <>
-
+      {/* <p>{userID}</p> */}
       <Router>
-        <Header />
+        < Header isLogin={isLogin} userID={userID} handleLogout={handleLogout}
+        />
         <Switch>
           <Route path="/" exact component={Home} />
           <Route path='/guide' component={UserGuide} />
           <Route path='/datasets' component={Datasets} />
-          <Route path='/login' component={Login} />
-          <Route path='/register' component={Register} />
+          <Route
+            path='/login'
+            render={props => (
+              <Login {...props} isLogin={isLogin} handleSuccessfulAuth={handleSuccessfulAuth} />
+            )}
+          />
+          <Route
+            path='/register'
+            render={props => (
+              <Register {...props} isLogin={isLogin} handleSuccessfulAuth={handleSuccessfulAuth} />
+            )}
+          />
+          <Route path='/projects' component={Projects} />
         </Switch>
 
         <Footer />
-        {/* <BarChart /> */}
       </Router>
 
     </>

@@ -1,15 +1,29 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
+import { Redirect } from 'react-router-dom';
 
 
 class Login extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            username: '',
+            pwd: '',
+            error_message: '',
+            isLogin: props.isLogin
 
-    state = {
-        username: '',
-        pwd: '',
+        }
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.isLogin !== this.props.isLogin) {
+            console.log('prop.isLogin changed:', this.props.isLogin.toString());
+            this.setState({ isLogin: nextProps.isLogin })
+        }
+    }
 
 
     handleChange = (e) => {
@@ -18,29 +32,85 @@ class Login extends React.Component {
     }
 
     handleSubmit = (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        console.log("making request to login")
+        // console.log(this.state.username)
+        fetch('/login',
+            {
+                method: "POST",
+                cache: 'force-cache',
+                credentials: 'include',
+                withCredentials: true,
+                headers: {
+                    "content_type": "application/json",
+                },
+                body: JSON.stringify({
+                    'username': this.state.username,
+                    'password': this.state.pwd
+                })
+            }
+        ).then(response => {
+            return response.json()
+        }).then(
+            data => {
+                console.log(data);
+                if (data.message !== 'success') {
+                    this.setState({ error_message: data.message })
+                    // //display for 1s
+                    // this.state.timer = setTimeout(() => {
+                    //     {
+                    //         this.setState({ error_message: ' ' });
+                    //     }
+                    // }, 1000);
+
+
+                } else {
+                    this.setState({ error_message: '' });
+                    this.props.handleSuccessfulAuth(data);
+                }
+
+
+
+            }).catch(error => {
+                console.log("login error", error);
+            });
+
     }
 
-    render() {
-        return (
-            <div className='div-login'>
-                <div className>
-                    <div id="homeLogo-login"></div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label for='username'>Username</label>
-                        <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
-                        <label for='password'>Password</label>
-                        <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
-                        <button onSubmit={this.handleSubmit}>Log In</button>
-                    </form>
-                    <Link to="/register"
-                        className="register">
-                        <button Link>Register</button>
-                    </Link>
 
+    render() {
+        if (!this.state.isLogin) {
+            return (
+
+                <div className='div-login'>
+                    {/* <p>{this.props.isLogin.toString()}</p> */}
+                    <div className>
+                        <div id="homeLogo-login"></div>
+                        <form onSubmit={this.handleSubmit}>
+                            <label for='username'>Username</label>
+                            <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
+                            <label for='password'>Password</label>
+                            <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
+
+                            <p id='error_message'>{this.state.error_message}</p>
+
+                            <button onSubmit={this.handleSubmit}>Log In</button>
+                        </form>
+                        <Link to="/register"
+                            className="register">
+                            <button Link>Register</button>
+                        </Link>
+
+                    </div>
                 </div>
-            </div>
-        )
+            )
+        }
+        // already login
+        return <Redirect to='/projects' />;
+        // return "I will let you stay here"
+
+
+
     }
 }
 

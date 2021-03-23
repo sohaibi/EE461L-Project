@@ -1,3 +1,15 @@
+/* #reactgooglegraph-1{
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: relative;
+} */
+#hwChart{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
 table {
     clear: both;
     margin: 20px auto;

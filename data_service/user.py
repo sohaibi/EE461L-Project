@@ -13,6 +13,8 @@ projects = mydb["Project"]
 users = mydb["User"]
 
 
+
+
 def check_duplicate(username: str, email: str) -> list[int]:
     """
     Check no duplicates of username and email in the database
@@ -35,6 +37,16 @@ def check_duplicate(username: str, email: str) -> list[int]:
 
 # print(check_duplicate("Yue", ""))
 # print(check_duplicate.__doc__)
+
+
+def get_user(username:str):
+    res_dup = check_duplicate(username,'')
+    # if user does not exist
+    if res_dup[0]==0:
+        return -1
+    user = users.find_one({"username": username})
+    return user
+# print(get_user('Yue'))
 
 
 def create_user(username: str, password: str, email: str) -> list[int]:

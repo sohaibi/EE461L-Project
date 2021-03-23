@@ -54,7 +54,7 @@ def create_new_hardware_set(hardware_name, capacity):
     hardware_set.insert_one(post)
     return 0
 
-print(create_new_hardware_set(hardware_name="test4", capacity=30))    #DEMO
+# print(create_new_hardware_set(hardware_name="test4", capacity=30))    #DEMO
 
 
 # set & get availability-------------------------------------------------------------------------------------------------

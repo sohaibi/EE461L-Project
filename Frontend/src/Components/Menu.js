@@ -1,8 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router,
-    Link 
+import {
+    BrowserRouter as Router,
+    Link,
+    Route
 } from 'react-router-dom';
 import './Menu.css';
+import Projects from './Pages/Projects'
 
 // TO-DO: Pages //
 // import Account from './Pages/Account';
@@ -10,8 +13,8 @@ import './Menu.css';
 
 function Menu() {
 
-    return(
-        <Router>
+    return (
+
         <ul>
             <li>
                 <Link to="/" className="menu_link">
@@ -21,11 +24,12 @@ function Menu() {
                 </Link>
             </li>
             <li>
-                <Link to="/" className="menu_link">
+                <Link to="/projects" className="menu_link">
                     <div className="list_item_div">
                         My Projects
                     </div>
                 </Link>
+
             </li>
             <li>
                 <Link to="/" className="menu_link">
@@ -35,7 +39,7 @@ function Menu() {
                 </Link>
             </li>
         </ul>
-        </Router>
+
     );
 }
 

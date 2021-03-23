@@ -5,3 +5,9 @@ __pycache__/
 
 node_modules/
 .venv/
+data_service/__pycache__/hardware.cpython-39.pyc
+data_service/.gitignore
+data_service/hardware.py
+data_service/test.py
+data_service/user.py
+data_service/__pycache__/hardware.cpython-39.pyc

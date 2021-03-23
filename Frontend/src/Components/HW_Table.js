@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Chart from "react-google-charts";
+import { Chart } from "react-google-charts";
 
 import './HW_Table.css';
 
@@ -12,6 +12,7 @@ function HW_Table() {
     const [availabilities, setAvailabilities] = useState([]);
     const [capacities, setCapacities] = useState([]);
     const [HW_names, setHW_names] = useState([]);
+
 
 
     useEffect(() => {
@@ -49,6 +50,7 @@ function HW_Table() {
     }
 
 
+
     // create dynamic table, ref https://blog.cloudboost.io/for-loops-in-react-render-no-you-didnt-6c9f4aa73778
     let table = []
 
@@ -65,6 +67,14 @@ function HW_Table() {
         table.push(<tr>{children}</tr>)
     }
 
+    // create bar chart array
+    let bar_data = []
+    bar_data.push(['HardWareSet', 'Availability', 'Capacity'])
+    for (let i = 0; i < availabilities.length; i++) {
+        //Inner loop to create children
+        bar_data.push([HW_names[i], availabilities[i], capacities[i] - availabilities[i]])
+    }
+
 
 
     return (
@@ -78,26 +88,35 @@ function HW_Table() {
                 </tr>
                 {table}
             </table>
-            <div>
+
+            <div id="hwChart">
+
                 <Chart
                     width={'500px'}
                     height={'300px'}
-                    chartType="PieChart"
+                    chartType="BarChart"
                     loader={<div>Loading Chart</div>}
-                    data={[
-                        ['Task', 'Hours per Day'],
-                        ['Work', 11],
-                        ['Eat', 2],
-                        ['Commute', 2],
-                        ['Watch TV', 2],
-                        ['Sleep', 7],
-                    ]}
-                    // options={{
-                    //     title: 'My Daily Activities',
-                    // }}
-                    rootProps={{ 'data-testid': '1' }}
+                    data={
+                        bar_data
+                    }
+                    options={{
+                        // title: 'Hardware Status',
+                        chartArea: { width: '50%' },
+                        isStacked: true,
+                        hAxis: {
+                            // title: 'Availability and Capacity',
+                            minValue: 0,
+                        },
+                        vAxis: {
+                            title: 'HardwareSet',
+                        },
+                        colors: ['#f8971f', '#808080'],
+                    }}
+                // For tests
+                // rootProps={{ 'data-testid': '3' }}
                 />
             </div>
+
 
         </>
     );
