@@ -11,7 +11,7 @@
     margin-top: 10vh;
 }
 
-input {
+#username, #password, #new_user, #new_email, #new_pwd, #new_pwd1 {
     width: 95%;
     border: 1px solid #dbdbdb;
     padding: 5px;
@@ -22,10 +22,11 @@ input {
     font-family: 'Open Sans Condensed', sans-serif;
 }
 
-button {
+.Log-In {
     width: 100%;
     margin: 5px 0;
     background-color: #f8971f;
     font-family: 'Open Sans Condensed', sans-serif;
     padding: 5px;
 }
+
