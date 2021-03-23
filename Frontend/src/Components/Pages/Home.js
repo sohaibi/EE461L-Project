@@ -31,7 +31,7 @@ function Home() {
      * Else, redirect to login page 
     */
     // TODO: method to determine if user is logged in 
-    const isUser = false;
+    const isUser = true;
     var hwLink = "/login";
 
     if(isUser) {
@@ -117,11 +117,12 @@ function Home() {
                     <div className="profile">
                         <div className="profile-pic">
                             <div className="profile-linked" 
-                                onClick={()=> window.open("https://www.linkedin.com/in/sohaib-khan-2022/", "_blank")} />
+                                onClick={()=> window.open("https://www.linkedin.com/", "_blank")} />
                         </div>
                         <div className="profile-desc">
-                            <p>My name is Sohaib Khan and I am a fourth-year undergraduate student at UT Austin. I am going to graduate on May 2022 and aim to become a software
-                               developer. I am also curious about linking mathematics towards programming.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                Turpis egestas pretium aenean pharetra magna ac placerat vestibulum. 
+                                Lacus laoreet non curabitur gravida arcu. </p>
                         </div>
                     </div>
 
