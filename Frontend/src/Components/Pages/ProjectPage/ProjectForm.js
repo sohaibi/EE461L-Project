@@ -18,7 +18,7 @@
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('fullName' in fieldValues)
+        if ('projName' in fieldValues)
             temp.projName = fieldValues.projName ? "" : "This field is required."
       
         setErrors({
@@ -26,7 +26,7 @@
         })
     
         if (fieldValues == values)
-            return Object.values(temp).every(x => x == "")
+            return Object.values(temp).every(x => x == "") //ret boolean validate()
     }
     
     const {
@@ -39,11 +39,12 @@
     } = useForm(initialFValues, true, validate);
     
     const handleSubmit = e => {
-        e.preventDefault()
+         e.preventDefault()
         if (validate()){
             projectService.insertProject(values)
             resetForm()
         }
+         
     }
 
       
@@ -56,11 +57,24 @@
                     label="Project Name"
                     value={values.projName}
                     onChange={handleInputChange}
+                    error={errors.projName}
+                />
+                <Controls.Input
+                    name="status"
+                    label="Status"
+                    value={values.status}
+                    onChange={handleInputChange}
                 />
                 <Controls.Input
                     name="comment"
                     label="Comment"
                     value={values.comment}
+                    onChange={handleInputChange}
+                />
+                <Controls.Input
+                    name="date"
+                    label="Date"
+                    value={values.date}
                     onChange={handleInputChange}
                 />
                 <div>

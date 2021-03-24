@@ -1,10 +1,4 @@
 
-export const getDepartmentCollection = ()=>([
-    { id: '1', title: 'Dev' },
-    { id: '2', title: 'Test' },
-    { id: '3', title: 'Opt' },
-    { id: '4', title: 'Hit' },
-])
 
 const KEYS ={
     projects:'projects',
@@ -40,12 +34,5 @@ export function getAllProjects() {
      // check if item already occupied
     if (localStorage.getItem(KEYS.projects) == null)
         localStorage.setItem(KEYS.projects, JSON.stringify([]))
-    let projects = JSON.parse(localStorage.getItem(KEYS.projects));
-    
-    //map departmentID to department title
-    let departments = getDepartmentCollection();
-    return projects.map(x => ({
-        ...x,
-        department : departments[x.departmentId-1].title
-    }))
+    return JSON.parse(localStorage.getItem(KEYS.projects));
 }

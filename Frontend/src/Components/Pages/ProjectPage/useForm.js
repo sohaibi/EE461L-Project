@@ -14,11 +14,11 @@ export function useForm(initialFValues, validateOnChange= false, validate) {
             ...values,     //keep other values the same
             [name]:value //change specific value
         })
-        if(validateOnChange)
+        if(validateOnChange) //real time validation
             validate({[name]: value})
     }
 
-    //validation section
+    //validation section 19:58
     const resetForm = () => {
         setValues(initialFValues);
         setErrors({})
