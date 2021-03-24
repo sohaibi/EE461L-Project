@@ -29,8 +29,8 @@ const headCells = [
     { id: 'projName', label: 'Project Name' },
     { id: 'status', label: 'Status' },
     // { id: 'comment', label: 'Comment' },
-    { id: 'date', label: 'Date Created', disableSorting: true },
-    { id: 'date', label: 'Last Edited', disableSorting: true },
+    { id: 'dateCreated', label: 'Date Created', disableSorting: true },
+    { id: 'lastEdited', label: 'Last Edited', disableSorting: true },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -82,6 +82,16 @@ function Project() {
     }
     //POP UP SECTION
 
+
+    //DELETE FX
+    const onDelete = id =>{
+        if(window.confirm('Are you sure you want to delete this project?')){
+            projectService.deleteProject(id);
+            setRecords(projectService.getAllProjects())
+        }
+    }
+
+
     return (
         <>
          
@@ -115,8 +125,8 @@ function Project() {
                                 (<TableRow key={item.id}>
                                     <TableCell>{item.projName}</TableCell>
                                     <TableCell>{item.status}</TableCell>
-                                    <TableCell>{item.comment}</TableCell>
-                                    <TableCell>{item.date}</TableCell>
+                                    <TableCell>{item.dateCreated}</TableCell>
+                                    <TableCell>{item.lastEdited}</TableCell>
                                     
                                     {/* POPUP section */}
                                     <TableCell>
@@ -126,7 +136,9 @@ function Project() {
                                             <EditOutlinedIcon fontSize="small" />
                                         </Controls.ActionButton>
                                         <Controls.ActionButton
-                                            color="secondary">
+                                            color="secondary"
+                                            onClick={()=>{
+                                            onDelete(item.id)}}>
                                             <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>
                                     </TableCell>

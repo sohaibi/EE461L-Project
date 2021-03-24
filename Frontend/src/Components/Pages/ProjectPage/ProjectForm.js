@@ -9,8 +9,7 @@
     id: 0,
     projName: '',
     status: '',
-    comment:'',
-    date:''
+    comment:''
 }
 
 

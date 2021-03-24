@@ -19,6 +19,14 @@ export function updateProject(data) {
     localStorage.setItem(KEYS.projects, JSON.stringify(projects));
 }
 
+//Delete
+export function deleteProject(id) {
+    let projects = getAllProjects();
+    projects = projects.filter(x => x.id != id)
+    localStorage.setItem(KEYS.projects, JSON.stringify(projects));
+}
+
+
 export function generateProjectId() {
    // check if item already occupied
     if (localStorage.getItem(KEYS.projectId) == null)
