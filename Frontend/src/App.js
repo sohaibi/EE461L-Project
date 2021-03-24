@@ -13,6 +13,7 @@ import Register from './Components/Pages/Register';
 import DownloadDatasets from './Components/Pages/DownloadDatasets';
 import EditUserProfile from './Components/Pages/EditUserProfile';
 import Hardware from './Components/Pages/HwForm';
+import Project from './Components/Pages/ProjectPage/Project';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
           <Route path='/download' component={DownloadDatasets}/>
           <Route path='/editProfile' component={EditUserProfile}/>
           <Route path='/hardware' component={Hardware}/>
+          <Route path='/project' component={Project}/>
         </Switch>
         <Footer />
       </Router>
