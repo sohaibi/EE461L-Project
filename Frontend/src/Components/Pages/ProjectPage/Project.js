@@ -14,6 +14,7 @@ const useStyles = makeStyles(theme => ({
     pageContent: {
         margin: theme.spacing(5),
         padding: theme.spacing(3)
+
     },
     searchInput: {
         width: '50%'
@@ -31,6 +32,7 @@ const headCells = [
     // { id: 'comment', label: 'Comment' },
     { id: 'dateCreated', label: 'Date Created', disableSorting: true },
     { id: 'lastEdited', label: 'Last Edited', disableSorting: true },
+    { id: 'comment', label: 'Comment' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -59,7 +61,7 @@ function Project() {
                 if (target.value == "")
                     return items;
                 else
-                    return items.filter(x => x.fullName.toLowerCase().includes(target.value))
+                    return items.filter(x => x.projName.toLowerCase().includes(target.value))
             }
         })
     }
@@ -127,6 +129,7 @@ function Project() {
                                     <TableCell>{item.status}</TableCell>
                                     <TableCell>{item.dateCreated}</TableCell>
                                     <TableCell>{item.lastEdited}</TableCell>
+                                    <TableCell>{item.comment}</TableCell>
                                     
                                     {/* POPUP section */}
                                     <TableCell>
@@ -149,7 +152,7 @@ function Project() {
                         }
                     </TableBody>
                 </TblContainer>
-                <TblPagination />
+                <TblPagination/>
          </Paper>
 
          <Popup
