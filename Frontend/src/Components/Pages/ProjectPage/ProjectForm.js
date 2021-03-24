@@ -14,7 +14,8 @@
 }
 
 
-   export default function ProjectForm() {
+   export default function ProjectForm(props) {
+    const { addOrEdit, recordForEdit } = props
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -41,12 +42,18 @@
     const handleSubmit = e => {
          e.preventDefault()
         if (validate()){
-            projectService.insertProject(values)
-            resetForm()
+            addOrEdit(values, resetForm);
         }
          
     }
 
+    //POPUP SECTION
+    useEffect(() => {
+        if (recordForEdit != null)
+            setValues({
+                ...recordForEdit
+            })
+    }, [recordForEdit])
       
        return (
          
@@ -71,20 +78,20 @@
                     value={values.comment}
                     onChange={handleInputChange}
                 />
-                <Controls.Input
+                {/* <Controls.Input
                     name="date"
                     label="Date"
                     value={values.date}
                     onChange={handleInputChange}
-                />
+                /> */}
                 <div>
-                        <Controls.Button
-                            type="submit"
-                            text="Submit" />
-                        <Controls.Button
-                            text="Reset"
-                            color="default"
-                            onClick={resetForm} />
+                    <Controls.Button
+                        type="submit"
+                        text="Submit" />
+                    <Controls.Button
+                        text="Reset"
+                        color="default"
+                        onClick={resetForm} />
                 </div>
             </Grid>
             </Form>
