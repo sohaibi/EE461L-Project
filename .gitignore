@@ -5,12 +5,12 @@ __pycache__/
 
 node_modules/
 .venv/
-data_service/__pycache__/hardware.cpython-39.pyc
+data_service/__pycache__/*
 data_service/.gitignore
-data_service/hardware.py
+
 data_service/test.py
-data_service/user.py
-data_service/__pycache__/hardware.cpython-39.pyc
+
+
 .DS_Store
 .venv/Lib/site-packages/pip/__pycache__/__init__.cpython-39.pyc
 .venv/Lib/site-packages/pip/__pycache__/__main__.cpython-39.pyc
@@ -411,3 +411,9 @@ data_service/__pycache__/hardware.cpython-39.pyc
 .venv/Lib/site-packages/pip/_vendor/webencodings/__pycache__/labels.cpython-39.pyc
 data_service/__pycache__/__init__.cpython-39.pyc
 data_service/__pycache__/hardware.cpython-39.pyc
+.venv/Lib/site-packages/pip/__pycache__/__init__.cpython-39.pyc
+.venv/Lib/site-packages/pip/__pycache__/__main__.cpython-39.pyc
+data_service/__pycache__/__init__.cpython-39.pyc
+data_service/__pycache__/hardware.cpython-39.pyc
+data_service/__pycache__/hardware.cpython-39.pyc
+data_service/__pycache__/__init__.cpython-39.pyc
