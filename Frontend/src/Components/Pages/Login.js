@@ -106,7 +106,7 @@ class Login extends React.Component {
             )
         }
         // already login
-        return <Redirect to='/projects' />;
+        return <Redirect to='/project' />;
         // return "I will let you stay here"
 
 

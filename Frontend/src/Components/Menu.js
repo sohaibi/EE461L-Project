@@ -15,7 +15,7 @@ function Menu() {
                 </Link>
             </li>
             <li>
-                <Link to="/projects" className="menu_link">
+                <Link to="/project" className="menu_link">
                     <div className="list_item_div">
                         My Projects
                     </div>

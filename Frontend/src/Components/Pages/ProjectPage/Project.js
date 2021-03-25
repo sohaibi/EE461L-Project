@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState, useEffect } from 'react'
 import ProjectForm from './ProjectForm'
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
 import useTable from './useTable'
@@ -9,6 +9,7 @@ import AddIcon from '@material-ui/icons/Add';
 import Popup from './Popup'
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
+import { Redirect } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -37,16 +38,18 @@ const headCells = [
 ]
 
 
-function Project() {   
+function Project(props) {
+    const [isLogin, setIsLogin] = useState(props.isLogin);
+    const [userID, setUserID] = useState(props.userID);
 
     const classes = useStyles();
 
     const [records, setRecords] = useState(projectService.getAllProjects())
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
-    
+
     const [recordForEdit, setRecordForEdit] = useState(null)
     const [openPopup, setOpenPopup] = useState(false)
-    
+
     const {
         TblContainer,
         TblHead,
@@ -86,51 +89,60 @@ function Project() {
 
 
     //DELETE FX
-    const onDelete = id =>{
-        if(window.confirm('Are you sure you want to delete this project?')){
+    const onDelete = id => {
+        if (window.confirm('Are you sure you want to delete this project?')) {
             projectService.deleteProject(id);
             setRecords(projectService.getAllProjects())
         }
     }
 
+    // synchronize with App.js's login status
+    useEffect(() => {
+        console.log('login status updated', props.isLogin);
+        console.log('userID updated', props.userID);
+        setUserID(props.userID)
+        setIsLogin(props.isLogin)
+    }, [props.isLogin, props.userID])
 
-    return (
-        <>
-         
-        <Paper className={classes.pageContent}>
-        
-            <Toolbar>
-                    <Controls.Input
-                        label="Search Projects"
-                        className={classes.searchInput}
-                        InputProps={{
-                            startAdornment: (<InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>)
-                        }}
-                        onChange={handleSearch}
-                    />
-                    <Controls.Button
-                        text="Create Project"
-                        variant="outlined"
-                        startIcon={<AddIcon />}
-                        className={classes.newButton}
-                        onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
-                    />
-                </Toolbar>
-                <TblContainer>
-                
-                    <TblHead />
-                    <TableBody>
-                        {
-                            recordsAfterPagingAndSorting().map(item =>
+
+    if (isLogin) {
+        return (
+            <>
+
+                <Paper className={classes.pageContent}>
+
+                    <Toolbar>
+                        <Controls.Input
+                            label="Search Projects"
+                            className={classes.searchInput}
+                            InputProps={{
+                                startAdornment: (<InputAdornment position="start">
+                                    <Search />
+                                </InputAdornment>)
+                            }}
+                            onChange={handleSearch}
+                        />
+                        <Controls.Button
+                            text="Create Project"
+                            variant="outlined"
+                            startIcon={<AddIcon />}
+                            className={classes.newButton}
+                            onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
+                        />
+                    </Toolbar>
+                    <TblContainer>
+
+                        <TblHead />
+                        <TableBody>
+                            {
+                                recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
                                     <TableCell>{item.projName}</TableCell>
                                     <TableCell>{item.status}</TableCell>
                                     <TableCell>{item.dateCreated}</TableCell>
                                     <TableCell>{item.lastEdited}</TableCell>
                                     <TableCell>{item.comment}</TableCell>
-                                    
+
                                     {/* POPUP section */}
                                     <TableCell>
                                         <Controls.ActionButton
@@ -140,34 +152,39 @@ function Project() {
                                         </Controls.ActionButton>
                                         <Controls.ActionButton
                                             color="secondary"
-                                            onClick={()=>{
-                                            onDelete(item.id)}}>
+                                            onClick={() => {
+                                                onDelete(item.id)
+                                            }}>
                                             <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>
                                     </TableCell>
-                                     {/* POPUP section */} 
+                                    {/* POPUP section */}
 
                                 </TableRow>)
-                            )
-                        }
-                    </TableBody>
-                </TblContainer>
-                <TblPagination/>
-         </Paper>
+                                )
+                            }
+                        </TableBody>
+                    </TblContainer>
+                    <TblPagination />
+                </Paper>
 
-         <Popup
-                title="Project Form"
-                openPopup={openPopup}
-                setOpenPopup={setOpenPopup}
-            >
-                <ProjectForm
-                    recordForEdit={recordForEdit}
-                    addOrEdit={addOrEdit} />
-            </Popup>
+                <Popup
+                    title="Project Form"
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                >
+                    <ProjectForm
+                        recordForEdit={recordForEdit}
+                        addOrEdit={addOrEdit} />
+                </Popup>
 
 
-        </>
-    )
+            </>
+        )
+    } else {
+        return <Redirect to='/login' />;
+    }
+
 }
 
 export default Project

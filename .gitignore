@@ -4,11 +4,10 @@ __pycache__/
 
 
 node_modules/
-.venv/
+.venv/*
 data_service/__pycache__/*
-data_service/.gitignore
+data_service/__pycache__
 
-data_service/test.py
 
 
 .DS_Store

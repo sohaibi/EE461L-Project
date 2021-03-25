@@ -97,9 +97,24 @@ function App() {
             )}
           />
           <Route path='/download' component={DownloadDatasets} />
-          <Route path='/editProfile' component={EditUserProfile} />
-          <Route path='/hardware' component={Hardware} />
-          <Route path='/project' component={Project} />
+          <Route
+            path='/editProfile'
+            render={props => (
+              <EditUserProfile {...props} isLogin={isLogin} userID={userID} />
+            )}
+          />
+          <Route
+            path='/hardware'
+            render={props => (
+              <Hardware {...props} isLogin={isLogin} userID={userID} />
+            )}
+          />
+          <Route
+            path='/project'
+            render={props => (
+              <Project {...props} isLogin={isLogin} userID={userID} />
+            )}
+          />
         </Switch>
 
         <Footer />
