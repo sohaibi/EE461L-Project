@@ -11,10 +11,10 @@ import Datasets from './Components/Pages/Datasets';
 import Footer from './Components/Footer';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
-import Projects from './Components/Pages/Projects'
 import DownloadDatasets from './Components/Pages/DownloadDatasets';
 import EditUserProfile from './Components/Pages/EditUserProfile';
 import Hardware from './Components/Pages/HwForm';
+import Project from './Components/Pages/ProjectPage/Project';
 
 function App() {
 
@@ -96,10 +96,10 @@ function App() {
               <Register {...props} isLogin={isLogin} handleSuccessfulAuth={handleSuccessfulAuth} />
             )}
           />
-          <Route path='/projects' component={Projects} />
           <Route path='/download' component={DownloadDatasets} />
           <Route path='/editProfile' component={EditUserProfile} />
           <Route path='/hardware' component={Hardware} />
+          <Route path='/project' component={Project} />
         </Switch>
 
         <Footer />
