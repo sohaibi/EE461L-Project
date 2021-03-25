@@ -40,6 +40,11 @@ def check_duplicate(username: str, email: str) -> list[int]:
 
 
 def get_user(username:str):
+    """
+    Get user information by the username provided by the client
+    :param username: username
+    :returns res: -1 if user does not exist; user dictionary object if user exists
+    """
     res_dup = check_duplicate(username,'')
     # if user does not exist
     if res_dup[0]==0:
@@ -51,7 +56,7 @@ def get_user(username:str):
 
 def create_user(username: str, password: str, email: str) -> list[int]:
     """
-    Create a new user in the database
+    Register：Create a new user in the database
     :param username: username 
     :param password: password
     :param email: email
@@ -71,18 +76,18 @@ def create_user(username: str, password: str, email: str) -> list[int]:
 # @param: pass in "" if the attributes does not need to be updated
 
 
-def update_user(new_username: str, new_password: str, new_email: str, old_username: str) -> list[int]:
+def update_user(new_username: str, new_password: str, new_email: str, user_id: ObjectId) -> list[int]:
     """
     Update user information in database
     :param new_username: new updated username; "" indicates no updates 
     :param new_password: new updated password; "" indicates no updates
     :param new_email: new updated email; "" indicates no updates
+    :param user_id: userID in mongoDB
     :returns res: list of error code. res[0] indicates username error code; res[1] indicates email error code
     :              res[i]= 0 success; res[i]= -1 duplicate exists
     """
     res = check_duplicate(new_username, new_email)
     if res[0] == 0 and res[1] == 0:
-        user_id = users.find_one({"username": old_username})["_id"]
         if new_username != "":
             users.update_one(filter={"_id": user_id}, update={'$set': {
                              "username": new_username}}, upsert=False)
