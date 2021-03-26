@@ -25,6 +25,7 @@ def check_duplicate(username: str, email: str) -> list[int]:
     """
 
     check1 = users.find_one({"username": username})
+    # print(check1)
     # check duplicated email
     check2 = users.find_one({"email": email})
     res = [0, 0]
@@ -35,7 +36,7 @@ def check_duplicate(username: str, email: str) -> list[int]:
     return res
 
 
-# print(check_duplicate("Yue", ""))
+# print(check_duplicate("Yue1", "yue1@utexas.edu"))
 # print(check_duplicate.__doc__)
 
 
@@ -53,6 +54,20 @@ def get_user(username:str):
     return user
 # print(get_user('Yue'))
 
+def get_user_byID(user_id:str):
+    """
+    Get user information by user_id
+    :param user_id in string format
+    :returns res: -1 if user does not exist; user dictionary object if user exists
+    """
+
+    user = users.find_one({"_id": ObjectId(user_id)})
+    if not user:
+        return -1
+    return user
+
+# print(get_user_byID("605d311f619fda7de819bece"))
+
 
 def create_user(username: str, password: str, email: str) -> list[int]:
     """
@@ -64,13 +79,16 @@ def create_user(username: str, password: str, email: str) -> list[int]:
     :              res[i]= 0 success; res[i]= -1 duplicate exists
     """
     res = check_duplicate(username, email)
+    print("check duplicate res =", res)
     if res[0] == 0 and res[1] == 0:
         users.insert_one({"username": username, "password": password,
                           "email": email, "projects": []})
+        print("Inside it, my res should be:", res)
+    print("Now my res should be:", res)
     return res
 
 
-# print(create_user("tom", "123", "tom@utexas.edu"))
+# print(create_user("Yue2", "1223", "yue2@utexas.edu"))
 # print(check_duplicate("", ""))
 
 # @param: pass in "" if the attributes does not need to be updated

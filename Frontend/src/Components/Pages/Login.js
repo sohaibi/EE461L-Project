@@ -56,21 +56,11 @@ class Login extends React.Component {
                 console.log(data);
                 if (data.message !== 'success') {
                     this.setState({ error_message: data.message })
-                    // //display for 1s
-                    // this.state.timer = setTimeout(() => {
-                    //     {
-                    //         this.setState({ error_message: ' ' });
-                    //     }
-                    // }, 1000);
-
 
                 } else {
                     this.setState({ error_message: '' });
                     this.props.handleSuccessfulAuth(data);
                 }
-
-
-
             }).catch(error => {
                 console.log("login error", error);
             });

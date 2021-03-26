@@ -57,6 +57,7 @@ def login():
 
     #POST
     data = request.json
+    # print(data)
     if not data:
         return jsonify({'message':'Null request'})
     if data:

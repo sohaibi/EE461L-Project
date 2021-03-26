@@ -6,7 +6,7 @@ class Register extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            Username: '11111',
+            Username: '',
             Email: '',
             Password: '',
             ConfirmPassword: '',
@@ -112,7 +112,7 @@ class Register extends React.Component {
             )
         }
         // already login
-        return <Redirect to='/projects' />;
+        return <Redirect to='/project' />;
         // return "Register.js embedded to direct to '/projects'."
     }
 }
