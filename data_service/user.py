@@ -13,8 +13,6 @@ projects = mydb["Project"]
 users = mydb["User"]
 
 
-
-
 def check_duplicate(username: str, email: str) -> list[int]:
     """
     Check no duplicates of username and email in the database
@@ -40,21 +38,22 @@ def check_duplicate(username: str, email: str) -> list[int]:
 # print(check_duplicate.__doc__)
 
 
-def get_user(username:str):
+def get_user(username: str):
     """
     Get user information by the username provided by the client
     :param username: username
     :returns res: -1 if user does not exist; user dictionary object if user exists
     """
-    res_dup = check_duplicate(username,'')
+    res_dup = check_duplicate(username, '')
     # if user does not exist
-    if res_dup[0]==0:
+    if res_dup[0] == 0:
         return -1
     user = users.find_one({"username": username})
     return user
 # print(get_user('Yue'))
 
-def get_user_byID(user_id:str):
+
+def get_user_byID(user_id: str):
     """
     Get user information by user_id
     :param user_id in string format
@@ -94,7 +93,7 @@ def create_user(username: str, password: str, email: str) -> list[int]:
 # @param: pass in "" if the attributes does not need to be updated
 
 
-def update_user(new_username: str, new_password: str, new_email: str, user_id: ObjectId) -> list[int]:
+def update_user(new_username: str, new_password: str, new_email: str, user_id: str) -> list[int]:
     """
     Update user information in database
     :param new_username: new updated username; "" indicates no updates 
@@ -107,13 +106,13 @@ def update_user(new_username: str, new_password: str, new_email: str, user_id: O
     res = check_duplicate(new_username, new_email)
     if res[0] == 0 and res[1] == 0:
         if new_username != "":
-            users.update_one(filter={"_id": user_id}, update={'$set': {
+            users.update_one(filter={"_id": ObjectId(user_id)}, update={'$set': {
                              "username": new_username}}, upsert=False)
         if new_password != "":
-            users.update_one(filter={"_id": user_id}, update={'$set': {
+            users.update_one(filter={"_id": ObjectId(user_id)}, update={'$set': {
                              "password": new_password}}, upsert=False)
         if new_email != "":
-            users.update_one(filter={"_id": user_id}, update={'$set': {
+            users.update_one(filter={"_id": ObjectId(user_id)}, update={'$set': {
                              "email": new_email}}, upsert=False)
 
     return res

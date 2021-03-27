@@ -8,7 +8,7 @@ function Menu() {
 
         <ul>
             <li>
-                <Link to="/editProfile" className="menu_link">
+                <Link to="/userProfile" className="menu_link">
                     <div className="list_item_div">
                         Account Settings
                     </div>

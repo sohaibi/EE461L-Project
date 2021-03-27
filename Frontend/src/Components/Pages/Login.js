@@ -74,24 +74,25 @@ class Login extends React.Component {
 
                 <div className='div-login'>
                     {/* <p>{this.props.isLogin.toString()}</p> */}
-                    <div className>
-                        <div id="homeLogo-login"></div>
-                        <form onSubmit={this.handleSubmit}>
-                            <label for='username'>Username</label>
-                            <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
-                            <label for='password'>Password</label>
-                            <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
 
-                            <p id='error_message'>{this.state.error_message}</p>
+                    <div id="homeLogo-login"></div>
+                    <form onSubmit={this.handleSubmit}>
+                        <label for='username'>Username</label>
+                        <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
+                        <label for='password'>Password</label>
+                        <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
 
-                            <button onSubmit={this.handleSubmit}>Log In</button>
-                        </form>
+                        <p id='error_message'>{this.state.error_message}</p>
+
+                        <button onSubmit={this.handleSubmit}>Log In</button>
                         <Link to="/register"
                             className="register">
                             <button Link>Register</button>
                         </Link>
+                    </form>
 
-                    </div>
+
+
                 </div>
             )
         }

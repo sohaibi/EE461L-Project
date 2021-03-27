@@ -12,7 +12,7 @@ import Footer from './Components/Footer';
 import Login from './Components/Pages/Login';
 import Register from './Components/Pages/Register';
 import DownloadDatasets from './Components/Pages/DownloadDatasets';
-import EditUserProfile from './Components/Pages/EditUserProfile';
+import UserProfile from './Components/Pages/UserProfile';
 import Hardware from './Components/Pages/HwForm';
 import Project from './Components/Pages/ProjectPage/Project';
 
@@ -98,9 +98,9 @@ function App() {
           />
           <Route path='/download' component={DownloadDatasets} />
           <Route
-            path='/editProfile'
+            path='/userProfile'
             render={props => (
-              <EditUserProfile {...props} isLogin={isLogin} userID={userID} />
+              <UserProfile {...props} isLogin={isLogin} userID={userID} handleLogout={handleLogout} />
             )}
           />
           <Route
