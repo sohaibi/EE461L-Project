@@ -7,12 +7,19 @@ cluster = MongoClient("mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectclus
 db = cluster["SemesterProject"]
 collection = db["Project"]
 
-def handle_project_creation(creation_date, project_name, user_id ):
+def generate_date():
+    now = datetime.datetime.now()
+    date = now.strftime("%Y-%m-%d %H:%M:%S") # ex:2021-03-28 13:19:42
+    return date
+
+
+# def handle_project_creation(creation_date, project_name, user_id ): //create date inside funcition
+def handle_project_creation(project_name, user_id,comment):
     print("Inside function")
-    history_dict = {creation_date:"Project Created"}
+     # status = "ongoing"  # history_dict = {creation_date:"Project Created"}  //for later
     hardware_set_dict = {}
-    status = "ongoing"
-    post = { "creation_date": creation_date, "project_name": project_name, "user_id": user_id, "status": status, "hardware_set_dict": hardware_set_dict, "history_dict": history_dict}
+    date_created = generate_date();
+    post = { "date_created": date_created,"last_edited": date_created, "project_name": project_name, "user_id": user_id, "comment": comment, "hardware_set_dict": hardware_set_dict} #,  "status": status, "history_dict": history_dict
     print("post created")
     collection.insert_one(post)
     print("post added")
@@ -20,6 +27,9 @@ def handle_project_creation(creation_date, project_name, user_id ):
 
 def handle_status(status, project_id):
     collection.update_one({"_id": project_id}, {"$set": {"status": status}})
+
+def handle_comment(comment, project_id):
+    collection.update_one({"_id": project_id}, {"$set": {"comment": comment}})
 
 def handle_get_project_id(project_name, user_id):
     results = collection.find({"project_name": project_name, "user_id" : user_id})
@@ -48,3 +58,5 @@ def handle_update_hardware(project_id, key, data):
 #handle_project_creation("today", "TestPost", "Sheila")
 #handle_status("completed", 0)
 #print(handle_get_project_id("TestPost", "Mona"))
+
+handle_project_creation( "TestCreateDate", "user", "blu blu blu")

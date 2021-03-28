@@ -56,8 +56,6 @@ export default function UserProfile(props) {
 
         }
 
-
-
     }, [props.isLogin, props.userID])
 
 

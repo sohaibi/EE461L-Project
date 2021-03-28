@@ -167,3 +167,9 @@ def creds(response):
 
 if(__name__ == "__main__"):
     app.run(debug=True)
+
+#Adding Project Route
+@app.route('/project', methods=['POST', 'GET'])
+def projectAccess():
+    pass
+    # return response

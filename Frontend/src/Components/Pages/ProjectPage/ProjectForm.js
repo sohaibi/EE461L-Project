@@ -65,12 +65,12 @@
                     onChange={handleInputChange}
                     error={errors.projName}
                 />
-                <Controls.Input
+                {/* <Controls.Input
                     name="status"
                     label="Status"
                     value={values.status}
                     onChange={handleInputChange}
-                />
+                /> */}
                 <Controls.Input
                     name="comment"
                     label="Comment"
