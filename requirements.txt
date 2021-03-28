@@ -2,3 +2,4 @@ Flask==1.1.2
 Flask-Cors==3.0.10
 pymongo[srv]
 python-dotenv==0.15.0
+passlib==1.7.4
