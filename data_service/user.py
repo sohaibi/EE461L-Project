@@ -1,6 +1,5 @@
 from pymongo import MongoClient
 from bson import ObjectId
-from bson.json_util import dumps
 
 
 client = MongoClient(
@@ -13,7 +12,7 @@ projects = mydb["Project"]
 users = mydb["User"]
 
 
-def check_duplicate(username: str, email: str) -> list[int]:
+def check_duplicate(username: str, email: str) -> list:
     """
     Check no duplicates of username and email in the database
     :param username: username
@@ -68,22 +67,22 @@ def get_user_byID(user_id: str):
 # print(get_user_byID("605d311f619fda7de819bece"))
 
 
-def create_user(username: str, password: str, email: str) -> list[int]:
+def create_user(username: str, password: str, email: str) -> list:
     """
     Register：Create a new user in the database
-    :param username: username 
+    :param username: username
     :param password: password
     :param email: email
     :returns res: list of error code. res[0] indicates username error code; res[1] indicates email error code
     :              res[i]= 0 success; res[i]= -1 duplicate exists
     """
     res = check_duplicate(username, email)
-    print("check duplicate res =", res)
+    # print("check duplicate res =", res)
     if res[0] == 0 and res[1] == 0:
         users.insert_one({"username": username, "password": password,
                           "email": email, "projects": []})
-        print("Inside it, my res should be:", res)
-    print("Now my res should be:", res)
+        # print("Inside it, my res should be:", res)
+    # print("Now my res should be:", res)
     return res
 
 
@@ -93,10 +92,10 @@ def create_user(username: str, password: str, email: str) -> list[int]:
 # @param: pass in "" if the attributes does not need to be updated
 
 
-def update_user(new_username: str, new_password: str, new_email: str, user_id: str) -> list[int]:
+def update_user(new_username: str, new_password: str, new_email: str, user_id: str) -> list:
     """
     Update user information in database
-    :param new_username: new updated username; "" indicates no updates 
+    :param new_username: new updated username; "" indicates no updates
     :param new_password: new updated password; "" indicates no updates
     :param new_email: new updated email; "" indicates no updates
     :param user_id: userID in mongoDB
@@ -122,22 +121,50 @@ def update_user(new_username: str, new_password: str, new_email: str, user_id: s
 # print(update_user("", "456", "chengyue@utexas.edu", "Yue"))
 
 
-def add_projects(username: str, project_id: str) -> int:
+def add_projects(user_id: str, project_id: str):
     """
     Add new project into projects list
-    :param username: new updated username; "" indicates no updates 
-    :param project_id: new updated password; "" indicates no updates
-    :returns: error code as int.  res= 0 success; res= -1 project_id duplicate exists
+    :param user_id: user_id in str type
+    :param project_id: project_id to be added into the lists
+    :returns:  list of project_id after adding the project
     """
-    # get user_id
-    user_id = users.find_one({"username": username})["_id"]
-    # # check if project_id already exists in projects list
-    # projects = users.find_one({"_id": user_id})["projects"]
-    # if project_id in projects:
-    #     return -1
-    users.update_one({"_id": user_id}, update={
-        '$addToSet': {'projects': project_id}}, upsert=False)
-    return 0
+    # # get project list from user_id
+    # projects = users.find_one({"_id": ObjectId(user_id)})['projects']
+    # no need to check if project_id already exists in projects list, since it's '$addToSet' operation
+    users.update_one({"_id": ObjectId(user_id)}, update={
+                     '$addToSet': {'projects': project_id}}, upsert=False)
+    return users.find_one(({"_id": ObjectId(user_id)}))['projects']
 
 
-# print(add_projects("Yue", "4321"))
+# print(add_projects("604e7d148aaacd6a12855cbb", "43210"))
+
+def delete_projects(user_id: str, project_id: str):
+    """
+    Delete an existing project in projects list
+    :param user_id: user_id in str type
+    :param project_id: project_id to be added into the lists
+    :returns:  res= -1 project_id does not exist in the projects list;  list of project_id if success
+    """
+    # get project list from user_id
+    projects = users.find_one({"_id": ObjectId(user_id)})['projects']
+    # check if project_id already exists in projects list
+    if project_id not in projects:
+        return -1
+    users.update_one({"_id": ObjectId(user_id)}, update={
+        '$pull': {'projects': project_id}}, upsert=False)
+    return users.find_one(({"_id": ObjectId(user_id)}))['projects']
+
+
+# print(delete_projects("604e7d148aaacd6a12855cbb", "432166"))
+
+
+def get_projects(user_id: str):
+    """
+    get the projects list belong to this user
+    :param user_id: user_id in str type
+    :returns:  res= -1 project_id does not exist in the projects list;  list of project_id if success
+    """
+    return users.find_one(({"_id": ObjectId(user_id)}))['projects']
+
+
+# print(get_projects("604e7d148aaacd6a12855cbb"))

@@ -117,7 +117,6 @@ def register():
 @app.route('/logout', methods=['POST', 'GET'])
 def logout():
     if request.method == 'POST':
-        data = request.json
         if "user" in session:
             session.clear()
             return jsonify({'message': 'logout successfully'})
