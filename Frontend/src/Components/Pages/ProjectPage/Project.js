@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import ProjectForm from './ProjectForm'
-import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
+import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment, Grid } from '@material-ui/core';
 import useTable from './useTable'
 import * as projectService from './projectService'
 import Controls from './controls/Controls'
@@ -18,19 +18,21 @@ const useStyles = makeStyles(theme => ({
 
     },
     searchInput: {
-        width: '50%'
+        width: '30%'
     },
     newButton: {
-        position: 'absolute',
-        right: '10px'
+        width: '20%',
+        position: 'right',
+        left: '300px'
     }
 }))
 
 
+
 const headCells = [
+    { id: 'id', label: 'Project ID' },
     { id: 'projName', label: 'Project Name' },
-    { id: 'status', label: 'Status' },
-    // { id: 'comment', label: 'Comment' },
+    // { id: 'status', label: 'Status' },
     { id: 'dateCreated', label: 'Date Created', disableSorting: true },
     { id: 'lastEdited', label: 'Last Edited', disableSorting: true },
     { id: 'comment', label: 'Comment' },
@@ -112,6 +114,7 @@ function Project(props) {
                 <Paper className={classes.pageContent}>
 
                     <Toolbar>
+                    {/* <Grid> */}
                         <Controls.Input
                             label="Search Projects"
                             className={classes.searchInput}
@@ -122,6 +125,9 @@ function Project(props) {
                             }}
                             onChange={handleSearch}
                         />
+                        {/* </Grid> */}
+
+                       
                         <Controls.Button
                             text="Create Project"
                             variant="outlined"
@@ -129,6 +135,7 @@ function Project(props) {
                             className={classes.newButton}
                             onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
                         />
+                        
                     </Toolbar>
                     <TblContainer>
 
@@ -137,14 +144,16 @@ function Project(props) {
                             {
                                 recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
+                                    <TableCell>{item.id}</TableCell>
                                     <TableCell>{item.projName}</TableCell>
-                                    <TableCell>{item.status}</TableCell>
+                                    {/* <TableCell>{item.status}</TableCell> */}
                                     <TableCell>{item.dateCreated}</TableCell>
                                     <TableCell>{item.lastEdited}</TableCell>
                                     <TableCell>{item.comment}</TableCell>
 
                                     {/* POPUP section */}
                                     <TableCell>
+                                    
                                         <Controls.ActionButton
                                             color="primary"
                                             onClick={() => { openInPopup(item) }}>
@@ -157,6 +166,7 @@ function Project(props) {
                                             }}>
                                             <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>
+                               
                                     </TableCell>
                                     {/* POPUP section */}
 

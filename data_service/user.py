@@ -13,7 +13,7 @@ projects = mydb["Project"]
 users = mydb["User"]
 
 
-def check_duplicate(username: str, email: str) -> list[int]:
+def check_duplicate(username: str, email: str):
     """
     Check no duplicates of username and email in the database
     :param username: username
@@ -68,7 +68,7 @@ def get_user_byID(user_id: str):
 # print(get_user_byID("605d311f619fda7de819bece"))
 
 
-def create_user(username: str, password: str, email: str) -> list[int]:
+def create_user(username: str, password: str, email: str):
     """
     Register：Create a new user in the database
     :param username: username 
@@ -93,7 +93,7 @@ def create_user(username: str, password: str, email: str) -> list[int]:
 # @param: pass in "" if the attributes does not need to be updated
 
 
-def update_user(new_username: str, new_password: str, new_email: str, user_id: str) -> list[int]:
+def update_user(new_username: str, new_password: str, new_email: str, user_id: str):
     """
     Update user information in database
     :param new_username: new updated username; "" indicates no updates 

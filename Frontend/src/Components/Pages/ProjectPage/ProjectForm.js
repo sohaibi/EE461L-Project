@@ -77,13 +77,8 @@
                     value={values.comment}
                     onChange={handleInputChange}
                 />
-                {/* <Controls.Input
-                    name="date"
-                    label="Date"
-                    value={values.date}
-                    onChange={handleInputChange}
-                /> */}
-                <div>
+               
+                {/* <div> */}
                     <Controls.Button
                         type="submit"
                         text="Submit" />
@@ -91,7 +86,7 @@
                         text="Reset"
                         color="default"
                         onClick={resetForm} />
-                </div>
+                {/* </div> */}
             </Grid>
             </Form>
           
