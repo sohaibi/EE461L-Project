@@ -162,7 +162,7 @@ def get_projects(user_id: str):
     """
     get the projects list belong to this user
     :param user_id: user_id in str type
-    :returns:  res= -1 project_id does not exist in the projects list;  list of project_id if success
+    :returns: list of project_id if success
     """
     return users.find_one(({"_id": ObjectId(user_id)}))['projects']
 
