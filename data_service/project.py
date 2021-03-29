@@ -18,7 +18,7 @@ def handle_project_creation(project_name, user_id,comment):
     print("Inside function")
      # status = "ongoing"  # history_dict = {creation_date:"Project Created"}  //for later
     hardware_set_dict = {}
-    date_created = generate_date();
+    date_created = generate_date()
     post = { "date_created": date_created,"last_edited": date_created, "project_name": project_name, "user_id": user_id, "comment": comment, "hardware_set_dict": hardware_set_dict} #,  "status": status, "history_dict": history_dict
     print("post created")
     collection.insert_one(post)
