@@ -13,82 +13,74 @@ hardware_set = database["HardwareSet"]
 
 # SET & GET ID-------------------------------------------------------------------------------------------------
 
-def get_hardware_id(hardware_name: str) -> ObjectId:
+def get_HWSet_name(HWSet_id: str) -> str:
     """
-    get hardware_set ObjectId
-    :param hardware_name: hardware_set name
-    :returns: ObjectId if success; error code -1 if hardware does not exist
+    get HWSet_name by HWSet_id in str type
+    :param HWSet_id: HWSet_id in str type
+    :returns: HWSet_name if success; error code -1 if hardware does not exist
     """
-    hardware = hardware_set.find_one({"hardware_name": hardware_name})
-    if hardware is None:
-        # print("Hardware does not exist!") #DEBUG
-        return -1  # "Hardware does not exist!"
+    HWSet = hardware_set.find_one({"_id": ObjectId(HWSet_id)})
+    if HWSet is None:
+        # print("HWSet does not exist!") #DEBUG
+        return -1  # "HWSet does not exist!"
 
-    else:
-        id = hardware["_id"]
-        # print("id: ", id)    #DEBUG
-        # print(type(id))
-        return id
+   # if HWSet exists
+    return HWSet["HWSet_name"]
 
 
-# print(get_hardware_id("test12"))  # DEMO
+# print(get_HWSet_name("6053e85aac3bed1ba2ecc70f"))  # DEMO
 
 
-# create hardware -----------------------------------------------------------------------------------------------------
-def create_new_hardware_set(hardware_name, capacity):
+# create hardware_set -----------------------------------------------------------------------------------------------------
+def create_new_HWSet(HWSet_name: str, capacity: int) -> str:
     """
-    create new hardware_set 
-    :param hardware_name: hardware_set name
-    :param capacity: hardware_set capacity
-    :returns: 0 if success; -1 if capacity is negative; -2 if hardware_name already exists
+    create new HWSet 
+    :param hardware_name: HWSet name
+    :param capacity: HWSet capacity
+    :returns: HWSet_id in str format if success; -1 if capacity is negative
     """
-    # ensure HWset has at least 0 HW AND no hardware duplication
     if capacity < 0:
         return -1
-    id = get_hardware_id(hardware_name)
-    if id != -1:
-        return -2
-    project_dictionary = {}
-    post = {"hardware_name": hardware_name, "capacity": capacity,
-            "availability": capacity, "project": project_dictionary}
-    hardware_set.insert_one(post)
-    return 0
 
-# print(create_new_hardware_set(hardware_name="test4", capacity=30))    #DEMO
+    post = {"HWSet_name": HWSet_name, "capacity": capacity,
+            "availability": capacity}
+    HWSet = hardware_set.insert_one(post)
+    return str(HWSet.inserted_id)
+
+
+# print(create_new_HWSet(HWSet_name="test4", capacity=-3))  # DEMO
 
 
 # set & get availability-------------------------------------------------------------------------------------------------
-def get_hardware_availability(hardware_name: str) -> int:
+def get_HWSet_availability(HWSet_id: str) -> int:
     """
-    get hardware_set availability 
-    :param hardware_name: hardware_set name
-    :returns: availability if success; -1 if hardware name does not exist
+    get HWSet availability by HWSet_id
+    :param HWSet_id: HWSet_id in str type
+    :returns: availability if success; -1 if HWSet_id does not exist
     """
-    id = get_hardware_id(hardware_name)
-    if id == -1:
-        return -1
-    availability = hardware_set.find_one(
-        {"_id": id})["availability"]
-    # print("availability: ", availability)    #DEBUG
-    return availability
+    HWSet = hardware_set.find_one({"_id": ObjectId(HWSet_id)})
+    if HWSet is not None:
+        availability = HWSet["availability"]
+        # print("availability: ", availability)    #DEBUG
+        return availability
+    return -1
 
 
-# print(get_hardware_availability("test1"))  # DEMO
+# print(get_HWSet_availability("60620d64d962298b2837d3d7"))  # DEMO
 
 
 # '+' for addition '-' for deletion ; Note: amt_of_hardware != total
-def set_hardware_availability(hardware_name: str, amt_of_hardware: int) -> int:
+def set_HWSet_availability(HWSet_id: str, amt_of_hardware: int) -> int:
     """
-    set hardware_set availability 
-    :param hardware_name: hardware_set name
+    set HWset availability 
+    :param HWSet_id: HWset id
     :param amt_of_hardware: change of amount of hardware capacity in this hardware set
-    :returns: 0 if success; -1 if hardware name does not exist; -2 if hardware deletion result in negative availability
+    :returns: new availability if success; -1 if HWSet does not exist; -2 if hardware deletion result in negative availability
     """
-    id = get_hardware_id(hardware_name)
-    if id == -1:
+    old_availability = get_HWSet_availability(
+        HWSet_id)   # availability before checkin
+    if old_availability == -1:
         return -1
-    old_availability = get_hardware_availability(
-        hardware_name)  # availability before checkin
     # check '< 0' or 'exceed capacity'
     if(old_availability + amt_of_hardware < 0):
         #error_msg="Invalid input: hardware deletion ."
@@ -97,128 +89,54 @@ def set_hardware_availability(hardware_name: str, amt_of_hardware: int) -> int:
     new_availability = old_availability + \
         amt_of_hardware  # availability after checkin
 
-    hardware_set.update_one({"hardware_name": hardware_name, }, {
+    hardware_set.update_one({"_id": ObjectId(HWSet_id), }, {
                             "$set": {"availability": new_availability}})
-    return 0  # return 0 if success
+    return new_availability  # return 0 if success
 
 
-# print(set_hardware_availability("test21", -300))  # DEMO
+# print(set_HWSet_availability("60620d64d962298b2837d3d7", -100))  # DEMO
 
 
 # set & get capacity-------------------------------------------------------------------------------------------------
-def get_hardware_capacity(hardware_name: str) -> int:
+def get_HWSet_capacity(HWSet_id: str) -> int:
     """
-    get hardware_set capacity
-    :param hardware_name: hardware_set name
-    :returns: capacity if success; error code= -1 when hardware cannot be found
+    get HWSet capacity
+    :param HWSet_id: hardware_set id
+    :returns: capacity if success; error code= -1 when HWSet cannot be found
     """
-    id = get_hardware_id(hardware_name)
-    if id == -1:
+    HWSet = hardware_set.find_one(
+        {"_id": ObjectId(HWSet_id)})
+    if HWSet is None:
         return -1
-    capacity = hardware_set.find_one(
-        {"_id": id})["capacity"]
-    # print("capacity: ", capacity)    #DEBUG
-    return capacity
+    return HWSet["capacity"]
 
 
-# print(get_hardware_capacity("test2"))  # DEMO
+# print(get_HWSet_capacity("60620d64d962298b2837d3d7"))  # DEMO
 
 
 # '+' for addition '-' for deletion ; Note: amt_of_hardware != total
-def set_hardware_capacity(hardware_name: str, amt_of_hardware: int) -> int:
+def set_HWSet_capacity(HWSet_id: str, amt_of_hardware: int) -> int:
     """
     set hardware_set capacity, amt_of_hardware can be positive or negative 
-    :param hardware_name: hardware_set name
+    :param HWSet_id: HWSet id
     :param amt_of_hardware: change of amount of hardware capacity in this hardware set
-    :returns: error code as int.  res= 0 success; -1 when hardware cannot be found ; -2 when decrease of capacity exceeds current availability
+    :returns: new capacity if success; error code as int. -1 when hardware cannot be found ; -2 when decrease of capacity exceeds current availability
     """
     # decrease of capacity should not exceed current availability; else availability is updated
-    code = set_hardware_availability(hardware_name, amt_of_hardware)
+    code = set_HWSet_availability(HWSet_id, amt_of_hardware)
     if code == -1 or code == -2:
         return code
     # update new_capacity
-    new_capacity = get_hardware_capacity(hardware_name) + amt_of_hardware
-    hardware_set.update_one({"hardware_name": hardware_name, }, {
+    new_capacity = get_HWSet_capacity(HWSet_id) + amt_of_hardware
+    hardware_set.update_one({"_id": ObjectId(HWSet_id), }, {
                             "$set": {"capacity": new_capacity}})
 
-    return 0
+    return new_capacity
+
+# print(set_HWSet_capacity("60620d64d962298b2837d3d7", -46))  # DEMO
 
 
-# print(set_hardware_capacity("test1", 10))  # DEMO
-
-
-# set & get project-----------------------------------------------------------------------------------------------------
-def get_hardware_projectlist(hardware_name: str) -> list:
-    """
-    get hardware_set projectlist
-    :param hardware_name: hardware_set name
-    :returns: project list if hardware_set is found, else -1 if hardware_set is not found
-    """
-    id = get_hardware_id(hardware_name)
-    if id == -1:
-        return -1
-    # if hardware exist
-    project_list = hardware_set.find_one(
-        {"hardware_name": hardware_name})["project"]
-    return project_list  # return a list of project ids that checked out this hardware
-
-
-# print(get_hardware_projectlist("test12"))  # DEMO
-
-
-def get_hardware_proj_checkout(hardware_name: str, project_id: ObjectId) -> int:
-    """
-    get a project's checkout amount from this hardware_set
-    :param hardware_name: hardware_set name
-    :param project_id: project_id
-    :returns: checkout amount if find hardware_set and project_id; -1 if hardware_set doesn't exist; -2 if this project does not exist
-    """
-    project_list = get_hardware_projectlist(hardware_name)
-    if project_list != -1:  # project list exist
-        try:
-            # tricky bug: key must be string
-            checkedout_amt = project_list[str(project_id)]
-        except KeyError:
-            #print("this project does not exist")
-            return -2  # this project does not exist
-        else:
-            # print("checkedout_amt: ",checkedout_amt) #debug
-            return checkedout_amt
-    else:
-        return -1  # hardware doesn't exist
-
-
-# print(get_hardware_proj_checkout("test1", 8765555))
-
-
-# CALL this function in check in/out(); Dont call this directly, lack logic check
-def update_hardware_proj_checkout(hardware_name: str, project_id: ObjectId, hardware_amt: int):
-    """
-    set hardware_set projectlist
-    :param hardware_name: hardware_set name
-    :param project_id: project_id
-    :returns: 0 if success; -1 if hardware_set does not exist
-    """
-    checked_out = get_hardware_proj_checkout(hardware_name, project_id)
-    project_dict = get_hardware_projectlist(hardware_name)
-
-    if(checked_out == -1):  # hardware_set does not exist
-        return -1
-    if(checked_out != -2):  # project exist, simply update hardware_amt
-        project_dict[str(project_id)] += hardware_amt
-        #print("check out: ", project_dict[str(project_id)])
-    else:  # Either hardware OR this project doesn't exist
-        # project_dict = {str(project_id):hardware_amt}
-        project_dict[str(project_id)] = hardware_amt
-
-    hardware_set.update_one({"hardware_name": hardware_name}, {
-                            "$set": {"project": project_dict}}, upsert=False)
-    return 0
-
-
-# print(update_hardware_proj_checkout("test1", 8765, 55))  # DEMO
-
-def get_hardware_info():
+def get_HWSet_collection_info():
     docs = hardware_set.find({})
     return list(docs)
 # get_hardware_info()
