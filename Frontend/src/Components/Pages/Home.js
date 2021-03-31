@@ -5,10 +5,6 @@ import './Home.css';
 /* Pages and Components */
 import HwTable from '../HW_Table';
 
-/** TODO
- *  - if user is signed in, direct to page to checkout datasets
- */
-
 function Home() {
 
     /* Timeline Interaction */
@@ -25,20 +21,6 @@ function Home() {
     const marClick = () => setDesc(par3);
     const aprClick = () => setDesc(par4);
     const mayClick = () => setDesc(par5);
-
-    /** Hardware Checkout 
-     * If user is logged in, redirect to hardware page
-     * Else, redirect to login page 
-    */
-    // TODO: method to determine if user is logged in 
-    const isUser = true;
-    var hwLink = "/login";
-
-    if (isUser) {
-        hwLink = "/hardware";
-    } else {
-        hwLink = "/login";
-    }
 
     return (
         <>
@@ -102,10 +84,6 @@ function Home() {
 
                     <div id="tableContainer">
                         <HwTable />
-                        {/* <h4>Sign in now to check out the hardware.</h4>
-                        <Link to={hwLink} id="homeCheckout">
-                            <button type="button" id="checkout">Check Out</button>
-                        </Link> */}
                     </div>
 
                 </div>

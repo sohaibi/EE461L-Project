@@ -18,15 +18,44 @@ function HwForm(props) {
     // check login status and user id
     const [isLogin, setIsLogin] = useState(props.isLogin);
     const [userID, setUserID] = useState(props.userID);
+    /** TODO: establish connection and organize list of projects */
+    const projects = [
+        {
+            name: 'My First Project',
+            hardware: [20, 30, 40, 10, 5],
+            credits: 80
+        },
+        {
+            name: 'NASA Internship',
+            hardware: [2, 1, 0, 1, 0],
+            credits: 224
+        },
+        {
+            name: 'Research Project',
+            hardware: [0, 0, 0, 0, 0],
+            credits: 350
+        }
+    ];
 
-    /** Part 1 Functions/Variables */
+
+    /** Part 1 Variables and Functions */
+    // project selection
+    const [projIndex, setProj] = useState(0);
+    const [disable1, setDisable1] = useState(false);
+
+    const projectSelect = (event) => {
+        var index = parseInt(event.target.value);
+        setProj(index);
+    }
+
+    // checkin-out checkboxes
     const [checkin, setCheckin] = useState(false);
     const toggleCheckIn = () => setCheckin(!checkin);
 
     const [checkout, setCheckout] = useState(false);
     const toggleCheckOut = () => setCheckout(!checkout);
 
-    const [disable, setDisable] = useState(false);
+    const [disable2, setDisable2] = useState(false);
     const [alert, setAlert] = useState(false);
     const [displayIn, setDisplayIn] = useState(false);
     const [displayOut, setDisplayOut] = useState(false);
@@ -42,9 +71,11 @@ function HwForm(props) {
 
 
 
+
+
     function handlePart1() {
         if (checkin || checkout) {
-            setDisable(true);
+            setDisable2(true);
             setDisplayIn(checkin);
             setDisplayOut(checkout);
             setAlert(false);
@@ -54,10 +85,32 @@ function HwForm(props) {
     }
 
     /** Part 2 Functions */
+    // confirmation function
+    const handleConfirmation = () => {
+        // TODO: check if either lists are empty 
+
+        if (checkin) {
+            /** TODO: 
+             * 1. get list of hardware being checked in
+             * 2. update hardware database
+             */
+        }
+        if (checkout) {
+            /** TODO: 
+              * 1. get list of hardware being checked out
+              * 2. update hardware and project database
+              */
+        }
+
+        /** TODO: 
+         * 1. display confirmation notification
+         * 2. refresh page 
+         */
+    }
+
     if (isLogin) {
         return (
             <>
-
                 <div id="hardware-container">
                     <h1>Hardware Rental Services</h1>
                     <div id="hardware-prompt">
@@ -65,41 +118,84 @@ function HwForm(props) {
 
                         {/* First Form */}
                         <form id="hardware-form">
-                            <p className="hardware-form-el">Are you checking in and/or checking out hardware?</p>
-
-                            <div className="hardware-form-el" id="hw-answer-wrap">
-                                <input type="checkbox"
-                                    id="inBox"
-                                    onChange={toggleCheckIn}
-                                    disabled={disable} />
-                                <label id="inBox-label" htmlFor="inBox">Checking In</label>
-                                <br />
-
-                                <input type="checkbox"
-                                    id="outBox"
-                                    onChange={toggleCheckOut}
-                                    disabled={disable} />
-                                <label id="outBox-label" htmlFor="outBox">Checking Out</label>
+                            {/** Project Selection */}
+                            <div className="hardware-form-el" id="project-select-div">
+                                <h3 id="hardware-form-header">Select Project</h3>
+                                <select name="Projects"
+                                    className="select-el"
+                                    value={projIndex.toString()}
+                                    onChange={projectSelect}
+                                    disabled={disable1}>
+                                    {projects.map((proj, index) => {
+                                        return (
+                                            <>
+                                                <option key={index.toString()} value={index}>
+                                                    {proj.name}
+                                                </option>
+                                            </>
+                                        );
+                                    })}
+                                </select>
+                                <button className="hw-form-button"
+                                    id="select-button"
+                                    disabled={disable1}
+                                    onClick={() => setDisable1(true)}>
+                                    Next
+                            </button>
                             </div>
 
-                            {/* Error Text */}
-                            <div className="hardware-form-el" id="errorDiv">
-                                <p id=
-                                    {alert
-                                        ? 'showError'
-                                        : 'hideError'
-                                    }>
-                                    You must select at least one option.
+                            {/** Checkin-out Selection */}
+                            <div className="hardware-form-el"
+                                id={disable1
+                                    ? "hw-answer-wrap"
+                                    : "hideBox"
+                                }>
+                                <p className="hw-form-prompts">
+                                    Are you checking in and/or checking out hardware?
                             </p>
-                            </div>
 
-                            <button className="hardware-form-el"
-                                id="part1-submit"
-                                type="button"
-                                onClick={handlePart1}
-                                disabled={disable}>
-                                Go
-                        </button>
+                                <div className="hw-form-prompts" id="hw-checkboxes">
+                                    <input type="checkbox"
+                                        id="inBox"
+                                        onChange={toggleCheckIn}
+                                        disabled={disable2} />
+                                    <label id="inBox-label"
+                                        htmlFor="inBox">
+                                        Checking In
+                                </label>
+                                    <br></br>
+
+                                    <input type="checkbox"
+                                        id="outBox"
+                                        onChange={toggleCheckOut}
+                                        disabled={disable2} />
+                                    <label id="outBox-label"
+                                        htmlFor="outBox">
+                                        Checking Out
+                                </label>
+                                </div>
+
+                                {/* Error Text */}
+                                <div id="errorDiv"
+                                    className="hw-form-prompts">
+                                    <p id=
+                                        {alert
+                                            ? 'showError'
+                                            : 'hideError'
+                                        }>
+                                        You must select at least one option.
+                                </p>
+                                </div>
+
+                                <button
+                                    className="hw-form-button"
+                                    id="part1-submit"
+                                    type="button"
+                                    onClick={() => handlePart1()}
+                                    disabled={disable2}>
+                                    Go
+                            </button>
+                            </div>
                         </form>
 
                         {/* Check In Form */}
@@ -109,7 +205,8 @@ function HwForm(props) {
                                 : 'hideCheckIn'
                             }
                             className="second-form">
-                            <CheckinTable />
+                            <CheckinTable
+                                hardware={projects[projIndex].hardware} />
                         </div>
 
                         {/* Check Out Form */}
@@ -119,7 +216,9 @@ function HwForm(props) {
                                 : 'hideCheckOut'
                             }
                             className="second-form">
-                            <CheckoutTable />
+                            <CheckoutTable
+                                hardware={projects[projIndex].hardware}
+                                credits={projects[projIndex].credits} />
                         </div>
 
                         {/* Confirmation Button  */}
@@ -127,13 +226,14 @@ function HwForm(props) {
                             (displayOut || displayIn)
                                 ? 'showCheckButton'
                                 : 'hideCheckButton'}>
-                            <button type="button" className="check_submit">Confirm</button>
+                            <button type="button"
+                                className="hw-form-button"
+                                onClick={() => handleConfirmation}>Confirm</button>
                         </div>
                     </div>
                 </div>
             </>
         );
-
     } else {
         return <Redirect to='/login' />;
     }
