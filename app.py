@@ -13,15 +13,19 @@
 # #type <localhost:5000> in browser
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
-from data_service import hardware, user
-from passlib.hash import pbkdf2_sha256
-from bson import ObjectId
+# from data_service import hardware, user
+# from passlib.hash import pbkdf2_sha256
+# from bson import ObjectId
 
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
+
+@app.route('/')
+def hello():
+    return 'hello'
 
 @app.route('/hardware')
 def send_hardware_info():
