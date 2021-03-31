@@ -73,14 +73,36 @@ function Project(props) {
 
     //POP UP SECTION
     const addOrEdit = (project, resetForm) => {
-        if (project.id == 0)
-            projectService.insertProject(project)
-        else
+        if (project.id == 0){ //if project id DNE
+            //projectService.insertProject(project) //NEED CHANGE
+
+            fetch('/project',{
+
+                method: "POST",
+                cache: 'force-cache',
+                credentials: 'include',
+                withCredentials: true,
+                headers: {
+                    "content_type": "application/json",
+                },
+                body: JSON.stringify({
+                    'projName': project.projName,
+                    'comment': project.comment
+                })
+
+            }).then(response => {
+                return response.json() //jasonify
+            }).then(data => {
+                console.log(data);
+            });
+        }
+        else{
             projectService.updateProject(project)
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
         setRecords(projectService.getAllProjects())
+        }
     }
 
     const openInPopup = item => {

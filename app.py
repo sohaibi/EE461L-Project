@@ -13,7 +13,7 @@
 # #type <localhost:5000> in browser
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
-from data_service import hardware, user
+from data_service import hardware, user,project
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 
@@ -171,5 +171,37 @@ if(__name__ == "__main__"):
 #Adding Project Route
 @app.route('/project', methods=['POST', 'GET'])
 def projectAccess():
-    pass
-    # return response
+    # GET: (display project list)
+    if request.method == 'GET':
+        user_id = session['user']
+        project_dict = user.get_projects(user_id)
+        return jsonify(project_dict)
+        # return jsonify({"id": project['id'], "project_name'": project['project_name'], "comment": project['comment']} )
+      
+
+    # POST: (update/create new project)
+    if request.method == 'POST':
+        data = request.json
+        if not data:
+            return jsonify({'message': 'Null request'})
+
+        # data is valid:
+        print(data)
+
+        #[if create:
+        #else if update:]
+        project_name = data['projName']
+        comment = data['comment']
+        user_id = session['user']
+        project.handle_project_creation(project_name,user_id,comment) #create new proj
+        
+        ## error repsonese check:
+        #  res = project.handle_project_creation(project_name,user_id,comment)
+        # if res[0] == -1:
+        #     return jsonify({'message': ' already exists'})
+
+        # successfully edited profile, send 'success' back
+        response = jsonify({
+            'message': 'success',
+        })
+        return response
