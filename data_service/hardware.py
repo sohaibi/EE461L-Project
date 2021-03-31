@@ -1,10 +1,12 @@
 import pymongo
 from pymongo import MongoClient
 from bson import ObjectId
-
+import certifi
 
 cluster = MongoClient(
-    "mongodb+srv://ProjectGroup3:UTAustin%21@semesterprojectcluster.nmjzk.mongodb.net/HardwareSet?retryWrites=true&w=majority")
+    "mongodb+srv://ProjectGroup3:UTAustin%21@semesterprojectcluster.nmjzk.mongodb.net/HardwareSet?retryWrites=true&w=majority", tlsCAFile=certifi.where())
+
+
 database = cluster["SemesterProject"]
 hardware_set = database["HardwareSet"]
 

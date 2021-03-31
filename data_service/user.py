@@ -1,9 +1,10 @@
 from pymongo import MongoClient
 from bson import ObjectId
-
+import certifi
 
 client = MongoClient(
-    "mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/test")
+    "mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/test",  tlsCAFile=certifi.where())
+
 # get database
 mydb = client["SemesterProject"]
 # get projects collection
