@@ -98,11 +98,12 @@ function Project(props) {
         }
         else{
             projectService.updateProject(project)
+        }
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
         setRecords(projectService.getAllProjects())
-        }
+        
     }
 
     const openInPopup = item => {
