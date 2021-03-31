@@ -9,10 +9,9 @@ function CheckinTable(props) {
     function checkHW() {
         var i;
         for(i=0; i<hardware.length; i++) {
-            return false;;
+            return false;
         }
-
-        return true;;
+        return true;
     }
 
     // check if input is within range and update checkinlist
@@ -61,7 +60,7 @@ function CheckinTable(props) {
         <h3 className="io-heading">Hardware Check-In</h3>
         <div className="check-table-container">
             <p className="check-text"
-                id={!checkHW()
+                id={checkHW()
                     ? 'showPara'
                     : 'hidePara'
                 }>
@@ -70,7 +69,7 @@ function CheckinTable(props) {
                 &nbsp;hardware checked out.
             </p>
             <table className="checked_table"
-                id={checkHW()
+                id={!checkHW()
                     ? 'showTable'
                     : 'hideTable'
                 }>

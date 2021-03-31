@@ -83,6 +83,8 @@
 #hideBox {
     visibility: collapse;
     height: 0px;
+    margin: 0px;
+    display: none;
 }
 
 #hw-answer-wrap {
@@ -130,6 +132,8 @@
 #hideError {
     visibility: collapse;
     height: 0px;
+    margin: 0px;
+    display: none;
 }
 
 #showError {
@@ -146,17 +150,19 @@
 #hideCheckIn, #hideCheckOut {
     visibility: collapse;
     height: 0px;
+    margin: 0px;
+    display: none;
 }
 
 #showCheckIn, #showCheckOut {
     visibility: visible;
-    width: 100%;
-    margin: 20px auto;
 }
 
 #hideCheckButton {
     visibility: collapse;
     height: 0px;
+    margin: 0px;
+    display: none;
 }
 
 #showCheckButton {

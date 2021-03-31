@@ -60,10 +60,10 @@
 
 #hideTable, #hidePara {
     height: 0px;
-    visibility: collapse;
+    visibility: hidden;
     margin: 0px;
+    display: none;
 }
-
 
 
 /** Checkout Only **/
@@ -75,6 +75,8 @@
 .hideError {
     visibility: collapse;
     height: 0px;
+    margin: 0px;
+    display: none;
 }
 
 .showError {

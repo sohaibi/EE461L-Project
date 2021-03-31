@@ -181,7 +181,8 @@ function HwForm() {
                         : 'hideCheckIn' 
                     }
                     className="second-form">
-                        <CheckinTable hardware={projects[projIndex].hardware}/>
+                        <CheckinTable 
+                            hardware={projects[projIndex].hardware}/>
                 </div>
 
                 {/* Check Out Form */}
