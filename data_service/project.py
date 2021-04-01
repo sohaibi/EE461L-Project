@@ -20,7 +20,7 @@ def generate_date():
 # print(generate_date())
 
 # def handle_project_creation(creation_date, project_name, user_id ): //create date inside funcition
-def handle_project_creation(project_name: str, user_id: str,comment: str):
+def handle_project_creation(project_name: str, user_id: str,comment: str)-> str:
     """
     create a new project
     :param project_name: project_name
@@ -35,7 +35,7 @@ def handle_project_creation(project_name: str, user_id: str,comment: str):
     post = { "date_created": date_created,"last_edited": date_created, "project_name": project_name, "user_id": user_id, "comment": comment, "hardware_set_dict": hardware_set_dict} #,  "status": status, "history_dict": history_dict
     # print("post created")
     result= collection.insert_one(post)
-    return result.inserted_id
+    return str(result.inserted_id)
     # print("post added")
     # print("created")
 
