@@ -13,7 +13,7 @@
 # #type <localhost:5000> in browser
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
-from data_service import hardware, user
+from data_service import hardware, user, dataset
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 
@@ -156,6 +156,24 @@ def userProfile():
         'message': 'success',
     })
     return response
+
+@app.route('/datasets', methods=['GET', 'POST'])
+def datasetNames():
+    # GET:
+    if request.method == 'GET':
+        data_list = dataset.getDatasetNames()
+        #dict = {"data1": "test1", "data2": "test2"}
+        print(jsonify(data_list))
+        #data = request.json
+        #data['Dataset1'] = str(data_list[0])
+        #print("THIS IS A DEBUGGING MESSAGE:"+str(data['Dataset1']))
+        #return jsonify({"message":data_list[0]})
+        return jsonify(data_list)
+    
+    # POST:
+    if request.method == 'POST':
+        zipped_file = dataset.getZip('aami-ec13')
+        return jsonify(zipped_file)
 
 
 @app.after_request
