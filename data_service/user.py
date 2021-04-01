@@ -53,11 +53,11 @@ def get_user(username: str):
 # print(get_user('Yue'))
 
 
-def get_user_byID(user_id: str):
+def get_user_byID(user_id: str) -> dict:
     """
     Get user information by user_id
     :param user_id in string format
-    :returns res: -1 if user does not exist; user dictionary object if user exists
+    :returns : a dict object containing all the information of that user
     """
 
     user = users.find_one({"_id": ObjectId(user_id)})
