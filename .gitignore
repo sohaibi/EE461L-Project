@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # Byte-compiled / optimized / DLL files
 __pycache__/
 */__pycache__/
@@ -1591,3 +1592,19 @@ data_service/__pycache__/hardware.cpython-39.pyc
 .venv/Lib/site-packages/werkzeug/wrappers/__pycache__/user_agent.cpython-39.pyc
 data_service/__pycache__/__init__.cpython-39.pyc
 data_service/__pycache__/hardware.cpython-39.pyc
+=======
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*/__pycache__/
+*.pyc
+
+node_modules/
+.venv
+.venv/
+data_service/__pycache__/
+
+.DS_Store
+
+
+
+>>>>>>> Stashed changes
