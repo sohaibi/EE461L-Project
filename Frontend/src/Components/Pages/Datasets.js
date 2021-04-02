@@ -50,52 +50,54 @@ export default function Datasets(){
     
           }, []);
 
-        function handleDownload(){
-            document.getElementById('download_button').innerText = "DOWNLOADING"
-            var checkbox = document.getElementById('check1')
-            if (checkbox.checked){
-                database_names.push({Dataset1})
-            }
-            var checkbox = document.getElementById('check2')
-            if (checkbox.checked){
-                database_names.push({Dataset2})
-            }
-            var checkbox = document.getElementById('check3')
-            if (checkbox.checked){
-                database_names.push({Dataset3})
-            }
-            var checkbox = document.getElementById('check4')
-            if (checkbox.checked){
-                database_names.push({Dataset4})
-            }
-            var checkbox = document.getElementById('check5')
-            if (checkbox.checked){
-                database_names.push({Dataset5})
-            }
-            var checkbox = document.getElementById('check6')
-            if (checkbox.checked){
-                database_names.push({Dataset6})
-            }
-            var checkbox = document.getElementById('check7')
-            if (checkbox.checked){
-                database_names.push({Dataset7})
-            }
-            var checkbox = document.getElementById('check8')
-            if (checkbox.checked){
-                database_names.push({Dataset8})
-            }
-            var checkbox = document.getElementById('check9')
-            if (checkbox.checked){
-                database_names.push({Dataset9})
-            }
-            var checkbox = document.getElementById('check10')
-            if (checkbox.checked){
-                database_names.push({Dataset10})
-            }
+        // function handleDownload(){
+        //     document.getElementById('download_button').innerText = "DOWNLOADING"
+        //     var checkbox = document.getElementById('check1')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset1})
+                
+        //     }
+        //     var checkbox = document.getElementById('check2')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset2})
+        //     }
+        //     var checkbox = document.getElementById('check3')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset3})
+        //     }
+        //     var checkbox = document.getElementById('check4')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset4})
+        //     }
+        //     var checkbox = document.getElementById('check5')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset5})
+        //     }
+        //     var checkbox = document.getElementById('check6')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset6})
+        //     }
+        //     var checkbox = document.getElementById('check7')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset7})
+        //     }
+        //     var checkbox = document.getElementById('check8')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset8})
+        //     }
+        //     var checkbox = document.getElementById('check9')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset9})
+        //     }
+        //     var checkbox = document.getElementById('check10')
+        //     if (checkbox.checked){
+        //         database_names.push({Dataset10})
+        //     }
     
-        };
+        // };
 
     return(
+        <form action="/downloadDataSets" method="POST">
         <div className = 'Datasets'>
             <h1>Datasets</h1>
             <p>  Select Datasets to download.</p>
@@ -108,48 +110,47 @@ export default function Datasets(){
             </thead>
             <tbody>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset1" name="Dataset1"/></td>
                 <td>Dataset 1</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset2" name="Dataset2" /></td>
                 <td>Dataset 2</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset3" name="Dataset3"/></td>
                 <td>Dataset 3</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset4" name="Dataset4"/></td>
                 <td>Dataset 4</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset5" name="Dataset5"/></td>
                 <td>Dataset 5</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset6" name="Dataset6"/></td>
                 <td>Dataset 6</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset7" name="Dataset7"/></td>
                 <td>Dataset 7</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset8" name="Dataset8"/></td>
                 <td>Dataset 8</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset9" name="Dataset9"/></td>
                 <td>Dataset 9</td>
             </tr>
             <tr>
-                <td><input type = "checkbox"/></td>
+                <td><input type = "checkbox" id="Dataset10" name="Dataset10"/></td>
                 <td>Dataset 10</td>
             </tr>
             </tbody>
         </table>
-        
         <div>
             <h1>Pick a Project</h1>
             <p>please select which project these datasets are for</p>  
@@ -159,10 +160,16 @@ export default function Datasets(){
                 <option value="Project2">Project 2</option>
                 <option value="Project3">Project 3</option>
             </select>
-            <button id="download_button" onClick={handleDownload}>Download</button>
         </div>
+                 
+
         
+
         </div>
+        <input type="Submit" value="Download"></input>
+        </form>
+
+        
     )
     
 }
