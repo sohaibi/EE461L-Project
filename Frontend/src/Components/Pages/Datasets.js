@@ -31,6 +31,7 @@ export default function Datasets(){
     fetch('/dataset_names'
     ).then(res => res.json()).then(
         data => {
+            //These are the dataset names
             setDataset1(Dataset1 => data[0]);
             setDataset2(Dataset2 => data[1]);
             setDataset3(Dataset3 => data[2]);
@@ -50,6 +51,7 @@ export default function Datasets(){
         fetch('/dataset_titles'
         ).then(res => res.json()).then(
         data => {
+            //These are the dataset keys
             setDataset1T(Dataset1T => data[0]);
             setDataset2T(Dataset2T => data[1]);
             setDataset3T(Dataset3T => data[2]);
@@ -69,7 +71,7 @@ export default function Datasets(){
 
       }, []);
 
-
+      //Returns table with dataset names and download buttons
     return(
         <div className = 'Datasets'>
             <h1>Datasets</h1>

@@ -19,6 +19,7 @@ from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 import io
 import os
+import shutil
 
 
 
@@ -162,35 +163,37 @@ def userProfile():
     })
     return response
 
+#Returns the names of each dataset for display
 @app.route('/dataset_names', methods=['GET', 'POST'])
 def datasetNames():
     # GET:
     if request.method == 'GET':
         data_names = dataset.getDatasetNames()
-        #data = request.json
-        #data['Dataset1'] = str(data_list[0])
-        #print("THIS IS A DEBUGGING MESSAGE:"+str(data['Dataset1']))
-        #return jsonify({"message":data_list[0]})
         return jsonify(data_names)
     
-
+#returns the keys to each Dataset
 @app.route('/dataset_titles', methods=['GET', 'POST'])
 def datasetTitles():
     # GET:
     if request.method == 'GET':
         data_titles = dataset.getDatasetTitles()
-        #data = request.json
-        #data['Dataset1'] = str(data_list[0])
-        #print("THIS IS A DEBUGGING MESSAGE:"+str(data['Dataset1']))
-        #return jsonify({"message":data_list[0]})
         return jsonify(data_titles)
 
+#Handles zip download
 @app.route('/uploads', methods=['GET', 'POST'])
 def download():
     if request.method == 'POST':
         file_name = request.form['filepath']
-        if dataset.getZip2(file_name) == True:
+        if dataset.getZip(file_name) == True:
+            #grabs zip from snippets folder
             zip = send_from_directory(directory=app.config['snippets'], filename=file_name, as_attachment=True)
+            #deletes data folder and data zip from /snippets
+            partial_path = app.config['snippets']
+            data_folder_path = partial_path+file_name[:-4]
+            zip_path = partial_path+file_name
+            shutil.rmtree(data_folder_path)
+            os.remove(zip_path)
+            #returns the saved zip file
             return zip
     return "hello"
     
