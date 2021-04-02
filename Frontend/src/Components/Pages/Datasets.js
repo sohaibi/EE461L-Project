@@ -15,20 +15,20 @@ export default function Datasets(){
     const [Dataset8, setDataset8] = useState([]);
     const [Dataset9, setDataset9] = useState([]);
     const [Dataset10, setDataset10] = useState([]);
-    const database_names = [];
+    const [Dataset1T, setDataset1T] = useState([]);
+    const [Dataset2T, setDataset2T] = useState([]);
+    const [Dataset3T, setDataset3T] = useState([]);
+    const [Dataset4T, setDataset4T] = useState([]);
+    const [Dataset5T, setDataset5T] = useState([]);
+    const [Dataset6T, setDataset6T] = useState([]);
+    const [Dataset7T, setDataset7T] = useState([]);
+    const [Dataset8T, setDataset8T] = useState([]);
+    const [Dataset9T, setDataset9T] = useState([]);
+    const [Dataset10T, setDataset10T] = useState([]);
 
     useEffect(() => {
 
-    fetch('/datasets'
-        /*{
-            method: "GET",
-            cache: 'force-cache',
-            credentials: 'include',
-            withCredentials: true,
-            headers: {
-                "content_type": "application/json",
-            }
-        }*/
+    fetch('/dataset_names'
     ).then(res => res.json()).then(
         data => {
             setDataset1(Dataset1 => data[0]);
@@ -46,121 +46,155 @@ export default function Datasets(){
         }).catch(error => {
             console.log("Dataset retrieval error", error);
         });
+
+        fetch('/dataset_titles'
+        ).then(res => res.json()).then(
+        data => {
+            setDataset1T(Dataset1T => data[0]);
+            setDataset2T(Dataset2T => data[1]);
+            setDataset3T(Dataset3T => data[2]);
+            setDataset4T(Dataset4T => data[3]);
+            setDataset5T(Dataset5T => data[4]);
+            setDataset6T(Dataset6T => data[5]);
+            setDataset7T(Dataset7T => data[6]);
+            setDataset8T(Dataset8T => data[7]);
+            setDataset9T(Dataset9T => data[8]);
+            setDataset10T(Dataset10T => data[9]);
+            console.log(data);
+            
+        }).catch(error => {
+            console.log("Dataset retrieval error", error);
+        });
     
 
       }, []);
 
-    function handleDownload(){
-        document.getElementById('download_button').innerText = "DOWNLOADING"
-        var checkbox = document.getElementById('check1')
-        if (checkbox.checked){
-            database_names.push({Dataset1})
-        }
-        var checkbox = document.getElementById('check2')
-        if (checkbox.checked){
-            database_names.push({Dataset2})
-        }
-        var checkbox = document.getElementById('check3')
-        if (checkbox.checked){
-            database_names.push({Dataset3})
-        }
-        var checkbox = document.getElementById('check4')
-        if (checkbox.checked){
-            database_names.push({Dataset4})
-        }
-        var checkbox = document.getElementById('check5')
-        if (checkbox.checked){
-            database_names.push({Dataset5})
-        }
-        var checkbox = document.getElementById('check6')
-        if (checkbox.checked){
-            database_names.push({Dataset6})
-        }
-        var checkbox = document.getElementById('check7')
-        if (checkbox.checked){
-            database_names.push({Dataset7})
-        }
-        var checkbox = document.getElementById('check8')
-        if (checkbox.checked){
-            database_names.push({Dataset8})
-        }
-        var checkbox = document.getElementById('check9')
-        if (checkbox.checked){
-            database_names.push({Dataset9})
-        }
-        var checkbox = document.getElementById('check10')
-        if (checkbox.checked){
-            database_names.push({Dataset10})
-        }
-
-    };
 
     return(
         <div className = 'Datasets'>
             <h1>Datasets</h1>
             <p>  Select Datasets to download.</p>
+
             <table id = 'dataset_table'>
             <thead>
             <tr>
-                <th>Select</th>
-                <th>Dataset Name</th>
+                <th>Datasets</th>
+                <th>Click to Download</th>
             </tr>
             </thead>
             <tbody>
             <tr>
-                <td><input type = "checkbox" id="check1"/></td>
-                <td>{Dataset1}</td>
+                <td>                  
+                     <p>{Dataset1}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset1T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check2"/></td>
-                <td>{Dataset2}</td>
+                <td>                  
+                     <p>{Dataset2}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset2T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check3"/></td>
-                <td>{Dataset3}</td>
+                <td>                  
+                     <p>{Dataset3}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset3T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check4"/></td>
-                <td>{Dataset4}</td>
+                <td>                  
+                     <p>{Dataset4}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset4T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check5"/></td>
-                <td>{Dataset5}</td>
+                <td>                  
+                     <p>{Dataset5}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset5T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check6"/></td>
-                <td>{Dataset6}</td>
+                <td>                  
+                     <p>{Dataset6}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset6T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check7"/></td>
-                <td>{Dataset7}</td>
+            <   td>                  
+                     <p>{Dataset7}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset7T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check8"/></td>
-                <td>{Dataset8}</td>
+                <td>                  
+                     <p>{Dataset8}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset8T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox" id="check9"/></td>
-                <td>{Dataset9}</td>
+                <td>                  
+                     <p>{Dataset9}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset9T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             <tr>
-                <td><input type = "checkbox"  id="check10"/></td>
-                <td>{Dataset10}</td>
+                <td>                  
+                     <p>{Dataset10}</p>
+                </td>
+                <td>
+                   <form action="/uploads" method='POST'>
+                       <select hidden name='filepath' id="filepath"><option selected>{Dataset10T}</option></select>
+                       <input type="submit" value="Download"></input>
+                    </form> 
+                </td>
             </tr>
             </tbody>
         </table>
-
-        <div>
-            <h1>Pick a Project</h1>
-            <p>please select which project these datasets are for</p>  
-            <select name="ProjectSelect" id="ProjectSelect">
-                <option value="Default">Default</option>
-                <option value="Project1">Project 1</option>
-                <option value="Project2">Project 2</option>
-                <option value="Project3">Project 3</option>
-            </select>
-            <button id="download_button" onClick={handleDownload}>Download</button>
-        </div>
       
         </div>
     )

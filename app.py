@@ -11,17 +11,22 @@
 # if __name__ == "__main__":
 #     app.run(debug=True) # error would display on webpage
 # #type <localhost:5000> in browser
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, send_from_directory, send_file
+import flask
 from flask_cors import CORS
 from data_service import hardware, user, dataset
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
+import io
+import os
+
 
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['snippets'] = os.path.dirname(os.path.abspath(__file__))+'/snippets/'
 
 
 @app.route('/hardware')
@@ -157,24 +162,38 @@ def userProfile():
     })
     return response
 
-@app.route('/datasets', methods=['GET', 'POST'])
+@app.route('/dataset_names', methods=['GET', 'POST'])
 def datasetNames():
     # GET:
     if request.method == 'GET':
-        data_list = dataset.getDatasetNames()
-        #dict = {"data1": "test1", "data2": "test2"}
-        print(jsonify(data_list))
+        data_names = dataset.getDatasetNames()
         #data = request.json
         #data['Dataset1'] = str(data_list[0])
         #print("THIS IS A DEBUGGING MESSAGE:"+str(data['Dataset1']))
         #return jsonify({"message":data_list[0]})
-        return jsonify(data_list)
+        return jsonify(data_names)
     
-    # POST:
-    if request.method == 'POST':
-        zipped_file = dataset.getZip('aami-ec13')
-        return jsonify(zipped_file)
 
+@app.route('/dataset_titles', methods=['GET', 'POST'])
+def datasetTitles():
+    # GET:
+    if request.method == 'GET':
+        data_titles = dataset.getDatasetTitles()
+        #data = request.json
+        #data['Dataset1'] = str(data_list[0])
+        #print("THIS IS A DEBUGGING MESSAGE:"+str(data['Dataset1']))
+        #return jsonify({"message":data_list[0]})
+        return jsonify(data_titles)
+
+@app.route('/uploads', methods=['GET', 'POST'])
+def download():
+    if request.method == 'POST':
+        file_name = request.form['filepath']
+        if dataset.getZip2(file_name) == True:
+            zip = send_from_directory(directory=app.config['snippets'], filename=file_name, as_attachment=True)
+            return zip
+    return "hello"
+    
 
 @app.after_request
 def creds(response):
