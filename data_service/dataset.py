@@ -49,7 +49,9 @@ def generateZip(database_name, dir):
 #uses database_name to derive directory then creates zip
 def getZip(database_name):
         database_name = database_name[:-4]
-        dir = '/Users/monamcelroy/Desktop/EE461L-Project/snippets/'+str(database_name)
+        dir = os.path.dirname(os.path.abspath(__file__))+'/snippets/'+str(database_name)
+        dir = dir.replace('/data_service/', '/')
+        #dir = '/Users/monamcelroy/Desktop/EE461L-Project/snippets/'+str(database_name)
         zip = generateZip(database_name, dir)
         return True
 
