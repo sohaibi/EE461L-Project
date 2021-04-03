@@ -164,6 +164,7 @@ def get_projects(user_id: str):
     :param user_id: user_id in str type
     :returns: list of project_id if success
     """
+
     return users.find_one(({"_id": ObjectId(user_id)}))['projects']
 
 

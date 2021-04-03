@@ -2,98 +2,119 @@ import React, { useState, useEffect } from 'react';
 import './CheckInOut.css';
 
 function CheckinTable(props) {
-    const [hardware, setHardware] = useState(props.hardware);
-    const [checkinList, setList] = useState(new Array(hardware.length).fill(0));
+    // /** get hardware checkin info, example format */
+    //    [{"HW_id":"60620d64d962298b2837d3d7","HW_name":"test1","HW_use":8},
+    //    {"HW_id":"60620d7601d2dff8efbed3c1","HW_name":"test2","HW_use":5}]
+    const [HWSet_rent_list, setHWSet_rent_list] = useState([]);
 
-    /** Hardware Names */
-    const [HW_names, setHW_names] = useState([]);
+    // a list to store the hardware to return from the user
+    const [checkinList, setCheckinList] = useState([]);
+
+
     useEffect(() => {
-        fetch('/hardware').then(res => res.json()).then(data => {
-            setHW_names(data.HW_name);
-        }).catch((error) => {
-            console.error(error);
-        });
-    },[]);
+        // get all the checkin HW infos
+        setHWSet_rent_list(props.HWSet_rent_list);
+        console.log(props.HWSet_rent_list);
+        // console.log("list updated!");
 
-    // check if user hardware is all 0s
-    function checkHW() {
-        var i;
-        for(i=0; i<hardware.length; i++) {
-            if(hardware[i] > 0) {return false;}
+        // initialize the return list
+        let list = [];
+        for (var i = 0; i < props.HWSet_rent_list.length; i++) {
+            list.push({
+                "HW_id": props.HWSet_rent_list[i].HW_id,
+                "HW_name": props.HWSet_rent_list[i].HW_name,
+                "HW_changeNum": 0
+            });
         }
-        return true;
+        setCheckinList(list);
+        console.log("initialized checkin list", list);
+
+    }, [props.HWSet_rent_list]);
+
+    // check if a user has any hardware in rent
+    function checkHW() {
+        return HWSet_rent_list.length > 0 ? false : true;
     }
 
     // check if input is within range and update checkinlist
     const handleInput = index => event => {
         var input = parseInt(event.target.value);
         let list = [...checkinList];
-        list[index] = input;
-        setList(list);
+        list[index].HW_changeNum = input;
+        setCheckinList(list);
+
         props.handleList(list);
+        // console.log("For now I will do nothing");
+        console.log(list);
     };
 
     // creates form table
-    function renderTable() {   
-        return hardware.map((hw, index) => {
-            if(hw > 0) {
-                var max = hw.toString();
+    function renderTable() {
+        return HWSet_rent_list.map((hw, index) => {
+            if (hw.HW_use > 0) {
+                var max = hw.HW_use.toString();
 
-                return(
+                return (
                     <>
-                    <tr key={index.toString()}>
-                        <td>{HW_names[index]}</td>
-                        <td>
-                            <input
-                                type="number" 
-                                className="hw-input"
-                                min={"0"}
-                                max={max}
-                                defaultValue={"0"}
-                                onChange={handleInput(index)}
-                                onKeyDown={(event) => {event.preventDefault();}}>
-                            </input>
-                            <label>/{max}</label>
-                        </td>
-                    </tr>
+                        <tr key={index.toString()}>
+                            {/* <td>{HW_names[index]}</td> */}
+                            <td>{hw.HW_name}</td>
+                            <td>
+                                <input
+                                    type="number"
+                                    className="hw-input"
+                                    min={"0"}
+                                    max={max}
+                                    defaultValue={"0"}
+                                    onChange={handleInput(index)}
+                                    onKeyDown={(event) => { event.preventDefault(); }}>
+                                </input>
+                                <label>/{max}</label>
+                            </td>
+                        </tr>
                     </>
                 );
             } else {
-                return(
+                return (
                     <></>
                 );
             }
         })
     }
 
-    return(
+    return (
         <>
-        <h3 className="io-heading">Hardware Check-In</h3>
-        <div className="check-table-container">
-            <p className="check-text"
-                id={checkHW()
-                    ? 'showPara'
-                    : 'hidePara'
-                }>
-                You currently have&nbsp;
-                <span className="hw-spanText">0</span> 
-                &nbsp;hardware checked out.
+            <p>{JSON.stringify(checkinList)}</p>
+            <h3 className="io-heading">Hardware Check-In</h3>
+            <div className="check-table-container">
+                <p className="check-text"
+                    id={checkHW()
+                        ? 'showPara'
+                        : 'hidePara'
+                    }>
+                    You currently have&nbsp;
+                <span className="hw-spanText">0</span>
+                &nbsp;hardware checked in.
             </p>
-            <table className="checked_table"
-                id={!checkHW()
-                    ? 'showTable'
-                    : 'hideTable'
-                }>
-                <tbody>
-                    <tr>
-                        <td>Hardware</td>
-                        <td>Check In</td>
-                    </tr>
-                    {renderTable()}
-                </tbody>
-            </table>
-        </div>
+                <table className="checked_table"
+                    id={!checkHW()
+                        ? 'showTable'
+                        : 'hideTable'
+                    }>
+                    <tbody>
+                        <tr>
+                            <td>Hardware</td>
+                            <td>Check In</td>
+                        </tr>
+                        {renderTable()}
+                    </tbody>
+                </table>
+            </div>
         </>
+
+
+        // "hi"
+
     );
 }
 

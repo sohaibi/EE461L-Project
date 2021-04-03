@@ -178,3 +178,9 @@
     visibility: visible;
     margin: 0px auto;
 }
+
+#confirm_message{
+    color: crimson;
+    text-align: center;
+
+}

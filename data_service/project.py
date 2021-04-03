@@ -120,7 +120,8 @@ def handle_update_hardware(project_id: str, HWSet_id: str, changedNumber: int):
                           "$set": {"hardware_set_dict": hardware_set_dict}})
 
 
-# handle_update_hardware("6064f8a60eb2ea5f785136dc", "60620d64d962298b2837d3d7", -30)
+# handle_update_hardware("6067e6307d9617f5a6102ef3", "60620d64d962298b2837d3d7", -2)
+
 
 def handle_get_project_info(project_id: str):
     """
