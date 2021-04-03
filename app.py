@@ -11,9 +11,10 @@
 # if __name__ == "__main__":
 #     app.run(debug=True) # error would display on webpage
 # #type <localhost:5000> in browser
+from re import A
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
-from data_service import hardware, user
+from data_service import hardware, user, project
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 
@@ -23,6 +24,49 @@ CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
 
+@app.route('/check',  methods=['POST', 'GET'])
+def check():
+    # GET
+    if request.method == 'GET': # send list of user's projects to React side
+        if "user" in session:
+            user_id = session['user']
+            project_ids = user.get_projects(user_id)   # list of project id strings
+
+            projects = []
+
+            for index in range(project_ids.length):  
+                projID = project_ids[index]
+                name = project.handlle_get_project_name(projID)
+                hardware = project.handle_get_project_info(projID).hardware_set_dict
+                credits = 80 #TODO: calculate credit
+
+                proj = {
+                    "name" : name,
+                    "id" : projID,
+                    "hardware" : hardware,
+                    "credits" : credits
+                }
+                projects.append(proj)
+
+            return jsonify(
+                {"message": "success", "projects": projects}
+            )
+        else:
+            return jsonify({'message': 'not login'})
+    # POST
+    data = request.json
+    if not data:
+        return jsonify({'message': 'Null request'})
+    if data:
+        projId = data['projId']
+        update = data['update']
+        hwInfo = hardware.get_HWSet_collection_info
+
+        for i in range(update.length):   # update project and hardware sets
+            project.handle_update_hardware(str(projId), str(hwInfo[i].id), update[i])
+            hardware.set_HWSet_availability(str(hwInfo[i].id), update[i])
+
+        return jsonify({'message' : 'success'})
 
 @app.route('/hardware')
 def send_hardware_info():
