@@ -45,8 +45,8 @@ function Project(props) {
     const [userID, setUserID] = useState(props.userID);
 
     const classes = useStyles();
-
-    const [records, setRecords] = useState(projectService.getAllProjects())
+    // const [records, setRecords] = useState(projectService.getAllProjects())
+    const [records, setRecords] = useState([]) //need para?
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
     const [recordForEdit, setRecordForEdit] = useState(null)
@@ -70,6 +70,28 @@ function Project(props) {
             }
         })
     }
+
+    useEffect(()=>{
+        fetch('/project',{
+
+            method: "GET",
+            cache: 'default',
+            credentials: 'include',
+            withCredentials: true,
+            headers: {
+                // "Content_Type": "application/json",
+                // 'Accept': 'application/json'
+            }
+
+        }).then(response => {
+            //response.json()
+            console.log( response.json() ) //jasonify
+        }).then(data => {
+            console.log(data);
+        }).catch((error) => {
+            console.error(error);
+        });
+    },[])
 
     //POP UP SECTION
     const addOrEdit = (project, resetForm) => {
@@ -102,7 +124,8 @@ function Project(props) {
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        setRecords(projectService.getAllProjects())
+        // setRecords(projectService.getAllProjects())
+        setRecords() //need param
         
     }
 

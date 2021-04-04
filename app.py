@@ -11,7 +11,7 @@
 # if __name__ == "__main__":
 #     app.run(debug=True) # error would display on webpage
 # #type <localhost:5000> in browser
-from flask import Flask, jsonify, request, session
+from flask import Flask, json, jsonify, request, session
 from flask_cors import CORS
 from data_service import hardware, user,project
 from passlib.hash import pbkdf2_sha256
@@ -175,8 +175,20 @@ def projectAccess():
     if request.method == 'GET':
         user_id = session['user']
         project_dict = user.get_projects(user_id)
-        return jsonify(project_dict)
-        # return jsonify({"id": project['id'], "project_name'": project['project_name'], "comment": project['comment']} )
+        
+        project_list = [] # [] of {}
+        for proj_id in project_dict:
+            proj_info = project.handle_get_project_info(proj_id)
+            project_list.append(proj_info)
+        # print("proj list: ", project_list)
+       
+       
+        return jsonify(project_list)
+        # response = jsonify({
+        #     'projName': 'get proj list?',
+        #     'comment' :'blah blah'
+        # })
+        # return response
       
 
     # POST: (update/create new project)
@@ -195,12 +207,12 @@ def projectAccess():
         user_id = session['user']
         project.handle_project_creation(project_name,user_id,comment) #create new proj
         
+        #also need to add proj_id to user's project list!!
+        proj_id = project.handle_get_project_id(project_name,user_id)
+        user.add_projects(user_id,proj_id)
+        
         ## error repsonese check:
-        #  res = project.handle_project_creation(project_name,user_id,comment)
-        # if res[0] == -1:
-        #     return jsonify({'message': ' already exists'})
-
-        # successfully edited profile, send 'success' back
+        # successfully create new project, send 'success' back
         response = jsonify({
             'message': 'success',
         })
