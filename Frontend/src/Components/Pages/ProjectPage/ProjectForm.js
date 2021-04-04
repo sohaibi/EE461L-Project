@@ -7,7 +7,7 @@
    
    const initialFValues = {
     id: 0,
-    projName: '',
+    project_name: '',
     status: '',
     comment:''
 }
@@ -18,8 +18,8 @@
 
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        if ('projName' in fieldValues)
-            temp.projName = fieldValues.projName ? "" : "This field is required."
+        if ('project_name' in fieldValues)
+            temp.project_name = fieldValues.project_name ? "" : "This field is required."
       
         setErrors({
             ...temp
@@ -59,11 +59,11 @@
            <Form onSubmit={handleSubmit}>
             <Grid container>
                <Controls.Input
-                    name="projName"
+                    name="project_name"
                     label="Project Name"
-                    value={values.projName}
+                    value={values.project_name}
                     onChange={handleInputChange}
-                    error={errors.projName}
+                    error={errors.project_name}
                 />
                 {/* <Controls.Input
                     name="status"

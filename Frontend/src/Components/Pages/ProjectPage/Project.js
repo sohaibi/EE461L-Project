@@ -30,14 +30,15 @@ const useStyles = makeStyles(theme => ({
 
 
 const headCells = [
-    { id: 'id', label: 'Project ID' },
-    { id: 'projName', label: 'Project Name' },
+    { id: 'id', label: 'Project ID', disableSorting: true  },
+    { id: 'project_name', label: 'Project Name' },
     // { id: 'status', label: 'Status' },
-    { id: 'dateCreated', label: 'Date Created', disableSorting: true },
-    { id: 'lastEdited', label: 'Last Edited', disableSorting: true },
+    { id: 'date_created', label: 'Date Created', disableSorting: true },
+    { id: 'last_edited', label: 'Last Edited', disableSorting: true },
     { id: 'comment', label: 'Comment' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
+
 
 
 function Project(props) {
@@ -71,27 +72,29 @@ function Project(props) {
         })
     }
 
-    useEffect(()=>{
-        fetch('/project',{
+        useEffect(()=>{
+            fetch('/project',{
+    
+                method: "GET",
+                cache: 'default',
+                credentials: 'include',
+                withCredentials: true,
+                headers: {
+                    "Content_Type": "application/json",
+                    'Accept': 'application/json'
+                }
+    
+            }).then(response => {
+                //response.json()
+                return response.json() //jsonify
+            }).then(data => {
+                console.log(data);
+                setRecords(data);
+            }).catch((error) => {
+                console.error(error);
+            });
+        },[openPopup])
 
-            method: "GET",
-            cache: 'default',
-            credentials: 'include',
-            withCredentials: true,
-            headers: {
-                // "Content_Type": "application/json",
-                // 'Accept': 'application/json'
-            }
-
-        }).then(response => {
-            //response.json()
-            console.log( response.json() ) //jasonify
-        }).then(data => {
-            console.log(data);
-        }).catch((error) => {
-            console.error(error);
-        });
-    },[])
 
     //POP UP SECTION
     const addOrEdit = (project, resetForm) => {
@@ -108,7 +111,7 @@ function Project(props) {
                     "content_type": "application/json",
                 },
                 body: JSON.stringify({
-                    'projName': project.projName,
+                    'project_name': project.project_name,
                     'comment': project.comment
                 })
 
@@ -190,11 +193,11 @@ function Project(props) {
                             {
                                 recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
-                                    <TableCell>{item.id}</TableCell>
-                                    <TableCell>{item.projName}</TableCell>
+                                    <TableCell>{item._id.$oid}</TableCell>
+                                    <TableCell>{item.project_name}</TableCell>
                                     {/* <TableCell>{item.status}</TableCell> */}
-                                    <TableCell>{item.dateCreated}</TableCell>
-                                    <TableCell>{item.lastEdited}</TableCell>
+                                    <TableCell>{item.date_created}</TableCell>
+                                    <TableCell>{item.last_edited}</TableCell>
                                     <TableCell>{item.comment}</TableCell>
 
                                     {/* POPUP section */}

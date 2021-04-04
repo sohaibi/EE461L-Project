@@ -16,6 +16,7 @@ from flask_cors import CORS
 from data_service import hardware, user,project
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
+from bson import json_util
 
 
 app = Flask(__name__)
@@ -181,14 +182,10 @@ def projectAccess():
             proj_info = project.handle_get_project_info(proj_id)
             project_list.append(proj_info)
         # print("proj list: ", project_list)
-       
-       
-        return jsonify(project_list)
-        # response = jsonify({
-        #     'projName': 'get proj list?',
-        #     'comment' :'blah blah'
-        # })
-        # return response
+        
+        return json_util.dumps(project_list)
+        # return json.loads(json_util.dumps(project_list))
+      
       
 
     # POST: (update/create new project)
@@ -202,7 +199,7 @@ def projectAccess():
 
         #[if create:
         #else if update:]
-        project_name = data['projName']
+        project_name = data['project_name']
         comment = data['comment']
         user_id = session['user']
         project.handle_project_creation(project_name,user_id,comment) #create new proj
