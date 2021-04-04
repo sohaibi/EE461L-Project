@@ -38,13 +38,16 @@ def handle_project_creation(project_name: str, user_id: str, comment: str) -> st
     date_created = generate_date()
     post = {"date_created": date_created, "last_edited": date_created, "project_name": project_name, "user_id": user_id,
             "comment": comment, "hardware_set_dict": hardware_set_dict}  # ,  "status": status, "history_dict": history_dict
-    # print("post created")
-    result = collection.insert_one(post)
-    return str(result.inserted_id)
+    print("post created")
+    # result =
+    collection.insert_one(post)
+    # return str(result.inserted_id)
     # print("post added")
     # print("created")
 
-# print(handle_project_creation("project_name", "60653916a2f9ba4486d1e759","no comment"))
+
+handle_project_creation("Yue's 4th project",
+                        "604e7d148aaacd6a12855cbb", "4th project")
 
 
 def handle_status(status: str, project_id: str):

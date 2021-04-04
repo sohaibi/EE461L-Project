@@ -47,5 +47,7 @@
 # users.update_one({'username': 'Yue'},
 #                  {'$set': {'dict': mydict}})
 
-mydict = {}
-print(mydict[1])
+# mydict = {}
+# print(mydict[1])
+
+# from .. import data_service

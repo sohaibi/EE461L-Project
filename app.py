@@ -36,7 +36,6 @@ def check():
                 user_id)   # list of project id strings
             # print(project_ids)
             projects = []
-
             for projID in project_ids:
                 proj_info = project.handle_get_project_info(projID)
                 name = proj_info['project_name']
@@ -57,7 +56,7 @@ def check():
                     "hardware": HW_info,
                     "credits": credits
                 }
-                print(proj)
+                # print(proj)
                 projects.append(proj)
 
             return jsonify(

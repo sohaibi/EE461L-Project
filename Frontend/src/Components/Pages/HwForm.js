@@ -15,7 +15,6 @@ import CheckoutTable from '../CheckoutTable';
 
 function HwForm(props) {
 
-
     /** Part 1 Variables and Functions */
     // GET projects from backend
     const [isLogin, setIsLogin] = useState(props.isLogin);
@@ -24,6 +23,7 @@ function HwForm(props) {
 
     // parameters for the single project selected
     const [projIndex, setProjIndex] = useState(-1);
+
     const [HWSet_rent_list, setHWSet_rent_list] = useState([]);
 
     // const [credits, setCredits] = useState([]);
@@ -32,6 +32,7 @@ function HwForm(props) {
 
     // reload projects info once comfirmed, to keep value updated
     const [confirm, setConfirm] = useState(false);
+
 
 
     /** Login Status Synchronization*/
@@ -64,9 +65,11 @@ function HwForm(props) {
                         if (projIndex === -1 || projIndex === undefined) {
                             setProjIndex(0);
 
+
                         } else {
                             setProjIndex(projIndex);
                             tempIdx = projIndex;
+
                         }
 
 
@@ -92,6 +95,7 @@ function HwForm(props) {
         setProjIndex(index);
 
         setHWSet_rent_list(projects[index].hardware);
+
         // console.log(HWSet_dict);
         // setCredits(projects[index].credits);
 
@@ -187,9 +191,10 @@ function HwForm(props) {
                     // reload the data
                     setConfirm(!confirm);
                     // console.log(confirm);
-                    setconfirmMessage("You have successfully checkin/checkout the hardware, refreshing...");
+                    setconfirmMessage("You have successfully checkin/checkout the hardware, redirect to project page...");
+
                     window.location.reload();
-                    // <Redirect to={{ pathname: "/hardware", isLogin=true }}   />;
+                    // return <Redirect to={{ pathname: "/hardware", isLogin=true }} />;
 
                 }
 
@@ -203,11 +208,11 @@ function HwForm(props) {
         return (
 
             <>
-                <p>{JSON.stringify(HWSet_rent_list)}</p>
+                {/* <p>{JSON.stringify(HWSet_rent_list)}</p> */}
                 <div id="hardware-container">
                     <h1>Hardware Rental Services</h1>
+                    <HwTable HWSet_rent_list={HWSet_rent_list} project={projects[projIndex]} />
                     <div id="hardware-prompt">
-                        <HwTable />
 
                         {/* First Form */}
                         <form id="hardware-form">
@@ -348,7 +353,9 @@ function HwForm(props) {
 
 
         );
-    } else {
+    }
+    else {
+        // console.log({ isLogin });
         return <Redirect to='/login' />;
     }
 

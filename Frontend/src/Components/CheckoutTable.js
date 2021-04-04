@@ -134,8 +134,8 @@ function CheckoutTable(props) {
 
     return (
         <>
-            <p>{JSON.stringify(checkoutList)}</p>
-            <p>{(checkoutList.length === 0).toString()}</p>
+            {/* <p>{JSON.stringify(checkoutList)}</p> */}
+            {/* <p>{(checkoutList.length === 0).toString()}</p> */}
             <h3 className="io-heading">Hardware Check-Out</h3>
             <div className="check-table-container">
                 {/* <p className="check-text">

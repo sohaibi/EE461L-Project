@@ -84,7 +84,7 @@ function CheckinTable(props) {
 
     return (
         <>
-            <p>{JSON.stringify(checkinList)}</p>
+            {/* <p>{JSON.stringify(checkinList)}</p> */}
             <h3 className="io-heading">Hardware Check-In</h3>
             <div className="check-table-container">
                 <p className="check-text"
