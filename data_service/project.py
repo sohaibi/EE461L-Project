@@ -33,6 +33,10 @@ def handle_status(status, project_id):
 def handle_comment(comment, project_id):
     collection.update_one({"_id": project_id}, {"$set": {"comment": comment}})
 
+def delete_project(project_id):
+    collection.delete_one( { "_id" : ObjectId(project_id) } );
+
+
 def handle_get_project_id(project_name, user_id):
     results = collection.find({"project_name": project_name, "user_id" : user_id})
     for result in results:
@@ -85,3 +89,4 @@ def handle_get_project_info(project_id:str):
 
 # # print("proj list: ", project_list)
 # print("json: ----",jsonify(project_list))
+# delete_projects("6068e749a6ebe68f824461c9")

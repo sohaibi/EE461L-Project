@@ -149,14 +149,14 @@ def delete_projects(user_id: str, project_id: str):
     # get project list from user_id
     projects = users.find_one({"_id": ObjectId(user_id)})['projects']
     # check if project_id already exists in projects list
-    if project_id not in projects:
+    if ObjectId(project_id) not in projects:
         return -1
     users.update_one({"_id": ObjectId(user_id)}, update={
-        '$pull': {'projects': project_id}}, upsert=False)
+        '$pull': {'projects': ObjectId(project_id)}}, upsert=False)
     return users.find_one(({"_id": ObjectId(user_id)}))['projects']
 
 
-# print(delete_projects("604e7d148aaacd6a12855cbb", "432166"))
+print(delete_projects("60601c82cdd298d4ea3c5a04", "60696dab2e0ea886c1bf5e2e"))
 
 
 def get_projects(user_id: str):

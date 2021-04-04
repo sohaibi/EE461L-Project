@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 
 const headCells = [
-    { id: 'id', label: 'Project ID', disableSorting: true  },
+    { id: '_id.$oid', label: 'Project ID', disableSorting: true  },
     { id: 'project_name', label: 'Project Name' },
     // { id: 'status', label: 'Status' },
     { id: 'date_created', label: 'Date Created', disableSorting: true },
@@ -93,7 +93,7 @@ function Project(props) {
             }).catch((error) => {
                 console.error(error);
             });
-        },[openPopup])
+        },[])
 
 
     //POP UP SECTION
@@ -111,6 +111,7 @@ function Project(props) {
                     "content_type": "application/json",
                 },
                 body: JSON.stringify({
+                    'action': "create",
                     'project_name': project.project_name,
                     'comment': project.comment
                 })
@@ -127,7 +128,8 @@ function Project(props) {
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
-        // setRecords(projectService.getAllProjects())
+        
+        setRecords(projectService.getAllProjects())
         setRecords() //need param
         
     }
@@ -142,8 +144,29 @@ function Project(props) {
     //DELETE FX
     const onDelete = id => {
         if (window.confirm('Are you sure you want to delete this project?')) {
-            projectService.deleteProject(id);
-            setRecords(projectService.getAllProjects())
+            // projectService.deleteProject(id);
+
+            fetch('/project',{
+
+                method: "POST",
+                cache: 'force-cache',
+                credentials: 'include',
+                withCredentials: true,
+                headers: {
+                    "content_type": "application/json",
+                },
+                body: JSON.stringify({
+                    'action': "delete",
+                    'project_id': id
+                })
+
+            }).then(response => {
+                return response.json() //jasonify
+            }).then(data => {
+                console.log(data);
+            });
+
+             setRecords(projectService.getAllProjects())
         }
     }
 
@@ -211,7 +234,7 @@ function Project(props) {
                                         <Controls.ActionButton
                                             color="secondary"
                                             onClick={() => {
-                                                onDelete(item.id)
+                                                onDelete(item._id.$oid)
                                             }}>
                                             <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>

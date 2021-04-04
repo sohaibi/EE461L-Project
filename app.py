@@ -194,20 +194,25 @@ def projectAccess():
         if not data:
             return jsonify({'message': 'Null request'})
 
-        # data is valid:
-        print(data)
-
-        #[if create:
-        #else if update:]
-        project_name = data['project_name']
-        comment = data['comment']
         user_id = session['user']
-        project.handle_project_creation(project_name,user_id,comment) #create new proj
+        print(user_id)
+        if data['action']== 'delete':
+            project_id = data['project_id']
+            #delete from user proj list and project db
+            user.delete_projects(user_id,project_id)
+            project.delete_project(project_id)
+
+        if data['action']== 'create':
+            project_name = data['project_name']
+            comment = data['comment']      
+            project.handle_project_creation(project_name,user_id,comment) #create new proj
+            
+            #also need to add proj_id to user's project list!!
+            proj_id = project.handle_get_project_id(project_name,user_id)
+            user.add_projects(user_id,proj_id)
         
-        #also need to add proj_id to user's project list!!
-        proj_id = project.handle_get_project_id(project_name,user_id)
-        user.add_projects(user_id,proj_id)
-        
+        if data['action']== 'update':
+            pass
         ## error repsonese check:
         # successfully create new project, send 'success' back
         response = jsonify({
