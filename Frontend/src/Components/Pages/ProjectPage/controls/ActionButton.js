@@ -5,7 +5,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         minWidth: 0,
         margin: theme.spacing(0.5),
-        maxWidth: 100
+        maxWidth: 50
     },
     secondary: {
         backgroundColor: theme.palette.error.dark,
@@ -23,10 +23,10 @@ const useStyles = makeStyles(theme => ({
 
 
 export default function ActionButton(props) {
-   
+
     const { color, children, onClick } = props;
     const classes = useStyles();
-   
+
     return (
         <Button
             className={`${classes.root} ${classes[color]}`}

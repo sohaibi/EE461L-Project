@@ -22,16 +22,16 @@ export default function Popup(props) {
     const classes = useStyles();
 
     return (
-       <Dialog open={openPopup} maxWidth="md" classes={{ paper: classes.dialogWrapper }}>
+        <Dialog open={openPopup} maxWidth="md" classes={{ paper: classes.dialogWrapper }}>
             <DialogTitle className={classes.dialogTitle}>
                 <div style={{ display: 'flex' }}>  {/** moves 'x' to upper-right */}
-                    <Typography variant="h6" component="div" style={{ flexGrow: 1}}>
+                    <Typography variant="h6" component="div" style={{ flexGrow: 1 }}>
                         {title}
                     </Typography>
 
                     <Controls.ActionButton
                         color="secondary"
-                        onClick={()=>{setOpenPopup(false)}}> {/** close pop up */}
+                        onClick={() => { setOpenPopup(false) }}> {/** close pop up */}
                         <CloseIcon />
                     </Controls.ActionButton>
                 </div>

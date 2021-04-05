@@ -101,7 +101,7 @@ function Home() {
                 </p>
 
                     <div id="tableContainer">
-                        <HwTable />
+                        {/* <HwTable /> */}
                         {/* <h4>Sign in now to check out the hardware.</h4>
                         <Link to={hwLink} id="homeCheckout">
                             <button type="button" id="checkout">Check Out</button>

@@ -172,50 +172,48 @@ if(__name__ == "__main__"):
 #Adding Project Route
 @app.route('/project', methods=['POST', 'GET'])
 def projectAccess():
-    # GET: (display project list)
-    if request.method == 'GET':
-        user_id = session['user']
-        project_dict = user.get_projects(user_id)
-        
-        project_list = [] # [] of {}
-        for proj_id in project_dict:
-            proj_info = project.handle_get_project_info(proj_id)
-            project_list.append(proj_info)
-        # print("proj list: ", project_list)
-        
-        return json_util.dumps(project_list)
-        # return json.loads(json_util.dumps(project_list))
-      
-      
-
+    if 'user' not in session:
+        return jsonify({'message': 'cannot access project without login'})
+    user_id = session['user']
     # POST: (update/create new project)
     if request.method == 'POST':
         data = request.json
         if not data:
             return jsonify({'message': 'Null request'})
-
-        user_id = session['user']
-        print(user_id)
+        # print(user_id)
         if data['action']== 'delete':
             project_id = data['project_id']
             #delete from user proj list and project db
             user.delete_projects(user_id,project_id)
             project.delete_project(project_id)
+            print("succefully deleted!")
 
         if data['action']== 'create':
             project_name = data['project_name']
             comment = data['comment']      
-            project.handle_project_creation(project_name,user_id,comment) #create new proj
-            
+            proj_id = project.handle_project_creation(project_name,user_id,comment) #create new proj
             #also need to add proj_id to user's project list!!
-            proj_id = project.handle_get_project_id(project_name,user_id)
             user.add_projects(user_id,proj_id)
         
         if data['action']== 'update':
-            pass
+            project_id = data['project_id']
+            project_name = data['project_name']
+            comment = data['comment'] 
+            project.handle_update_project(project_id, project_name, comment)
         ## error repsonese check:
         # successfully create new project, send 'success' back
-        response = jsonify({
-            'message': 'success',
-        })
-        return response
+
+    # Either POST OR GET: (display project list)
+    project_dict = user.get_projects(user_id)
+    project_list = [] # [] of {}
+    for proj_id in project_dict:
+        proj_info = project.handle_get_project_info(proj_id)
+        proj_info['_id'] = str(proj_info['_id'] ) # make ObjectID jsonable
+        project_list.append(proj_info)
+    # print("proj list: ", project_list)
+    # print(project_list)
+    return jsonify({'records': tuple(project_list)})
+    # return json.loads(json_util.dumps(project_list))
+      
+      
+

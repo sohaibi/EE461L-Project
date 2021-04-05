@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import ProjectForm from './ProjectForm'
+import React, { useState, useEffect } from 'react';
+import ProjectForm from './ProjectForm';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment, Grid } from '@material-ui/core';
-import useTable from './useTable'
-import * as projectService from './projectService'
-import Controls from './controls/Controls'
+import useTable from './useTable';
+import * as projectService from './projectService';
+import Controls from './controls/Controls';
 import { Search } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import Popup from './Popup'
@@ -18,7 +18,8 @@ const useStyles = makeStyles(theme => ({
 
     },
     searchInput: {
-        width: '30%'
+        width: '40%',
+        position: 'left'
     },
     newButton: {
         width: '20%',
@@ -30,12 +31,12 @@ const useStyles = makeStyles(theme => ({
 
 
 const headCells = [
-    { id: '_id.$oid', label: 'Project ID', disableSorting: true  },
+    { id: '_id', label: 'Project ID', disableSorting: true },
     { id: 'project_name', label: 'Project Name' },
-    // { id: 'status', label: 'Status' },
-    { id: 'date_created', label: 'Date Created', disableSorting: true },
-    { id: 'last_edited', label: 'Last Edited', disableSorting: true },
-    { id: 'comment', label: 'Comment' },
+    // { id: 'owner_id', label: 'Owner ID', disableSorting: true },
+    { id: 'date_created', label: 'Date Created' },
+    { id: 'last_edited', label: 'Last Edited' },
+    { id: 'comment', label: 'Comment', disableSorting: true },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -51,14 +52,16 @@ function Project(props) {
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
     const [recordForEdit, setRecordForEdit] = useState(null)
-    const [openPopup, setOpenPopup] = useState(false)
-
+    const [openPopup, setOpenPopup] = useState(false) // bool to indicate if popup should open
+    const [updateToggle, setUpdateToggle] = useState(false)
+    const [popUpTitle, setPopUpTitle] = useState('')
+    const [isDelete, setIsDelete] = useState(false)
     const {
         TblContainer,
-        TblHead,
+        TblHead,  // defined by headCells
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(records, headCells, filterFn);
+    } = useTable(records, headCells, filterFn);// 要验证多久刷新一次
 
     const handleSearch = e => {
         let target = e.target;
@@ -72,103 +75,140 @@ function Project(props) {
         })
     }
 
-        useEffect(()=>{
-            fetch('/project',{
-    
-                method: "GET",
-                cache: 'default',
-                credentials: 'include',
-                withCredentials: true,
-                headers: {
-                    "Content_Type": "application/json",
-                    'Accept': 'application/json'
-                }
-    
-            }).then(response => {
-                //response.json()
-                return response.json() //jsonify
-            }).then(data => {
-                console.log(data);
-                setRecords(data);
-            }).catch((error) => {
-                console.error(error);
-            });
-        },[])
+    // load user's project data 
+    useEffect(() => {
+        fetch('/project', {
+
+            method: "GET",
+            cache: 'default',
+            credentials: 'include',
+            withCredentials: true,
+            headers: {
+                "Content_Type": "application/json",
+                'Accept': 'application/json'
+            }
+
+        }).then(response => {
+            //response.json()
+            return response.json() //jsonify
+        }).then(data => {
+            console.log("records when loading", data);
+
+            setRecords(data['records']);
+            setUpdateToggle(!updateToggle);
+        }).catch((error) => {
+            console.error(error);
+        });
+    }, [])
+
+    // update the page when record is updated
+    // useEffect(() => {
+    //     // const {
+    //     //     TblContainer,
+    //     //     TblHead,  // defined by headCells
+    //     //     TblPagination,
+    //     //     recordsAfterPagingAndSorting
+    //     // } = useTable(records, headCells, filterFn);// 要验证多久刷新一次
+
+
+    // }, [updateToggle])
+
+
 
 
     //POP UP SECTION
-    const addOrEdit = (project, resetForm) => {
-        if (project.id == 0){ //if project id DNE
-            //projectService.insertProject(project) //NEED CHANGE
+    const makeAction = (project, resetForm) => {
+        console.log(project);
+        var request = {};
+        if (recordForEdit == null) {
+            request['action'] = "create";
+            request['project_name'] = project.project_name;
+            request['comment'] = project.comment
 
-            fetch('/project',{
+        } else if (isDelete) {
+            request['project_id'] = project['_id']
+            request['action'] = "delete"
 
-                method: "POST",
-                cache: 'force-cache',
-                credentials: 'include',
-                withCredentials: true,
-                headers: {
-                    "content_type": "application/json",
-                },
-                body: JSON.stringify({
-                    'action': "create",
-                    'project_name': project.project_name,
-                    'comment': project.comment
-                })
+        } else {
+            request['project_id'] = project['_id']
+            request['project_name'] = project.project_name;
+            request['comment'] = project.comment
+            request['action'] = "update"
 
-            }).then(response => {
-                return response.json() //jasonify
-            }).then(data => {
-                console.log(data);
-            });
         }
-        else{
-            projectService.updateProject(project)
-        }
-        resetForm()
+        console.log("request", request)
+
+
+        fetch('/project', {
+
+            method: "POST",
+            cache: 'force-cache',
+            credentials: 'include',
+            withCredentials: true,
+            headers: {
+                "content_type": "application/json",
+            },
+            body: JSON.stringify(
+                request
+            )
+
+        }).then(response => {
+            return response.json() //jasonify
+        }).then(data => {
+            console.log(data);
+            console.log("records when updating", data);
+            setRecords(data['records']); // reset records
+        });
+
+
+
+
+        resetForm() //  parameter pass from child
         setRecordForEdit(null)
         setOpenPopup(false)
-        
-        setRecords(projectService.getAllProjects())
-        setRecords() //need param
-        
+
+
+
+
+
     }
 
     const openInPopup = item => {
         setRecordForEdit(item)
+        console.log("record for edit:", item);
         setOpenPopup(true)
     }
     //POP UP SECTION
 
 
     //DELETE FX
-    const onDelete = id => {
-        if (window.confirm('Are you sure you want to delete this project?')) {
-            // projectService.deleteProject(id);
+    // const onDelete = id => {
+    //     if (window.confirm('Are you sure you want to delete this project?')) {
+    //         // projectService.deleteProject(id);
 
-            fetch('/project',{
+    //         fetch('/project', {
 
-                method: "POST",
-                cache: 'force-cache',
-                credentials: 'include',
-                withCredentials: true,
-                headers: {
-                    "content_type": "application/json",
-                },
-                body: JSON.stringify({
-                    'action': "delete",
-                    'project_id': id
-                })
+    //             method: "POST",
+    //             cache: 'force-cache',
+    //             credentials: 'include',
+    //             withCredentials: true,
+    //             headers: {
+    //                 "content_type": "application/json",
+    //             },
+    //             body: JSON.stringify({
+    //                 'action': "delete",
+    //                 'project_id': id
+    //             })
 
-            }).then(response => {
-                return response.json() //jasonify
-            }).then(data => {
-                console.log(data);
-            });
+    //         }).then(response => {
+    //             return response.json() //jasonify
+    //         }).then(data => {
+    //             console.log(data);
+    //         });
 
-             setRecords(projectService.getAllProjects())
-        }
-    }
+    //         setRecords(projectService.getAllProjects())
+    //     }
+    // }
 
     // synchronize with App.js's login status
     useEffect(() => {
@@ -185,9 +225,9 @@ function Project(props) {
 
                 <Paper className={classes.pageContent}>
 
-                    <Toolbar>
-                    {/* <Grid> */}
-                        <Controls.Input
+                    <Toolbar >
+                        {/* <Grid> */}
+                        {/* <Controls.Input
                             label="Search Projects"
                             className={classes.searchInput}
                             InputProps={{
@@ -196,18 +236,30 @@ function Project(props) {
                                 </InputAdornment>)
                             }}
                             onChange={handleSearch}
-                        />
+                        /> */}
                         {/* </Grid> */}
 
-                       
+
                         <Controls.Button
                             text="Create Project"
                             variant="outlined"
                             startIcon={<AddIcon />}
                             className={classes.newButton}
-                            onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
+                            onClick={() => {
+                                setIsDelete(false);
+                                setPopUpTitle('Create Project');
+                                setOpenPopup(true);
+                                setRecordForEdit(null);
+                            }}
                         />
-                        
+                        {/* <Controls.Button
+                            text="Join Project"
+                            variant="outlined"
+                            startIcon={<AddIcon />}
+                            className={classes.newButton}
+                            onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
+                        /> */}
+
                     </Toolbar>
                     <TblContainer>
 
@@ -216,7 +268,7 @@ function Project(props) {
                             {
                                 recordsAfterPagingAndSorting().map(item =>
                                 (<TableRow key={item.id}>
-                                    <TableCell>{item._id.$oid}</TableCell>
+                                    <TableCell>{item._id}</TableCell>
                                     <TableCell>{item.project_name}</TableCell>
                                     {/* <TableCell>{item.status}</TableCell> */}
                                     <TableCell>{item.date_created}</TableCell>
@@ -225,20 +277,28 @@ function Project(props) {
 
                                     {/* POPUP section */}
                                     <TableCell>
-                                    
+
                                         <Controls.ActionButton
                                             color="primary"
-                                            onClick={() => { openInPopup(item) }}>
+                                            onClick={() => {
+                                                setIsDelete(false)
+                                                setPopUpTitle('Edit Project');
+                                                openInPopup(item)
+                                            }}>
                                             <EditOutlinedIcon fontSize="small" />
                                         </Controls.ActionButton>
                                         <Controls.ActionButton
                                             color="secondary"
                                             onClick={() => {
-                                                onDelete(item._id.$oid)
+                                                // onDelete(item._id)
+                                                setIsDelete(true)
+                                                setPopUpTitle('Delete Project');
+                                                openInPopup(item)
+
                                             }}>
                                             <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>
-                               
+
                                     </TableCell>
                                     {/* POPUP section */}
 
@@ -251,13 +311,15 @@ function Project(props) {
                 </Paper>
 
                 <Popup
-                    title="Project Form"
-                    openPopup={openPopup}
-                    setOpenPopup={setOpenPopup}
+                    title={popUpTitle}
+                    openPopup={openPopup} // boolean to indicate Popup is enabled or not
+                    setOpenPopup={setOpenPopup}  // setOpenPopup bool function
                 >
                     <ProjectForm
                         recordForEdit={recordForEdit}
-                        addOrEdit={addOrEdit} />
+                        makeAction={makeAction}
+                        isDelete={isDelete}
+                    />
                 </Popup>
 
 

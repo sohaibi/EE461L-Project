@@ -21,18 +21,21 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-export default function useTable(records, headCells,filterFn) {
+export default function useTable(records, headCells, filterFn) {
+
+    // const [records, setRecords] = useState(props.records);//need para?
 
     const classes = useStyles(); //apply css above
+    const pages = [5, 10, 25] //paging config， how many rows per page
+    const [page, setPage] = useState(0)  // index to configure how many rows per page
+    const [rowsPerPage, setRowsPerPage] = useState(pages[0]) // should use another index ??
 
-    const pages = [5, 10, 25] //paging config
-    const [page, setPage] = useState(0)
-    const [rowsPerPage, setRowsPerPage] = useState(pages[page])
-    
-    const [order, setOrder] = useState() //sorting
-    const [orderBy, setOrderBy] = useState()
+    const [order, setOrder] = useState('asc') //sorting  'asc','desc', false
+    const [orderBy, setOrderBy] = useState() // headcell.id in Project.js
+
 
     // access everything in '<TblContainer>' in 'project.js'
+
     const TblContainer = props => (
         <Table className={classes.table}>
             {props.children}
@@ -54,11 +57,11 @@ export default function useTable(records, headCells,filterFn) {
                 {
                     headCells.map(headCell => (
                         <TableCell key={headCell.id}
-                        
-                        // sorting section
+
+                            // sorting section
                             sortDirection={orderBy === headCell.id ? order : false}>
-                            {headCell.disableSorting ? headCell.label :     
-                                
+                            {headCell.disableSorting ? headCell.label :
+
                                 <TableSortLabel
                                     active={orderBy === headCell.id} //highlight selected sorting type
                                     direction={orderBy === headCell.id ? order : 'asc'}
@@ -67,15 +70,17 @@ export default function useTable(records, headCells,filterFn) {
                                 </TableSortLabel>
 
                             }
-                        
+
                         </TableCell>))
                 }
             </TableRow>
         </TableHead>)
     }
 
-    //set page
+    //set page：   ??? this is not enabled??
     const handleChangePage = (event, newPage) => {
+        var val = parseInt(event.target.value, 10);
+        console.log(val);
         setPage(newPage);
     }
 
@@ -99,11 +104,14 @@ export default function useTable(records, headCells,filterFn) {
     //sorting section:
     function stableSort(array, comparator) {
         const stabilizedThis = array.map((el, index) => [el, index]);
+        // console.log("stabilizedThis before sort", stabilizedThis);
         stabilizedThis.sort((a, b) => {
-            const order = comparator(a[0], b[0]); 
+            const order = comparator(a[0], b[0]);
+            // console.log("a is", a);
             if (order !== 0) return order;
-            return a[1] - b[1]; //-1 switch, 0== same value
+            return a[1] - b[1]; //-1 switch, 0== same value // if value is the same, determined by default index
         });
+        // console.log("stabilizedThis before mappling", stabilizedThis);
         return stabilizedThis.map((el) => el[0]);
     }
 
@@ -130,6 +138,13 @@ export default function useTable(records, headCells,filterFn) {
         return stableSort(filterFn.fn(records), getComparator(order, orderBy))
             .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
     }
+
+    // synchronize with Project.js's records data
+    // useEffect(() => {
+    //     setRecords(props.records);
+    //     console.log('records updated', props.records);
+    // }, [props.records])
+
 
     return {
         TblContainer,
