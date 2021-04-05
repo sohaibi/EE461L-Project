@@ -115,24 +115,6 @@
     margin: 5px auto 0px auto;
 }
 
-#checkout {
-    width: fit-content;
-    height: fit-content;
-    border: none;
-    outline: none;
-    background-color: #f8971f;
-    color: white;
-    padding: 10px;
-    font-size: 2vw;
-    margin: 0px auto;
-    cursor: pointer;
-}
-
-#checkout:hover {
-    background-color: #bf5700;
-    transition: 0.2s;
-}
-
 
 /* Team Information */
 #profile-container {

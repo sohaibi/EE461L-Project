@@ -1,8 +1,10 @@
 .io-heading {
     margin: 0px auto;
+    width: 80vw;
+    padding: 10px;
     background-color: #f8971f;
     color: white;
-    padding: 20px;
+    text-align: center;
 }
 
 .checked_table {
@@ -10,11 +12,12 @@
     font-family: 'Nunito', sans-serif;
     background-color: white;
     border-collapse: collapse;
+    width: fit-content;
 }
 
 .checked_table > tbody > tr > td {
     text-align: center;
-    width: 150px;
+    width: fit-content;
     padding: 5px;
     border: 1px solid #f8971f;
     color: #333f48;
@@ -25,25 +28,63 @@
     color: white;
 }
 
-/** BUTTON **/
-#hideCheckButton {
-    visibility: hidden;
+.check-table-container {
+    width: 100%;
 }
 
-#showCheckButton {
+.check-table-container > p {
+    margin: 5px auto;
+    width: fit-content;
+}
+
+.hw-input {
+    margin: 5px;
+    width: 50px;
+    font-size: 20px;
+    text-align: right;
+}
+
+.check-text {
+    margin: 20px auto;
+}
+
+.hw-spanText {
+    font-weight:bold;
+    color: #f8971f;
+}
+
+/** Checkin Only **/
+#showTable, #showPara {
     visibility: visible;
+}
+
+#hideTable, #hidePara {
+    height: 0px;
+    visibility: hidden;
+    margin: 0px;
+    display: none;
+}
+
+
+/** Checkout Only **/
+
+.hideError, .showError {
     margin: 0px auto;
 }
 
-.check_submit {
-    background-color: #f8971f;
-    color: white;
-    font-size: 20px;
-    outline: none;
-    border: none;
-    width: fit-content;
-    cursor: pointer;
-    margin: 10px auto;
-    padding: 5px;
-    height: fit-content;
+.hideError {
+    visibility: collapse;
+    height: 0px;
+    margin: 0px;
+    display: none;
+}
+
+.showError {
+    visibility: visible;
+    color: red;
+}
+
+.hw-input:disabled {
+    cursor: default;
+    color: gray;
 }

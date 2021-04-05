@@ -13,7 +13,7 @@
 # #type <localhost:5000> in browser
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS
-from data_service import hardware, user, dataset
+from data_service import hardware, user
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 
@@ -156,64 +156,6 @@ def userProfile():
         'message': 'success',
     })
     return response
-
-@app.route('/datasets', methods=['GET', 'POST'])
-def datasetNames():
-    # GET:
-    if request.method == 'GET':
-        data_list = dataset.getDatasetNames()
-        #dict = {"data1": "test1", "data2": "test2"}
-        print(jsonify(data_list))
-        #data = request.json
-        #data['Dataset1'] = str(data_list[0])
-        #print("THIS IS A DEBUGGING MESSAGE:"+str(data['Dataset1']))
-        #return jsonify({"message":data_list[0]})
-        return jsonify(data_list)
-    
-    # POST:
-    if request.method == 'POST':
-        zipped_file = dataset.getZip('aami-ec13')
-        return jsonify(zipped_file)
-
-@app.route('/downloadDataSets', methods=['GET', 'POST'])
-def downloadDataSets():
-    # POST:
-    if request.method == 'POST':
-    #    print(request.form)
-        project_number = 0
-        option_selected = request.form['ProjectSelect']
-        if option_selected == 'Project 1':
-            project_number = 1
-        elif option_selected == 'Project 2':
-            project_number = 2
-        elif option_selected == 'Project 3':
-            project_number = 3
-        elif option_selected == 'Default':
-            project_number = 0
-        database_names = []
-
-        if(bool(request.form['Dataset1'])):
-            database_names.append('Dataset1')
-        elif(bool(request.form['Dataset2'])):
-            database_names.append('Dataset2')
-        elif(bool(request.form['Dataset3'])):
-            database_names.append('Dataset3')
-        elif(bool(request.form['Dataset4'])):
-            database_names.append('Dataset4')
-        elif(bool(request.form['Dataset5'])):
-            database_names.append('Dataset5')
-        elif(bool(request.form['Dataset6'])):
-            database_names.append('Dataset6')
-        elif(bool(request.form['Dataset7'])):
-            database_names.append('Dataset7')
-        elif(bool(request.form['Dataset8'])):
-            database_names.append('Dataset8')
-        elif(bool(request.form['Dataset9'])):
-            database_names.append('Dataset9')
-        elif(bool(request.form['Dataset10'])):
-            database_names.append('Dataset10')    
-
-    return 
 
 
 @app.after_request
