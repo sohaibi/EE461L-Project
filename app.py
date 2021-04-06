@@ -20,12 +20,15 @@ from bson import ObjectId
 from bson import json_util
 
 
-app = Flask(__name__,static_folder='Frontend/build')
+app = Flask(__name__,static_folder='Frontend/build', static_url_path='/')
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
 
-
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+    
 @app.route('/check',  methods=['POST', 'GET'])
 def check():
     # GET
