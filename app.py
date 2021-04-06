@@ -20,7 +20,7 @@ from bson import ObjectId
 from bson import json_util
 
 
-app = Flask(__name__)
+app = Flask(__name__,static_folder='Frontend/build')
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
