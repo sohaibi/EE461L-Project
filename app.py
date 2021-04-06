@@ -174,14 +174,25 @@ def projectAccess():
         if data['action'] == 'delete':
             project_id = data['project_id']
             # delete from user proj list and project db
+
+            # first to check if all the hardware has been returned
+            hardware_set_dict = project.handle_get_project_info(project_id)[
+                "hardware_set_dict"]
+            # if all the hardware has been returned, delete this project from user's projects list directly
+            if len(hardware_set_dict) > 0:
+                # check if this user is the only one person to manage this project
+                team_list = project.handle_get_project_info(project_id)['team']
+                if len(team_list) == 1:
+                    return jsonify({'message': 'As the only manager for this project please return the hardware before delete it.'})
+            # remove project_id from user's projects list
             user.delete_projects(user_id, project_id)
-            # if remove member from project team
+            # remove member from project team
             project.handle_update_project_team(project_id, user_id, "-")
             team_list = project.handle_get_project_info(project_id)['team']
-            # delete one project only when no one is managing that
+            # delete one project only when no one is managing that, and all the HW has been returned
             if len(team_list) == 0:
                 project.delete_project(project_id)
-            # print("succefully deleted!")
+            print("succefully deleted!")
 
         if data['action'] == 'create':
             project_name = data['project_name']
