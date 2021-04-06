@@ -1,49 +1,113 @@
 /** Hardware Prompt **/
 #hardware-container {
     margin: 50px 0px;
+    font-size: 20px;
+    width: 100%;
 }
 
 #hardware-container > h1 {
     margin: 0px auto;
-    width: fit-content;
+    width: 100%;
+    padding: 20px;
+    background-color: #f8971f;
+    text-align: center;
 }
 
 #hardware-prompt {
     display: flex;
     flex-direction: column;
     margin: 0px auto;
+    width: 100%;
 }
 
-/** Form Part 1 **/
-#hardware-form {
-    margin: 0px auto;
-    display: flex;
-    flex-direction: column;
-}
-
-.hardware-form-el {
-    width: fit-content;
-    padding: 5px;
-    margin: 0px auto;
-}
-
-.hardware-form-el > input, .hardware-form-el > label {
-    margin: 0px 5px;
-}
-
-.hardware-form-el > input {
-    cursor: pointer;
-}
-
-.hardware-form-el:nth-child(4) {
+.hw-form-button {
     background-color: #f8971f;
     color: white;
     outline: none;
     border: none;
-    font-size: 24px;
-    width: 50px;
+    width: fit-content;
     cursor: pointer;
     margin: 10px auto;
+    padding: 5px;
+    height: fit-content;
+    font-size: 20px;
+}
+
+.hw-form-button:disabled {
+    background-color: gray;
+    cursor: default;
+}
+
+/** Form Part 1 **/
+#hardware-form {
+    margin: 20px auto;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.hardware-form-el {
+    width: 100%;
+    padding: 5px;
+    margin: 0px auto;
+}
+
+#hide-project-select {
+    visibility: hidden;
+    height: 0px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#project-select-div {
+    margin: 0px auto;
+    width: 80vw;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    visibility: visible;
+}
+
+#hardware-form-header {
+    margin: 0px auto;
+    width: 100%;
+    padding: 10px;
+    background-color: #f8971f;
+    color: white;
+    text-align: center;
+}
+
+.select-el {
+    width: fit-content;
+    margin: 20px auto;
+    font-size: 20px;
+}  
+
+/** Checkin/out Boxes **/
+.hardware-form-el > input {
+    cursor: pointer;
+}
+
+#hideBox {
+    visibility: collapse;
+    height: 0px;
+    margin: 0px;
+    display: none;
+}
+
+#hw-answer-wrap {
+    visibility: visible;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.hw-form-prompts, #part1-submit {
+    margin: 5px auto;
+}
+
+#hw-checkboxes > input {
+    margin: 5px;
 }
 
 #inBox:disabled, #outBox:disabled {
@@ -75,39 +139,48 @@
 
 #hideError {
     visibility: collapse;
+    height: 0px;
+    margin: 0px;
+    display: none;
 }
 
-#showError {
+#showError, #projectError {
     visibility: visible;
     color: red;
-}
-
-/** Go Button **/
-#part1-submit:disabled {
-    background-color: gray;
-    cursor: default;
+    margin: 0px auto;
 }
 
 /** Part 2 **/
+.second-form {
+    margin: 20px auto;
+    width: 100%;
+}
+
+#hideCheckIn, #hideCheckOut {
+    visibility: collapse;
+    height: 0px;
+    margin: 0px;
+    display: none;
+}
+
 #showCheckIn, #showCheckOut {
+    visibility: visible;
+}
+
+#hideCheckButton {
+    visibility: collapse;
+    height: 0px;
+    margin: 0px;
+    display: none;
+}
+
+#showCheckButton {
+    visibility: visible;
     margin: 0px auto;
-    width: 80%;
 }
 
-/** Checkin Form **/
-#hideCheckIn {
-    visibility: collapse;
-}
+#confirm_message{
+    color: crimson;
+    text-align: center;
 
-#showCheckIn {
-    visibility: visible;
-}
-
-/** Checkout Form **/
-#hideCheckOut {
-    visibility: collapse;
-}
-
-#showCheckOut {
-    visibility: visible;
 }

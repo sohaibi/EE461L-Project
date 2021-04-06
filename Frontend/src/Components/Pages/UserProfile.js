@@ -75,10 +75,10 @@ export default function UserProfile(props) {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("making request to editProfile");
-        if (newProfile.Username == username) {
+        if (newProfile.Username === username) {
             newProfile.Username = '';
         }
-        if (newProfile.Email == email) {
+        if (newProfile.Email === email) {
             newProfile.Email = '';
         }
         console.log(newProfile);

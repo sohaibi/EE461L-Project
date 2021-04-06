@@ -3,7 +3,7 @@ import { Chart } from "react-google-charts";
 
 import './HW_Table.css';
 
-function HW_Table() {
+function HW_Table(props) {
 
     /** TODO: 
      *  - load  array of hw availabilities 
@@ -12,6 +12,8 @@ function HW_Table() {
     const [availabilities, setAvailabilities] = useState([]);
     const [capacities, setCapacities] = useState([]);
     const [HW_names, setHW_names] = useState([]);
+    const [HWSet_rent_list, setHWSet_rent_list] = useState(props.setHWSet_rent_list);
+    const [project, setProject] = useState(props.project);
 
 
 
@@ -28,6 +30,19 @@ function HW_Table() {
         }, 1000);
         return () => clearInterval(interval);
     }, []);
+
+
+    useEffect(() => {
+        // get all the checkin HW infos
+        setHWSet_rent_list(props.HWSet_rent_list);
+        console.log(props.HWSet_rent_list);
+        console.log("list updated!");
+        setProject(props.project);
+        // console.log(props.project);
+        console.log("project info updated");
+
+    }, [props.HWSet_rent_list, props.project]);
+
 
     // var availabilities = [10, 8, 7, 10]; // temporary values
     // var capacities = [20, 20, 15, 10];
@@ -67,12 +82,37 @@ function HW_Table() {
         table.push(<tr>{children}</tr>)
     }
 
-    // create bar chart array
+    // create bar chart array and colar array
     let bar_data = []
+    let color_data = ['#f8971f', '#808080']
     bar_data.push(['HardWareSet', 'Availability', 'Capacity'])
     for (let i = 0; i < availabilities.length; i++) {
         //Inner loop to create children
         bar_data.push([HW_names[i], availabilities[i], capacities[i] - availabilities[i]])
+    }
+
+    if (HWSet_rent_list !== undefined && project !== undefined) {
+        console.log("run this???")
+        bar_data[0].push('Capacity');
+        bar_data[0][2] = project.name;
+
+        for (let i = 0; i < availabilities.length; i++) {
+            // record HW_use
+            bar_data[i + 1][2] = 0;
+            //Inner loop to create children
+            for (let j = 0; j < HWSet_rent_list.length; j++) {
+                if (HW_names[i] === HWSet_rent_list[j]['HW_name']) {
+                    bar_data[i + 1][2] = HWSet_rent_list[j]['HW_use'];
+                }
+            }
+        }
+
+        for (let i = 0; i < availabilities.length; i++) {
+            // record HW_cap
+            bar_data[i + 1].push(capacities[i] - availabilities[i] - bar_data[i + 1][2]);
+        }
+        color_data = ['#f8971f', '#009900', '#808080'];
+        console.log(bar_data);
     }
 
 
@@ -110,7 +150,7 @@ function HW_Table() {
                         vAxis: {
                             title: 'HardwareSet',
                         },
-                        colors: ['#f8971f', '#808080'],
+                        colors: color_data,
                     }}
                 // For tests
                 // rootProps={{ 'data-testid': '3' }}

@@ -157,6 +157,7 @@ def delete_projects(user_id: str, project_id: str):
 
 
 # print(delete_projects("604e7d148aaacd6a12855cbb", "606a9ea311afe9208cdc319c"))
+# print(delete_projects("604e7d148aaacd6a12855cbb", "432166"))
 
 
 def get_projects(user_id: str):

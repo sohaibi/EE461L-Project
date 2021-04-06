@@ -2,8 +2,6 @@ import pymongo
 from pymongo import MongoClient
 import datetime
 from bson import ObjectId
-# import user
-# /Library/Frameworks/Python.framework/Versions/3.9/lib/python3.9/site-packages/pip
 
 cluster = MongoClient("mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/SemesterProject?retryWrites=true&w=majority",
                       ssl=True, ssl_cert_reqs='CERT_NONE')
