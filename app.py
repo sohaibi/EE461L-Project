@@ -26,9 +26,10 @@ app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
 
 @app.route('/')
+@cross_origin()
 def index():
     return app.send_static_file('index.html')
-    
+
 @app.route('/check',  methods=['POST', 'GET'])
 def check():
     # GET
