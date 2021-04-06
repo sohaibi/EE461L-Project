@@ -13,7 +13,7 @@
 # #type <localhost:5000> in browser
 
 from flask import Flask, jsonify, request, session
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 from data_service import hardware, user, project
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
