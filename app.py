@@ -73,7 +73,7 @@ def check():
         else:
             return jsonify({'message': 'not login'})
     # POST
-    data = request.json
+    data = request.get_json(force=True)
     if not data:
         return jsonify({'message': 'Null request'})
 
@@ -180,7 +180,7 @@ def register():
     if request.method == 'GET':
         return jsonify({"message": "This will not happen"})
     # POST:
-    data = request.json
+    data = request.get_json(force=True)
     if not data:
         return jsonify({'message': 'Null request'})
     # data is valid:
@@ -225,7 +225,7 @@ def userProfile():
         else:
             return jsonify({'message': 'not login'})
     # POST:
-    data = request.json
+    data = request.get_json(force=True)
     if not data:
         return jsonify({'message': 'Null request'})
     # data is valid:
@@ -253,7 +253,7 @@ def projectAccess():
     user_id = session['user']
     # POST: (update/create new project)
     if request.method == 'POST':
-        data = request.json
+        data = request.get_json(force=True)
         if not data:
             return jsonify({'message': 'Null request'})
         # print(user_id)
