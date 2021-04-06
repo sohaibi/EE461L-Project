@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import ProjectForm from './ProjectForm';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment, Grid } from '@material-ui/core';
 import useTable from './useTable';
-import * as projectService from './projectService';
+import Box from '@material-ui/core/Box';
 import Controls from './controls/Controls';
 import { Search } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 const headCells = [
     { id: '_id', label: 'Project ID', disableSorting: true },
     { id: 'project_name', label: 'Project Name' },
-    // { id: 'owner_id', label: 'Owner ID', disableSorting: true },
+    { id: 'owner_id', label: 'Owner ID', disableSorting: true },
     { id: 'date_created', label: 'Date Created' },
     { id: 'last_edited', label: 'Last Edited' },
     { id: 'comment', label: 'Comment', disableSorting: true },
@@ -47,15 +47,16 @@ function Project(props) {
     const [userID, setUserID] = useState(props.userID);
 
     const classes = useStyles();
-    // const [records, setRecords] = useState(projectService.getAllProjects())
+
     const [records, setRecords] = useState([]) //need para?
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
 
     const [recordForEdit, setRecordForEdit] = useState(null)
     const [openPopup, setOpenPopup] = useState(false) // bool to indicate if popup should open
-    const [updateToggle, setUpdateToggle] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+
     const [popUpTitle, setPopUpTitle] = useState('')
-    const [isDelete, setIsDelete] = useState(false)
+    const [action, setAction] = useState('')
     const {
         TblContainer,
         TblHead,  // defined by headCells
@@ -63,14 +64,18 @@ function Project(props) {
         recordsAfterPagingAndSorting
     } = useTable(records, headCells, filterFn);// 要验证多久刷新一次
 
+
+
+
     const handleSearch = e => {
         let target = e.target;
+        console.log("target is", target.value);
         setFilterFn({
             fn: items => {
                 if (target.value == "")
                     return items;
                 else
-                    return items.filter(x => x.projName.toLowerCase().includes(target.value))
+                    return items.filter(x => x.project_name.toLowerCase().includes((target.value).toLowerCase()))
             }
         })
     }
@@ -95,23 +100,11 @@ function Project(props) {
             console.log("records when loading", data);
 
             setRecords(data['records']);
-            setUpdateToggle(!updateToggle);
         }).catch((error) => {
             console.error(error);
         });
     }, [])
 
-    // update the page when record is updated
-    // useEffect(() => {
-    //     // const {
-    //     //     TblContainer,
-    //     //     TblHead,  // defined by headCells
-    //     //     TblPagination,
-    //     //     recordsAfterPagingAndSorting
-    //     // } = useTable(records, headCells, filterFn);// 要验证多久刷新一次
-
-
-    // }, [updateToggle])
 
 
 
@@ -120,21 +113,24 @@ function Project(props) {
     const makeAction = (project, resetForm) => {
         console.log(project);
         var request = {};
-        if (recordForEdit == null) {
+        if (action === "create") {
             request['action'] = "create";
             request['project_name'] = project.project_name;
             request['comment'] = project.comment
 
-        } else if (isDelete) {
+        } else if (action === "delete") {
             request['project_id'] = project['_id']
             request['action'] = "delete"
 
-        } else {
+        } else if (action === "update") {
             request['project_id'] = project['_id']
             request['project_name'] = project.project_name;
             request['comment'] = project.comment
             request['action'] = "update"
 
+        } else if (action === "join") {
+            request['project_id'] = project['_id']
+            request['action'] = "join"
         }
         console.log("request", request)
 
@@ -157,17 +153,17 @@ function Project(props) {
         }).then(data => {
             console.log(data);
             console.log("records when updating", data);
-            setRecords(data['records']); // reset records
+            if (data['message'] !== 'success') {
+                setErrorMessage(data['message']);
+            } else {
+                setRecords(data['records']); // reset records
+                resetForm() //  parameter pass from child
+                setRecordForEdit(null)
+                setOpenPopup(false)
+
+            }
+
         });
-
-
-
-
-        resetForm() //  parameter pass from child
-        setRecordForEdit(null)
-        setOpenPopup(false)
-
-
 
 
 
@@ -176,39 +172,10 @@ function Project(props) {
     const openInPopup = item => {
         setRecordForEdit(item)
         console.log("record for edit:", item);
+        setErrorMessage('')
         setOpenPopup(true)
     }
-    //POP UP SECTION
 
-
-    //DELETE FX
-    // const onDelete = id => {
-    //     if (window.confirm('Are you sure you want to delete this project?')) {
-    //         // projectService.deleteProject(id);
-
-    //         fetch('/project', {
-
-    //             method: "POST",
-    //             cache: 'force-cache',
-    //             credentials: 'include',
-    //             withCredentials: true,
-    //             headers: {
-    //                 "content_type": "application/json",
-    //             },
-    //             body: JSON.stringify({
-    //                 'action': "delete",
-    //                 'project_id': id
-    //             })
-
-    //         }).then(response => {
-    //             return response.json() //jasonify
-    //         }).then(data => {
-    //             console.log(data);
-    //         });
-
-    //         setRecords(projectService.getAllProjects())
-    //     }
-    // }
 
     // synchronize with App.js's login status
     useEffect(() => {
@@ -225,10 +192,11 @@ function Project(props) {
 
                 <Paper className={classes.pageContent}>
 
-                    <Toolbar >
+                    <Toolbar flex>
+
                         {/* <Grid> */}
-                        {/* <Controls.Input
-                            label="Search Projects"
+                        <Controls.Input
+                            label="Search Project Name"
                             className={classes.searchInput}
                             InputProps={{
                                 startAdornment: (<InputAdornment position="start">
@@ -236,31 +204,40 @@ function Project(props) {
                                 </InputAdornment>)
                             }}
                             onChange={handleSearch}
-                        /> */}
+                        />
                         {/* </Grid> */}
 
-
+                        {/* <div style={{ display: "flex", flexDirection: "column", alignItems: "end" }}> */}
                         <Controls.Button
                             text="Create Project"
                             variant="outlined"
                             startIcon={<AddIcon />}
                             className={classes.newButton}
                             onClick={() => {
-                                setIsDelete(false);
+                                setAction('create');
                                 setPopUpTitle('Create Project');
                                 setOpenPopup(true);
                                 setRecordForEdit(null);
                             }}
                         />
-                        {/* <Controls.Button
+                        <Controls.Button
                             text="Join Project"
                             variant="outlined"
                             startIcon={<AddIcon />}
                             className={classes.newButton}
-                            onClick={() => { setOpenPopup(true); setRecordForEdit(null); }}
-                        /> */}
+                            onClick={() => {
+                                setAction('join');
+                                setPopUpTitle('Join Project');
+                                setOpenPopup(true);
+                                setRecordForEdit(null);
+                            }}
+                        />
+
+
+                        {/* </div> */}
 
                     </Toolbar>
+
                     <TblContainer>
 
                         <TblHead />
@@ -270,7 +247,9 @@ function Project(props) {
                                 (<TableRow key={item.id}>
                                     <TableCell>{item._id}</TableCell>
                                     <TableCell>{item.project_name}</TableCell>
-                                    {/* <TableCell>{item.status}</TableCell> */}
+
+                                    <TableCell>{item.user_id === userID ? item.user_id + " (me)" : item.user_id}</TableCell>
+
                                     <TableCell>{item.date_created}</TableCell>
                                     <TableCell>{item.last_edited}</TableCell>
                                     <TableCell>{item.comment}</TableCell>
@@ -281,7 +260,7 @@ function Project(props) {
                                         <Controls.ActionButton
                                             color="primary"
                                             onClick={() => {
-                                                setIsDelete(false)
+                                                setAction('update')
                                                 setPopUpTitle('Edit Project');
                                                 openInPopup(item)
                                             }}>
@@ -291,7 +270,7 @@ function Project(props) {
                                             color="secondary"
                                             onClick={() => {
                                                 // onDelete(item._id)
-                                                setIsDelete(true)
+                                                setAction('delete')
                                                 setPopUpTitle('Delete Project');
                                                 openInPopup(item)
 
@@ -314,12 +293,18 @@ function Project(props) {
                     title={popUpTitle}
                     openPopup={openPopup} // boolean to indicate Popup is enabled or not
                     setOpenPopup={setOpenPopup}  // setOpenPopup bool function
+                    setErrorMessage={setErrorMessage}
                 >
+
+
                     <ProjectForm
                         recordForEdit={recordForEdit}
                         makeAction={makeAction}
-                        isDelete={isDelete}
+                        action={action}
+                        errorMessage={errorMessage}
+                        setErrorMessage={setErrorMessage}
                     />
+
                 </Popup>
 
 

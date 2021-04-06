@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core';
 import React, { useState } from 'react'
 
-export function useForm(initialFValues, validateOnChange = false, validate) {
+export function useForm(initialFValues, validateOnChange = false, validate, setErrorMessage) {
     // above para for "= useForm(initialFValues, true, validate)" in projForm.js;
 
     const [values, setValues] = useState(initialFValues);
@@ -22,12 +22,19 @@ export function useForm(initialFValues, validateOnChange = false, validate) {
 
     }
 
-    //validation section 19:58
+    // validation section 19:58
     const resetForm = () => {
         console.log("resetForm executed!")
         setValues(initialFValues);
-        setErrors({})
+        setErrors({});
+        setErrorMessage('');
+
     }
+    // const resetForm = () => {
+    //     console.log("resetForm executed!")
+    //     setValues(initialFValues);
+    //     setErrors({});
+    // }
 
     return {
         values,

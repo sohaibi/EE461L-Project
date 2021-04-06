@@ -13,7 +13,7 @@
 # #type <localhost:5000> in browser
 from flask import Flask, json, jsonify, request, session
 from flask_cors import CORS
-from data_service import hardware, user,project
+from data_service import hardware, user, project
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 from bson import json_util
@@ -160,16 +160,6 @@ def userProfile():
     return response
 
 
-@app.after_request
-def creds(response):
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-    return response
-
-
-if(__name__ == "__main__"):
-    app.run(debug=True)
-
-#Adding Project Route
 @app.route('/project', methods=['POST', 'GET'])
 def projectAccess():
     if 'user' not in session:
@@ -181,39 +171,63 @@ def projectAccess():
         if not data:
             return jsonify({'message': 'Null request'})
         # print(user_id)
-        if data['action']== 'delete':
+        if data['action'] == 'delete':
             project_id = data['project_id']
-            #delete from user proj list and project db
-            user.delete_projects(user_id,project_id)
-            project.delete_project(project_id)
-            print("succefully deleted!")
+            # delete from user proj list and project db
+            user.delete_projects(user_id, project_id)
+            # if remove member from project team
+            project.handle_update_project_team(project_id, user_id, "-")
+            team_list = project.handle_get_project_info(project_id)['team']
+            # delete one project only when no one is managing that
+            if len(team_list) == 0:
+                project.delete_project(project_id)
+            # print("succefully deleted!")
 
-        if data['action']== 'create':
+        if data['action'] == 'create':
             project_name = data['project_name']
-            comment = data['comment']      
-            proj_id = project.handle_project_creation(project_name,user_id,comment) #create new proj
-            #also need to add proj_id to user's project list!!
-            user.add_projects(user_id,proj_id)
-        
-        if data['action']== 'update':
+            comment = data['comment']
+            proj_id = project.handle_project_creation(
+                project_name, user_id, comment)  # create new proj
+            # also need to add proj_id to user's project list!!
+            user.add_projects(user_id, proj_id)
+
+        if data['action'] == 'update':
             project_id = data['project_id']
             project_name = data['project_name']
-            comment = data['comment'] 
+            comment = data['comment']
             project.handle_update_project(project_id, project_name, comment)
-        ## error repsonese check:
+        # error repsonese check:
         # successfully create new project, send 'success' back
+        if data['action'] == 'join':
+            project_id = data['project_id']
+            # print(ObjectId.is_valid(project_id))
+            if (not ObjectId.is_valid(project_id)) or (not project.handle_get_project_info(project_id)):
+                return jsonify({'message': 'Project ID does not exist!'})
+            # if project does exist
+            user.add_projects(user_id, project_id)
+            project.handle_update_project_team(project_id, user_id, "+")
 
     # Either POST OR GET: (display project list)
     project_dict = user.get_projects(user_id)
-    project_list = [] # [] of {}
+    project_list = []  # [] of {}
     for proj_id in project_dict:
         proj_info = project.handle_get_project_info(proj_id)
-        proj_info['_id'] = str(proj_info['_id'] ) # make ObjectID jsonable
-        project_list.append(proj_info)
+        if proj_info:  # if project can be found
+            proj_info['_id'] = str(proj_info['_id'])  # make ObjectID jsonable
+            project_list.append(proj_info)
     # print("proj list: ", project_list)
     # print(project_list)
-    return jsonify({'records': tuple(project_list)})
+    return jsonify({'message': 'success', 'records': tuple(project_list)})
     # return json.loads(json_util.dumps(project_list))
-      
-      
 
+
+@app.after_request
+def creds(response):
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    return response
+
+
+if(__name__ == "__main__"):
+    app.run(debug=True)
+
+# Adding Project Route

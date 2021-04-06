@@ -6,7 +6,7 @@ const useStyles = makeStyles(theme => ({
     root: {
         minWidth: 0,
         margin: theme.spacing(0.5),
-        maxWidth: 100
+        maxWidth: 800
     },
     label: {
         textTransform: 'none'
