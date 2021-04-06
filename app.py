@@ -24,6 +24,7 @@ app = Flask(__name__,static_folder='Frontend/build', static_url_path='/')
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config["DEBUG"] = True
 
 @app.route('/')
 @cross_origin()
@@ -139,8 +140,10 @@ def login():
     # POST
     data = request.json
     # print(data)
+    print("data received as:")
+    print(data)
     if not data:
-        return jsonify({'message': 'Null request'})
+        return jsonify({'message': 'Null request????'})
     if data:
         username = data['username']
         password = data['password']

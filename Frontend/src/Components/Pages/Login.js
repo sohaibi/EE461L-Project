@@ -34,7 +34,8 @@ class Login extends React.Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log("making request to login")
-        // console.log(this.state.username)
+        console.log(this.state.username)
+        console.log(this.state.pwd)
         fetch('/login',
             {
                 method: "POST",
