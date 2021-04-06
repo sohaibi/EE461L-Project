@@ -143,7 +143,7 @@ def login():
         )
 
     # POST
-    data = request.json()
+    data = request.get_json(force=True)
     # print(data)
     app.logger.debug("data received as:")
     app.logger.debug(request)
