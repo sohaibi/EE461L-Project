@@ -45,10 +45,13 @@ class Login extends React.Component {
                 headers: {
                     "content_type": "application/json",
                 },
-                body: JSON.stringify({
-                    'username': this.state.username,
-                    'password': this.state.pwd
-                })
+                body: JSON.stringify(
+                    {
+                        'username': this.state.username,
+                        'password': this.state.pwd
+
+                    }
+                )
             }
         ).then(response => {
             return response.json()

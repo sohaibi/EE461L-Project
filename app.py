@@ -145,9 +145,9 @@ def login():
     # POST
     data = request.json
     # print(data)
-    app.logger.info("data received as:")
-
-    app.logger.info(data)
+    app.logger.debug("data received as:")
+    app.logger.debug(request)
+    app.logger.debug(data)
     if not data:
         return jsonify({'message': 'Null request????'})
     if data:
