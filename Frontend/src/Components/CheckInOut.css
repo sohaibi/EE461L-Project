@@ -1,0 +1,49 @@
+.io-heading {
+    margin: 0px auto;
+    background-color: #f8971f;
+    color: white;
+    padding: 20px;
+}
+
+.checked_table {
+    margin: 20px auto;
+    font-family: 'Nunito', sans-serif;
+    background-color: white;
+    border-collapse: collapse;
+}
+
+.checked_table > tbody > tr > td {
+    text-align: center;
+    width: 150px;
+    padding: 5px;
+    border: 1px solid #f8971f;
+    color: #333f48;
+}
+
+.checked_table > tbody > tr:nth-child(1) > td {
+    background-color: #f8971f;
+    color: white;
+}
+
+/** BUTTON **/
+#hideCheckButton {
+    visibility: hidden;
+}
+
+#showCheckButton {
+    visibility: visible;
+    margin: 0px auto;
+}
+
+.check_submit {
+    background-color: #f8971f;
+    color: white;
+    font-size: 20px;
+    outline: none;
+    border: none;
+    width: fit-content;
+    cursor: pointer;
+    margin: 10px auto;
+    padding: 5px;
+    height: fit-content;
+}
