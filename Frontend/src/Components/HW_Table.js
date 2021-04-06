@@ -92,7 +92,7 @@ function HW_Table(props) {
     }
 
     if (HWSet_rent_list !== undefined && project !== undefined) {
-        console.log("run this???")
+        // console.log("run this???")
         bar_data[0].push('Capacity');
         bar_data[0][2] = project.name;
 
@@ -111,7 +111,7 @@ function HW_Table(props) {
             // record HW_cap
             bar_data[i + 1].push(capacities[i] - availabilities[i] - bar_data[i + 1][2]);
         }
-        color_data = ['#f8971f', '#009900', '#808080'];
+        color_data = ['#f8971f', '#900C3F', '#808080'];
         console.log(bar_data);
     }
 

@@ -256,7 +256,7 @@ def projectAccess():
                 # check if this user is the only one person to manage this project
                 team_list = project.handle_get_project_info(project_id)['team']
                 if len(team_list) == 1:
-                    return jsonify({'message': 'As the only manager for this project please return the hardware before delete it.'})
+                    return jsonify({'message': 'As the only manager for this project please return the hardware before delete it. This project will be permanently deleted afterwards.'})
             # remove project_id from user's projects list
             user.delete_projects(user_id, project_id)
             # remove member from project team

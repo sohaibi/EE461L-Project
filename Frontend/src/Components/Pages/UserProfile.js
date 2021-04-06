@@ -136,6 +136,10 @@ export default function UserProfile(props) {
                             <span class="v">{email}</span>
                         </div>
                         <div class="pair">
+                            <p class="profile_tag">User ID</p>
+                            <span class="v">{userID}</span>
+                        </div>
+                        <div class="pair">
                             <p class="profile_tag">Password</p>
                             <span class="v">••••••••</span>
                         </div>
