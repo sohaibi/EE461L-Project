@@ -11,7 +11,7 @@
 # if __name__ == "__main__":
 #     app.run(debug=True) # error would display on webpage
 # #type <localhost:5000> in browser
-
+import logging
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS, cross_origin
 from data_service import hardware, user, project
@@ -20,16 +20,16 @@ from bson import ObjectId
 from bson import json_util
 
 
-app = Flask(__name__,static_folder='Frontend/build', static_url_path='/')
+app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["DEBUG"] = True
 
-@app.route('/')
-# @cross_origin()
-# def index():
-#     return app.send_static_file('index.html')
+# @app.route('/')
+# # @cross_origin()
+# # def index():
+# #     return app.send_static_file('index.html')
 
 @app.route('/check',  methods=['POST', 'GET'])
 def check():
@@ -140,8 +140,9 @@ def login():
     # POST
     data = request.json
     # print(data)
-    print("data received as:")
-    print(data)
+    app.logger.info("data received as:")
+
+    app.logger.info(data)
     if not data:
         return jsonify({'message': 'Null request????'})
     if data:
@@ -321,4 +322,8 @@ def creds(response):
 if(__name__ == "__main__"):
     app.run(debug=True)
 
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 # Adding Project Route
