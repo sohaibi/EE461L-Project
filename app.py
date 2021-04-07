@@ -11,7 +11,7 @@ app = Flask(__name__)
 CORS(app)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
-app.config["DEBUG"] = True
+app.config["DEBUG"] = False
 
 
 
@@ -329,8 +329,7 @@ def projectAccess():
 
 @app.after_request
 def creds(response):
-    if response.headers['Access-Control-Allow-Credentials']!= 'true':
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 #     # response.headers.add('Access-Control-Allow-Credentials')
 #     response.headers.add('Access-Control-Allow-Headers',
@@ -338,7 +337,7 @@ def creds(response):
 
 
 if(__name__ == "__main__"):
-    app.run(debug=True)
+    app.run(debug=False)
 
 if __name__ != '__main__':
     gunicorn_logger = logging.getLogger('gunicorn.error')
