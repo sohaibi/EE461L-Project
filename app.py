@@ -192,7 +192,9 @@ def download():
             data_folder_path = partial_path+file_name[:-4]
             zip_path = partial_path+file_name
             shutil.rmtree(data_folder_path)
-            os.remove(zip_path)
+            #zip.close()
+            if os.path.exists(zip_path):
+                os.remove(zip_path)
             #returns the saved zip file
             return zip
     return "hello"

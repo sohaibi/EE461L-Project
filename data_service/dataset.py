@@ -38,22 +38,25 @@ def getDatasetTitles():
 #downloads data into folder, creates zip
 def generateZip(database_name, dir):
     #if __name__ == '__main__':
-        print("entered generateZip()")
-        wfdb.dl_database(database_name, dir)
-        print("completed .dl_database()")
-        zipf = zipfile.ZipFile(dir+'.zip', 'w')
-        zipdir(dir, zipf)
-        zipf.close()
-        return zipf 
+    print("entered generateZip()")
+    wfdb.dl_database(database_name, dir)
+    print("completed .dl_database()")
+    zipf = zipfile.ZipFile(dir+'.zip', 'w')
+    zipdir(dir, zipf)
+    zipf.close()
+    return zipf 
 
 #uses database_name to derive directory then creates zip
 def getZip(database_name):
-        database_name = database_name[:-4]
-        dir = os.path.dirname(os.path.abspath(__file__))+'/snippets/'+str(database_name)
-        dir = dir.replace('/data_service/', '/')
-        #dir = '/Users/monamcelroy/Desktop/EE461L-Project/snippets/'+str(database_name)
-        zip = generateZip(database_name, dir)
-        return True
+    database_name = database_name[:-4]
+    dir = os.path.dirname(os.path.abspath(__file__))+'/snippets/'+str(database_name)
+    dir = dir.replace('/data_service/', '/')
+            #dir = '/Users/monamcelroy/Desktop/EE461L-Project/snippets/'+str(database_name)
+    zip = generateZip(database_name, dir)
+    return True
+
+def getZip2(database_name):
+    print("in progess")
 
 
 def main():

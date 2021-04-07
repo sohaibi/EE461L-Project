@@ -38,7 +38,7 @@ export default function Datasets(){
             setDataset4(Dataset4 => data[3]);
             setDataset5(Dataset5 => data[4]);
             setDataset6(Dataset6 => data[5]);
-            setDataset7(Dataset7 => data[6]);
+            setDataset7(Dataset7 => data[11]);
             setDataset8(Dataset8 => data[7]);
             setDataset9(Dataset9 => data[8]);
             setDataset10(Dataset10 => data[9]);
@@ -58,7 +58,7 @@ export default function Datasets(){
             setDataset4T(Dataset4T => data[3]);
             setDataset5T(Dataset5T => data[4]);
             setDataset6T(Dataset6T => data[5]);
-            setDataset7T(Dataset7T => data[6]);
+            setDataset7T(Dataset7T => data[11]);
             setDataset8T(Dataset8T => data[7]);
             setDataset9T(Dataset9T => data[8]);
             setDataset10T(Dataset10T => data[9]);
@@ -72,7 +72,7 @@ export default function Datasets(){
       }, []);
 
       //Returns table with dataset names and download buttons
-    return(
+          return(
         <div className = 'Datasets'>
             <h1>Datasets</h1>
             <p>  Select Datasets to download.</p>
@@ -90,32 +90,25 @@ export default function Datasets(){
                      <p>{Dataset1}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset1T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/aami-ec13/ansiaami-ec13-test-waveforms-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
                 <td>                  
                      <p>{Dataset2}</p>
                 </td>
+                
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset2T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/adfecgdb/abdominal-and-direct-fetal-ecg-database-1.0.0.zip">Download</a>
                 </td>
+                
             </tr>
             <tr>
                 <td>                  
                      <p>{Dataset3}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset3T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/afdb/mit-bih-atrial-fibrillation-database-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -123,10 +116,7 @@ export default function Datasets(){
                      <p>{Dataset4}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset4T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/afpdb/paf-prediction-challenge-database-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -134,10 +124,7 @@ export default function Datasets(){
                      <p>{Dataset5}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset5T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/aftdb/af-termination-challenge-database-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -145,10 +132,7 @@ export default function Datasets(){
                      <p>{Dataset6}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset6T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/ahadb/aha-database-sample-excluded-record-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -156,10 +140,7 @@ export default function Datasets(){
                      <p>{Dataset7}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset7T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/body-sway-music-vr/body-sway-when-standing-and-listening-to-music-modified-to-reinforce-virtual-reality-environment-motion-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -167,10 +148,7 @@ export default function Datasets(){
                      <p>{Dataset8}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset8T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/apnea-ecg/apnea-ecg-database-1.0.0.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -178,10 +156,7 @@ export default function Datasets(){
                      <p>{Dataset9}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset9T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://storage.googleapis.com/bhx-brain-bounding-box-1.1.physionet.org/brain-hemorrhage-extended-bhx-bounding-box-extrapolation-from-thick-to-thin-slice-ct-images-1.1.zip">Download</a>
                 </td>
             </tr>
             <tr>
@@ -189,10 +164,7 @@ export default function Datasets(){
                      <p>{Dataset10}</p>
                 </td>
                 <td>
-                   <form action="/uploads" method='POST'>
-                       <select hidden name='filepath' id="filepath"><option selected>{Dataset10T}</option></select>
-                       <input type="submit" value="Download"></input>
-                    </form> 
+                   <a href="https://www.physionet.org/static/published-projects/bidmc/bidmc-ppg-and-respiration-dataset-1.0.0.zip">Download</a>
                 </td>
             </tr>
             </tbody>
@@ -200,5 +172,133 @@ export default function Datasets(){
       
         </div>
     )
+    // return(
+    //     <div className = 'Datasets'>
+    //         <h1>Datasets</h1>
+    //         <p>  Select Datasets to download.</p>
+
+    //         <table id = 'dataset_table'>
+    //         <thead>
+    //         <tr>
+    //             <th>Datasets</th>
+    //             <th>Click to Download</th>
+    //         </tr>
+    //         </thead>
+    //         <tbody>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset1}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset1T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset2}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset2T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset3}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset3T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset4}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset4T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset5}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset5T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset6}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset6T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //         <   td>                  
+    //                  <p>{Dataset7}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset7T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset8}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset8T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset9}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset9T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         <tr>
+    //             <td>                  
+    //                  <p>{Dataset10}</p>
+    //             </td>
+    //             <td>
+    //                <form action="/uploads" method='POST'>
+    //                    <select hidden name='filepath' id="filepath"><option selected>{Dataset10T}</option></select>
+    //                    <input type="submit" value="Download"></input>
+    //                 </form> 
+    //             </td>
+    //         </tr>
+    //         </tbody>
+    //     </table>
+      
+    //     </div>
+    // )
     
 }
