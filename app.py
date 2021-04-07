@@ -14,7 +14,8 @@ def create_app(test_config=None):
     app.secret_key = "secret"
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["DEBUG"] = False
-
+    app.config["SESSION_COOKIE_HTTPONLY"] = False
+    app.config["TESTING"] = False
 
 
     # @app.route('/')
