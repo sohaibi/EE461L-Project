@@ -160,10 +160,7 @@ def create_app(test_config=None):
             session['user'] = str(client['_id'])  # make jsonID serializable
             # print(client)
             if "user" in session:
-                response = jsonify(
-                    {'message': 'success', 'userID': session['user']}
-
-                return response
+                return jsonify({'message': 'success', 'userID': session['user']}
             return jsonify({'message': 'something wrong'})
 
 
