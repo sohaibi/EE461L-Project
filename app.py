@@ -63,7 +63,7 @@ def create_app(test_config=None):
 
                 )
             else:
-                return jsonify({'message': 'not login'})
+                return jsonify({'message': session['user']})
         # POST
         data = request.get_json(force=True)
         if not data:
