@@ -319,7 +319,7 @@ def create_app(test_config=None):
     @app.after_request
     def creds(response):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
-        response.headers['Access-Control-Allow-Origin']= request.url
+        response.headers['Access-Control-Allow-Origin']= "https://wirereact.herokuapp.com"
         return response
     #     # response.headers.add('Access-Control-Allow-Credentials')
     #     response.headers.add('Access-Control-Allow-Headers',
