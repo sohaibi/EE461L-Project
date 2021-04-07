@@ -21,7 +21,7 @@ def creds(response):
     # response.headers.add('Access-Control-Allow-Credentials')
     response.headers.add('Access-Control-Allow-Headers',
                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-    response.headers.add['Access-Control-Allow-Origin']= 'true'
+    # response.headers.add['Access-Control-Allow-Origin']= 'true'
     return response
 
 # @app.after_request
