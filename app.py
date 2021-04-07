@@ -53,7 +53,7 @@ def create_app(test_config=None):
                     proj = {
                         "name": name,
                         "id": projID,
-                        "hardware": HW_info,
+                        "hardware": tuple(HW_info),
                         "credits": credits
                     }
                     app.logger.debug('I have been here 4')
