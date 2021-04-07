@@ -176,7 +176,7 @@ def login():
         if "user" in session:
             response = jsonify(
                 {'message': 'success', 'userID': session['user']})
-            response.headers.add['Access-Control-Allow-Origin']= request.url
+            response.headers['Access-Control-Allow-Origin']= request.url
 
             return response
         return jsonify({'message': 'something wrong'})
