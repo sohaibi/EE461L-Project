@@ -21,7 +21,7 @@ def creds(response):
     # response.headers.add('Access-Control-Allow-Credentials')
     response.headers.add('Access-Control-Allow-Headers',
                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-    # response.headers.add['Access-Control-Allow-Origin']= 'true'
+    
     return response
 
 # @app.after_request
@@ -176,6 +176,7 @@ def login():
         if "user" in session:
             response = jsonify(
                 {'message': 'success', 'userID': session['user']})
+            response.headers.add['Access-Control-Allow-Origin']= request.url
 
             return response
         return jsonify({'message': 'something wrong'})
