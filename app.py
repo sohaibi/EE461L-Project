@@ -59,9 +59,9 @@ def create_app(test_config=None):
                     app.logger.debug('I have been here 4')
                     # print(proj)
                     projects.append(proj)
-
+                    app.logger.debug('I have been here 5')
                 return jsonify(
-                    {"message": "success", "projects": projects}
+                    {"message": "success", "projects": tuple(projects)}
                     # {"message": "success"}
 
                 )
