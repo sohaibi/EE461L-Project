@@ -8,7 +8,7 @@ from bson import json_util
 
 
 app = Flask(__name__)
-CORS(app, supports_credentials=True)
+CORS(app)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["DEBUG"] = True
