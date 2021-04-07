@@ -323,6 +323,12 @@ def projectAccess():
 #     response.headers['Access-Control-Allow-Credentials'] = 'true'
 #     return response
 
+@app.after_request
+def creds(response):
+    response.headers.add('Access-Control-Allow-Headers',
+                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+    return response
+
 
 if(__name__ == "__main__"):
     app.run(debug=True)
