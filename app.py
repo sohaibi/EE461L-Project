@@ -10,7 +10,7 @@ from bson import json_util
 
 def create_app(test_config=None):
     app = Flask(__name__)
-    CORS(app)
+    CORS(app,supports_credentials=True)
     app.secret_key = "secret"
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config["DEBUG"] = False
@@ -314,7 +314,6 @@ def create_app(test_config=None):
 
     @app.after_request
     def creds(response):
-        # response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         response.headers.add('Access-Control-Allow-Headers',
                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
