@@ -17,8 +17,8 @@ app.config["DEBUG"] = True
 
 @app.after_request
 def creds(response):
-    # response.headers['Access-Control-Allow-Credentials'] = 'true'
-    response.headers.add('Access-Control-Allow-Credentials')
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    # response.headers.add('Access-Control-Allow-Credentials')
     # response.headers.add('Access-Control-Allow-Headers',
     #                     "Origin, X-Requested-With, Content-Type, Accept, x-auth")
     return response
