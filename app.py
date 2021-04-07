@@ -140,7 +140,7 @@ def create_app(test_config=None):
                     'ans': 'N',
                 }
             )
-            # response.headers['Access-Control-Allow-Origin']= request.url
+            response.headers['Access-Control-Allow-Origin']= request.url
 
             return response
 
