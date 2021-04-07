@@ -1,3 +1,4 @@
+  
 import logging
 from flask import Flask, jsonify, request, session
 from flask_cors import CORS, cross_origin
@@ -45,7 +46,7 @@ def create_app(test_config=None):
                         temp_dict['HW_name'] = each_name
                         temp_dict['HW_id'] = HW_id
                         HW_info.append(temp_dict)
-                    credits = 80  # TODO: calculate credit
+                    # credits = 80  # TODO: calculate credit
                     proj = {
                         "name": name,
                         "id": projID,
@@ -123,17 +124,17 @@ def create_app(test_config=None):
         # app.logger.critical('this is a CRITICAL message')
         if request.method == 'GET':
             if "user" in session:
-                data = jsonify({
+                return jsonify({
                     'ans': 'Y',
                     'userID': session['user']
                 })
             else:
-                data = jsonify(
+                return jsonify(
                 {
                     'ans': 'N',
                 }
             )
-            return data
+ 
 
         # POST
         data = request.get_json(force=True)
@@ -160,7 +161,11 @@ def create_app(test_config=None):
             session['user'] = str(client['_id'])  # make jsonID serializable
             # print(client)
             if "user" in session:
-                return jsonify({'message': 'success', 'userID': session['user']}
+                response = jsonify(
+                    {'message': 'success', 'userID': session['user']})
+                response.headers['Access-Control-Allow-Origin']= request.url
+
+                return response
             return jsonify({'message': 'something wrong'})
 
 
@@ -314,8 +319,7 @@ def create_app(test_config=None):
     def creds(response):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers.add('Access-Control-Allow-Headers',
-                            "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-   
+                        "Origin, X-Requested-With, Content-Type, Accept, x-auth")
         return response
 
 
