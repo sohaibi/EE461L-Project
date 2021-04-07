@@ -17,10 +17,10 @@ app.config["DEBUG"] = True
 
 @app.after_request
 def creds(response):
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    # response.headers['Access-Control-Allow-Credentials'] = 'true'
     # response.headers.add('Access-Control-Allow-Credentials')
-    # response.headers.add('Access-Control-Allow-Headers',
-    #                     "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+    response.headers.add('Access-Control-Allow-Headers',
+                        "Origin, X-Requested-With, Content-Type, Accept, x-auth")
     return response
 
 # @app.after_request
@@ -128,6 +128,7 @@ def send_hardware_info():
 
 
 @app.route('/login', methods=['POST', 'GET'])
+@cross_origin(supports_credentials=True)
 def login():
     # GET
     app.logger.debug('this is a DEBUG message')
