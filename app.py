@@ -139,15 +139,18 @@ def login():
     app.logger.critical('this is a CRITICAL message')
     if request.method == 'GET':
         if "user" in session:
-            return jsonify({
+            response = jsonify({
                 'ans': 'Y',
                 'userID': session['user']
             })
-        return jsonify(
+        else:
+            response = jsonify(
             {
                 'ans': 'N',
             }
         )
+        response.headers['Access-Control-Allow-Origin']= request.url
+        return response
 
     # POST
     data = request.get_json(force=True)
