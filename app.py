@@ -123,18 +123,18 @@ def create_app(test_config=None):
         # app.logger.critical('this is a CRITICAL message')
         if request.method == 'GET':
             if "user" in session:
-                response = jsonify({
+                data = jsonify({
                     'ans': 'Y',
                     'userID': session['user']
                 })
             else:
-                response = jsonify(
+                data = jsonify(
                 {
                     'ans': 'N',
                 }
             )
-            
-
+            response = app.response_class(response = data, status=200, mimetype='application/json')
+            response.headers['Access-Control-Allow-Origin']= request.url
             return response
 
         # # POST
@@ -319,7 +319,7 @@ def create_app(test_config=None):
     @app.after_request
     def creds(response):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
-        response.headers['Access-Control-Allow-Origin']= "https://wirereact.herokuapp.com"
+     
         return response
     #     # response.headers.add('Access-Control-Allow-Credentials')
     #     response.headers.add('Access-Control-Allow-Headers',
