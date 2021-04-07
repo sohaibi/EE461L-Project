@@ -129,7 +129,7 @@ def send_hardware_info():
 
 
 @app.route('/login', methods=['POST', 'GET'])
-@cross_origin(supports_credentials=True)
+@cross_origin()
 def login():
     # GET
     # app.logger.debug('this is a DEBUG message')
