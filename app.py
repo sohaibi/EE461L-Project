@@ -329,7 +329,8 @@ def projectAccess():
 
 @app.after_request
 def creds(response):
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    if response.headers['Access-Control-Allow-Credentials']!= 'true':
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response
 #     # response.headers.add('Access-Control-Allow-Credentials')
 #     response.headers.add('Access-Control-Allow-Headers',
