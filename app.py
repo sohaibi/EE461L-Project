@@ -318,7 +318,7 @@ def create_app(test_config=None):
         response.headers.add('Access-Control-Allow-Credentials', 'true')
         response.headers.add('Access-Control-Allow-Headers',
                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-        response.set_cookie("Yue's cookie", session)
+        # response.set_cookie("Yue's cookie", session)
         # response.headers['Access-Control-Allow-Origin']
         return response
 
