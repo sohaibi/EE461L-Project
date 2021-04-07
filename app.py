@@ -11,7 +11,25 @@ app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
-# app.config["DEBUG"] = True
+app.config["DEBUG"] = True
+
+
+
+@app.after_request
+def creds(response):
+    # response.headers['Access-Control-Allow-Credentials'] = 'true'
+    response.headers.add('Access-Control-Allow-Credentials')
+    # response.headers.add('Access-Control-Allow-Headers',
+    #                     "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+    return response
+
+# @app.after_request
+# def creds(response):
+# response.headers.add('Access-Control-Allow-Headers',
+#                      "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+#     return response
+
+
 
 # @app.route('/')
 # # @cross_origin()
@@ -305,18 +323,6 @@ def projectAccess():
     # return json.loads(json_util.dumps(project_list))
 
 
-@app.after_request
-def creds(response):
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-    # response.headers.add('Access-Control-Allow-Headers',
-    #                     "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-    return response
-
-# @app.after_request
-# def creds(response):
-# response.headers.add('Access-Control-Allow-Headers',
-#                      "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-#     return response
 
 
 if(__name__ == "__main__"):
