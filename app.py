@@ -133,9 +133,7 @@ def create_app(test_config=None):
                     'ans': 'N',
                 }
             )
-            response = app.response_class(response = data, status=200, mimetype='application/json')
-            response.headers['Access-Control-Allow-Origin']= request.url
-            return response
+            return data
 
         # # POST
         # data = request.get_json(force=True)
