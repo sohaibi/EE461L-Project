@@ -161,11 +161,8 @@ def create_app(test_config=None):
             session['user'] = str(client['_id'])  # make jsonID serializable
             # print(client)
             if "user" in session:
-                response = jsonify(
+                return jsonify(
                     {'message': 'success', 'userID': session['user']})
-                response.headers['Access-Control-Allow-Origin']= request.url
-
-                return response
             return jsonify({'message': 'something wrong'})
 
 
@@ -320,6 +317,7 @@ def create_app(test_config=None):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         response.headers.add('Access-Control-Allow-Headers',
                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+        # response.headers['Access-Control-Allow-Origin']
         return response
 
 
