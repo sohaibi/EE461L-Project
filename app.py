@@ -15,13 +15,6 @@ def create_app(test_config=None):
     app.config["DEBUG"] = False
 
 
-    # @app.after_request
-    # def creds(response):
-    # response.headers.add('Access-Control-Allow-Headers',
-    #                      "Origin, X-Requested-With, Content-Type, Accept, x-auth")
-    #     return response
-
-
 
     # @app.route('/')
     # # @cross_origin()
@@ -140,7 +133,7 @@ def create_app(test_config=None):
                     'ans': 'N',
                 }
             )
-            response.headers['Access-Control-Allow-Origin']= request.url
+            
 
             return response
 
@@ -326,6 +319,7 @@ def create_app(test_config=None):
     @app.after_request
     def creds(response):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers['Access-Control-Allow-Origin']= request.url
         return response
     #     # response.headers.add('Access-Control-Allow-Credentials')
     #     response.headers.add('Access-Control-Allow-Headers',
