@@ -314,7 +314,8 @@ def create_app(test_config=None):
 
     @app.after_request
     def creds(response):
-        response.headers['Access-Control-Allow-Credentials'] = 'true'
+        # response.headers['Access-Control-Allow-Credentials'] = 'true'
+        response.headers.add('Access-Control-Allow-Credentials', 'true')
         response.headers.add('Access-Control-Allow-Headers',
                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
         # response.headers['Access-Control-Allow-Origin']
