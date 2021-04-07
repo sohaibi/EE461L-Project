@@ -162,7 +162,7 @@ def create_app(test_config=None):
             if "user" in session:
                 response = jsonify(
                     {'message': 'success', 'userID': session['user']})
-                response.headers['Access-Control-Allow-Origin']= "which one you are"
+                # response.headers['Access-Control-Allow-Origin']= "which one you are"
 
                 return response
             return jsonify({'message': 'something wrong'})
