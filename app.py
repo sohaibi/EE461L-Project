@@ -305,8 +305,7 @@ def create_app(test_config=None):
             if proj_info:  # if project can be found
                 proj_info['_id'] = str(proj_info['_id'])  # make ObjectID jsonable
                 project_list.append(proj_info)
-        # print("proj list: ", project_list)
-        # print(project_list)
+        # print("proj list: ", project_list
         return jsonify({'message': 'success', 'records': tuple(project_list)})
         # return json.loads(json_util.dumps(project_list))
 
