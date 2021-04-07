@@ -63,7 +63,7 @@ def create_app(test_config=None):
 
                 )
             else:
-                return jsonify({'message': session['user']})
+                return jsonify({'message': len(session)})
         # POST
         data = request.get_json(force=True)
         if not data:
