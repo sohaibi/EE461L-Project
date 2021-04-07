@@ -60,8 +60,8 @@ def create_app(test_config=None):
                     # print(proj)
                     projects.append(proj)
                     app.logger.debug('I have been here 5')
-                    app.logger.debug(projects)
-                    return jsonify( {"message": "success", "projects": tuple(projects)})
+                app.logger.debug(projects)
+                return jsonify( {"message": "success", "projects": tuple(projects)})
             else:
                 return jsonify({'message': "not login"})
         # POST
