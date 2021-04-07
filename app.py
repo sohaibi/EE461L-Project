@@ -150,7 +150,7 @@ def login():
             }
         )
         # response.headers['Access-Control-Allow-Origin']= request.url
-        response.headers['Access-Control-Allow-Credential'] = 'hahaha'
+        response.headers['Access-Control-Allow-Credential'] = 'true'
         return response
 
     # # POST
