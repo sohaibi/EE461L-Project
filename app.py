@@ -135,37 +135,37 @@ def create_app(test_config=None):
             )
             return data
 
-        # # POST
-        # data = request.get_json(force=True)
-        # # print(data)
-        # app.logger.debug("data received as:")
-        # app.logger.debug(request)
-        # app.logger.debug(data)
-        # if not data:
-        #     return jsonify({'message': 'Null request'})
-        # if data:
-        #     username = data['username']
-        #     password = data['password']
-        #     # compare user data in MongoDB
-        #     client = user.get_user(username)
-        #     # print(client)
-        #     if client == -1:
-        #         return jsonify({'message': 'Username does not exist'})
+        # POST
+        data = request.get_json(force=True)
+        # print(data)
+        app.logger.debug("data received as:")
+        app.logger.debug(request)
+        app.logger.debug(data)
+        if not data:
+            return jsonify({'message': 'Null request'})
+        if data:
+            username = data['username']
+            password = data['password']
+            # compare user data in MongoDB
+            client = user.get_user(username)
+            # print(client)
+            if client == -1:
+                return jsonify({'message': 'Username does not exist'})
 
-        #     if not pbkdf2_sha256.verify(password, client['password']):
-        #         return jsonify({'message': 'Username and password does not match'})
+            if not pbkdf2_sha256.verify(password, client['password']):
+                return jsonify({'message': 'Username and password does not match'})
 
-        #     # # success login, send userID back
+            # # success login, send userID back
 
-        #     session['user'] = str(client['_id'])  # make jsonID serializable
-        #     # print(client)
-        #     if "user" in session:
-        #         response = jsonify(
-        #             {'message': 'success', 'userID': session['user']})
-        #         response.headers['Access-Control-Allow-Origin']= request.url
+            session['user'] = str(client['_id'])  # make jsonID serializable
+            # print(client)
+            if "user" in session:
+                response = jsonify(
+                    {'message': 'success', 'userID': session['user']})
+                response.headers['Access-Control-Allow-Origin']= request.url
 
-        #         return response
-        #     return jsonify({'message': 'something wrong'})
+                return response
+            return jsonify({'message': 'something wrong'})
 
 
     @app.route('/register', methods=['POST', 'GET'])
