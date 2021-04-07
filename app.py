@@ -318,10 +318,10 @@ def projectAccess():
     # return json.loads(json_util.dumps(project_list))
 
 
-@app.after_request
-def creds(response):
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-    return response
+# @app.after_request
+# def creds(response):
+#     response.headers['Access-Control-Allow-Credentials'] = 'true'
+#     return response
 
 
 if(__name__ == "__main__"):
