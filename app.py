@@ -149,7 +149,7 @@ def login():
                 'ans': 'N',
             }
         )
-        response.headers['Access-Control-Allow-Origin']= request.url
+        # response.headers['Access-Control-Allow-Origin']= request.url
         response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
