@@ -30,6 +30,7 @@ def create_app(test_config=None):
             if "user" in session:
                 user_id = session['user']
                 # print(user_id)
+                app.logger.debug('I have been here 1')
                 project_ids = user.get_projects(
                     user_id)   # list of project id strings
                 # print(project_ids)
@@ -39,7 +40,7 @@ def create_app(test_config=None):
                     name = proj_info['project_name']
                     hardware_dict = proj_info['hardware_set_dict']
                     HW_info = []
-
+                    app.logger.debug('I have been here 2')
                     for HW_id in hardware_dict.keys():
                         temp_dict = {}
                         temp_dict = {'HW_use': hardware_dict[HW_id]}
@@ -48,12 +49,14 @@ def create_app(test_config=None):
                         temp_dict['HW_id'] = HW_id
                         HW_info.append(temp_dict)
                     # credits = 80  # TODO: calculate credit
+                    app.logger.debug('I have been here 3')
                     proj = {
                         "name": name,
                         "id": projID,
                         "hardware": HW_info,
                         "credits": credits
                     }
+                    app.logger.debug('I have been here 4')
                     # print(proj)
                     projects.append(proj)
 
@@ -63,7 +66,7 @@ def create_app(test_config=None):
 
                 )
             else:
-                return jsonify({'message': len(session)})
+                return jsonify({'message': "not login"})
         # POST
         data = request.get_json(force=True)
         if not data:
