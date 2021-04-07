@@ -7,7 +7,7 @@ node_modules/
 .venv
 .venv/
 data_service/__pycache__/
-
+Frontend/
 .DS_Store
 
 
