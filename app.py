@@ -161,8 +161,7 @@ def create_app(test_config=None):
             # print(client)
             if "user" in session:
                 response = jsonify(
-                    {'message': 'success', 'userID': session['user']})
-                # response.headers['Access-Control-Allow-Origin']= "which one you are"
+                    {'message': 'success', 'userID': session['user']}
 
                 return response
             return jsonify({'message': 'something wrong'})
@@ -317,11 +316,11 @@ def create_app(test_config=None):
     @app.after_request
     def creds(response):
         response.headers['Access-Control-Allow-Credentials'] = 'true'
-     
+        response.headers.add('Access-Control-Allow-Headers',
+                            "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+   
         return response
-    #     # response.headers.add('Access-Control-Allow-Credentials')
-    #     response.headers.add('Access-Control-Allow-Headers',
-    #                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+
 
 
     if(__name__ == "__main__"):
