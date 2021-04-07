@@ -15,13 +15,7 @@ app.config["DEBUG"] = True
 
 
 
-@app.after_request
-def creds(response):
-    response.headers['Access-Control-Allow-Credentials'] = 'true'
-    return response
-#     # response.headers.add('Access-Control-Allow-Credentials')
-#     response.headers.add('Access-Control-Allow-Headers',
-#                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+
     
   
 
@@ -331,6 +325,15 @@ def projectAccess():
     # return json.loads(json_util.dumps(project_list))
 
 
+
+
+@app.after_request
+def creds(response):
+    response.headers['Access-Control-Allow-Credentials'] = 'true'
+    return response
+#     # response.headers.add('Access-Control-Allow-Credentials')
+#     response.headers.add('Access-Control-Allow-Headers',
+#                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
 
 
 if(__name__ == "__main__"):
