@@ -15,14 +15,14 @@ app.config["DEBUG"] = True
 
 
 
-@app.after_request
-def creds(response):
-    # response.headers['Access-Control-Allow-Credentials'] = 'true'
-    # response.headers.add('Access-Control-Allow-Credentials')
-    response.headers.add('Access-Control-Allow-Headers',
-                        "Origin, X-Requested-With, Content-Type, Accept, x-auth")
+# @app.after_request
+# def creds(response):
+#     # response.headers['Access-Control-Allow-Credentials'] = 'true'
+#     # response.headers.add('Access-Control-Allow-Credentials')
+#     response.headers.add('Access-Control-Allow-Headers',
+#                         "Origin, X-Requested-With, Content-Type, Accept, x-auth")
     
-    return response
+    # return response
 
 # @app.after_request
 # def creds(response):
@@ -132,11 +132,11 @@ def send_hardware_info():
 @cross_origin(supports_credentials=True)
 def login():
     # GET
-    app.logger.debug('this is a DEBUG message')
-    app.logger.info('this is an INFO message')
-    app.logger.warning('this is a WARNING message')
-    app.logger.error('this is an ERROR message')
-    app.logger.critical('this is a CRITICAL message')
+    # app.logger.debug('this is a DEBUG message')
+    # app.logger.info('this is an INFO message')
+    # app.logger.warning('this is a WARNING message')
+    # app.logger.error('this is an ERROR message')
+    # app.logger.critical('this is a CRITICAL message')
     if request.method == 'GET':
         if "user" in session:
             response = jsonify({
@@ -150,6 +150,7 @@ def login():
             }
         )
         response.headers['Access-Control-Allow-Origin']= request.url
+        response.headers['Access-Control-Allow-Credentials'] = 'true'
         return response
 
     # POST
