@@ -2,3 +2,8 @@ data_service/
 .venv/
 Frontend/
 __pycache__/
+app.py 
+.env
+snippet
+requirements.txt
+README.md
