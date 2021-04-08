@@ -12,18 +12,23 @@
 #     app.run(debug=True) # error would display on webpage
 # #type <localhost:5000> in browser
 
-from flask import Flask, jsonify, request, session
+from flask import Flask, jsonify, request, session, send_from_directory, send_file
 from flask_cors import CORS
-from data_service import hardware, user, project
+from data_service import hardware, user, project, dataset
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 from bson import json_util
+import io
+import os
+import shutil
+
 
 
 app = Flask(__name__)
 CORS(app, supports_credentials=True)
 app.secret_key = "secret"
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['snippets'] = os.path.dirname(os.path.abspath(__file__))+'/snippets/'
 
 
 @app.route('/check',  methods=['POST', 'GET'])
@@ -232,6 +237,42 @@ def userProfile():
     })
     return response
 
+#Returns the names of each dataset for display
+@app.route('/dataset_names', methods=['GET', 'POST'])
+def datasetNames():
+    # GET:
+    if request.method == 'GET':
+        data_names = dataset.getDatasetNames()
+        return jsonify(data_names)
+    
+#returns the keys to each Dataset
+@app.route('/dataset_titles', methods=['GET', 'POST'])
+def datasetTitles():
+    # GET:
+    if request.method == 'GET':
+        data_titles = dataset.getDatasetTitles()
+        return jsonify(data_titles)
+
+#Handles zip download
+@app.route('/uploads', methods=['GET', 'POST'])
+def download():
+    if request.method == 'POST':
+        file_name = request.form['filepath']
+        if dataset.getZip(file_name) == True:
+            #grabs zip from snippets folder
+            zip = send_from_directory(directory=app.config['snippets'], filename=file_name, as_attachment=True)
+            #deletes data folder and data zip from /snippets
+            partial_path = app.config['snippets']
+            data_folder_path = partial_path+file_name[:-4]
+            zip_path = partial_path+file_name
+            shutil.rmtree(data_folder_path)
+            #zip.close()
+            if os.path.exists(zip_path):
+                os.remove(zip_path)
+            #returns the saved zip file
+            return zip
+    return "hello"
+    
 
 @app.route('/project', methods=['POST', 'GET'])
 def projectAccess():

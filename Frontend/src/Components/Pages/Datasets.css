@@ -1,1 +1,10 @@
 
+/* .Datasets{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+} */
+#dataset_table{
+    margin-top: 5%;
+    margin-bottom: 10%;
+}

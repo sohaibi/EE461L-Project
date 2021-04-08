@@ -1,10 +1,11 @@
 import pymongo
 from pymongo import MongoClient
 from bson import ObjectId
+import certifi
 
 
 cluster = MongoClient(
-    "mongodb+srv://ProjectGroup3:UTAustin%21@semesterprojectcluster.nmjzk.mongodb.net/HardwareSet?retryWrites=true&w=majority")
+    "mongodb+srv://ProjectGroup3:UTAustin%21@semesterprojectcluster.nmjzk.mongodb.net/HardwareSet?retryWrites=true&w=majority",tlsCAFile=certifi.where())
 database = cluster["SemesterProject"]
 hardware_set = database["HardwareSet"]
 
@@ -28,7 +29,7 @@ def get_HWSet_name(HWSet_id: str) -> str:
     return HWSet["HWSet_name"]
 
 
-# print(get_HWSet_name("6053e85aac3bed1ba2ecc70f"))  # DEMO
+#print(get_HWSet_name("60620d64d962298b2837d3d7"))  # DEMO
 
 
 # create hardware_set -----------------------------------------------------------------------------------------------------
