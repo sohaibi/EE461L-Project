@@ -1,11 +1,16 @@
   
 import logging
-from flask import Flask, jsonify, request, session
 from flask_cors import CORS, cross_origin
-from data_service import hardware, user, project
+from flask import Flask, jsonify, request, session, send_from_directory, send_file
+from data_service import hardware, user, project, dataset
+
 from passlib.hash import pbkdf2_sha256
 from bson import ObjectId
 from bson import json_util
+import io
+import os
+import shutil
+
 
 
 def create_app(test_config=None):
@@ -17,11 +22,8 @@ def create_app(test_config=None):
     app.config["SESSION_COOKIE_HTTPONLY"] = False
     app.config["TESTING"] = False
 
+    app.config['snippets'] = os.path.dirname(os.path.abspath(__file__))+'/snippets/'
 
-    # @app.route('/')
-    # # @cross_origin()
-    # # def index():
-    # #     return app.send_static_file('index.html')
 
     @app.route('/check',  methods=['POST', 'GET'])
     def check():
@@ -68,7 +70,6 @@ def create_app(test_config=None):
         data = request.get_json(force=True)
         if not data:
             return jsonify({'message': 'Null request'})
-
         # get the project id and the HWSet to be updated
         project_id = data['project_id']
         update_dict = data['update']
@@ -90,7 +91,7 @@ def create_app(test_config=None):
             return jsonify({'message': 'success'})
         else:
             return jsonify({'message': 'The hardware listed in the log are not successfully checked in/out.',
-                            'log': {"1": "hi", "2": "ok"}})
+                            'log': log})
 
 
     @app.route('/hardware')
@@ -271,7 +272,7 @@ def create_app(test_config=None):
                 # delete one project only when no one is managing that, and all the HW has been returned
                 if len(team_list) == 0:
                     project.delete_project(project_id)
-                print("succefully deleted!")
+                # print("succefully deleted!")
 
             if data['action'] == 'create':
                 project_name = data['project_name']
@@ -286,8 +287,7 @@ def create_app(test_config=None):
                 project_name = data['project_name']
                 comment = data['comment']
                 project.handle_update_project(project_id, project_name, comment)
-            # error repsonese check:
-            # successfully create new project, send 'success' back
+
             if data['action'] == 'join':
                 project_id = data['project_id']
                 # print(ObjectId.is_valid(project_id))
@@ -309,6 +309,43 @@ def create_app(test_config=None):
         return jsonify({'message': 'success', 'records': tuple(project_list)})
         # return json.loads(json_util.dumps(project_list))
 
+
+
+    #Returns the names of each dataset for display
+    @app.route('/dataset_names', methods=['GET', 'POST'])
+    def datasetNames():
+        # GET:
+        if request.method == 'GET':
+            data_names = dataset.getDatasetNames()
+            return jsonify(data_names)
+        
+    #returns the keys to each Dataset
+    @app.route('/dataset_titles', methods=['GET', 'POST'])
+    def datasetTitles():
+        # GET:
+        if request.method == 'GET':
+            data_titles = dataset.getDatasetTitles()
+            return jsonify(data_titles)
+
+    #Handles zip download
+    @app.route('/uploads', methods=['GET', 'POST'])
+    def download():
+        if request.method == 'POST':
+            file_name = request.form['filepath']
+            if dataset.getZip(file_name) == True:
+                #grabs zip from snippets folder
+                zip = send_from_directory(directory=app.config['snippets'], filename=file_name, as_attachment=True)
+                #deletes data folder and data zip from /snippets
+                partial_path = app.config['snippets']
+                data_folder_path = partial_path+file_name[:-4]
+                zip_path = partial_path+file_name
+                shutil.rmtree(data_folder_path)
+                #zip.close()
+                if os.path.exists(zip_path):
+                    os.remove(zip_path)
+                #returns the saved zip file
+                return zip
+        return "hello"
 
 
 
