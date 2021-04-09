@@ -12,7 +12,7 @@ Our menu consists of a header and drop down menu. The drop down menu is only ava
 #### My Projects:
 This page contains all the projects you've started with us as well as projects created by others that you've joined. Using this page, you can create new projects, join existing ones, or edit the information associated with your current projects. Projects are important because they allow you to check out hardware.
 #### Hardware:
-The hardware page allows you to check in and check out our different types of hardware for your projects. Our graph at the top gives a quick view of what we have available and how much of that hardware you've checked out personallly for the selected project. By selecting one of your projects, you can alter this graph view and procede to check in or check out hardware. What ever you decide to do with the hardware at this point will be tied to the project you selected. 
+The hardware page allows you to check in and check out our different types of hardware for your projects. Our graph at the top gives a quick view of what we have available and how much of that hardware you've checked out personally for the selected project. By selecting one of your projects, you can alter this graph view and procede to check in or check out hardware. What ever you decide to do with the hardware at this point will be tied to the project you selected. 
 #### Account Settings:
 This page displays for you your username, email, and user id. You also have the capability to changing your username or email by clicking the edit profile button.
 
@@ -38,7 +38,17 @@ This page displays for you your username, email, and user id. You also have the 
   * The pagination clickable at the bottom of the project table allows user to select the number of projects (5, 10, or 15) to be displayed on a single page. The arrows clickable allows user to go back and forth between pages.
 
 
-## Hareware Management:
+## Hardware Management:
+### The Hardware Table (also on Home Page) 
+  * The table contains the availability and capacity of each hardware set.
+  * The graph displays the available and capacity of the hardware sets, as well as the amount checked out by the selected project.
+
+### Checking In and Checking Out Hardware
+  * The selection input allows the user to pick which of the projects they want to add/remove hardware to/from.
+  * Once a project is selected, the user then determines whether to check-in hardware, check-out hardware, or both. 
+  * When checking in or out the hardware, only numeric inputs are accepted by arrow keys. In the next phase, acceptance of user input will be more flexible. 
+    * If checking in, their inputs are limited by the current amount they have checked out.
+    * If checking out, their inputs are limited by the capacity of the hardware. In the next phase, they will also be limited by the remaining credits in the project.
 
 ## Dataset Management:
 #### Functionalities: 
