@@ -1,6 +1,10 @@
 # EE461L-Project
 
 ## Userguide:
+### Home Page:
+### Sign In:
+### Datasets:
+### Projects:
 
 ## Features:
 
