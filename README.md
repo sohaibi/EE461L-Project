@@ -1,10 +1,20 @@
 # EE461L-Project
 
 ## Userguide:
-### Home Page:
+### Home Page: 
+Our home page tells you everything you need to know about our project's concept and development time. It also provides you with a quick view of the types of hardware you can check out with us. 
 ### Sign In:
+Our sign in page is crucial. Signing in precedes most of our websites functionalities, including the project page and checking out hardware. If you don't yet have an account, the sign in page will give you a registration option as well.
 ### Datasets:
-### Projects:
+Our datasets page allows you to download various types of databases to use with the hardware you check out from us. All it takes is one click to get the zip containing your desired information!
+### Under the Menu:
+Our menu consists of a header and drop down menu. The drop down menu is only available to those already signed in. If you ever need to get back to the main page just click on our logo!
+#### My Projects:
+This page contains all the projects you've started with us as well as projects created by others that you've joined. Using this page, you can create new projects, join existing ones, or edit the information associated with your current projects. Projects are important because they allow you to check out hardware.
+#### Hardware:
+The hardware page allows you to check in and check out our different types of hardware for your projects. Our graph at the top gives a quick view of what we have available and how much of that hardware you've checked out personallly for the selected project. By selecting one of your projects, you can alter this graph view and procede to check in or check out hardware. What ever you decide to do with the hardware at this point will be tied to the project you selected. 
+#### Account Settings:
+This page displays for you your username, email, and user id. You also have the capability to changing your username or email by clicking the edit profile button.
 
 ## Features:
 
@@ -34,7 +44,7 @@
 #### Functionalities: 
   * The first functionality uses wfdb to grab the names of the databases from Physionet to diplay them as options for the user to download.
   * The second functionality allows for the download of these database zip files. When the user clicks the Download hyperlink, the zip of that specific database is downloaded to their computer. This is via a href in the <a></a> data type. The links for which were taken by inspecting Physionet's website. 
-  * The thrid functionality was built as a way to make our code more dynamic. Using wfdb functions, we are able to download the files for a database into our own project folder. The database is then zipped. When the user clicks the button to download as part of a submit through a form datatype, this grabbing of the zip from Physionet ensues. The zip is then saved into a variable, the files within our project folder are deleted, and the zip variable is returned, initiating the process of downloading. This functionality is currently inactive but is intended to be expanded upon in Phase 3.
+  * The third functionality was built as a way to make our code more dynamic. Using wfdb functions, we are able to download the files for a database into our own project folder. The database is then zipped. When the user clicks the button to download as part of a submit through a form datatype, this grabbing of the zip from Physionet ensues. The zip is then saved into a variable, the files within our project folder are deleted, and the zip variable is returned, initiating the process of downloading. This functionality is currently inactive but is intended to be expanded upon in Phase 3.
 #### Files:
 The files used to exercise the Dataset Management functionallities are as follows:
   * dataset.py: This is the backend python code that uses wfdb to interact with Physionet
