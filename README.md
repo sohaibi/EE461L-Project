@@ -39,11 +39,11 @@ This page displays for you your username, email, and user id. You also have the 
 
 
 ## Hardware Management:
-### The Hardware Table (also on Home Page) 
+#### The Hardware Table (also on Home Page) 
   * The table contains the availability and capacity of each hardware set.
   * The graph displays the available and capacity of the hardware sets, as well as the amount checked out by the selected project.
 
-### Checking In and Checking Out Hardware
+#### Checking In and Checking Out Hardware
   * The selection input allows the user to pick which of the projects they want to add/remove hardware to/from.
   * Once a project is selected, the user then determines whether to check-in hardware, check-out hardware, or both. 
   * When checking in or out the hardware, only numeric inputs are accepted by arrow keys. In the next phase, acceptance of user input will be more flexible. 
