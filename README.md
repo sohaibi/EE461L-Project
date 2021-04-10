@@ -11,23 +11,22 @@ Our header consists of a navigation bar to **Home Page**, **Userguide**, **Sign 
 Our home page tells you everything you need to know about our project's concept and development time. It also provides you with a quick view of the types of hardware you can check in or out with us. 
 #### User guide
 This is the page you're looking at right now. The userguide page provides guidance to our users on how to browse our app.
+#### Datasets
+Our datasets page allows you to download various types of databases to use with the hardware you check out from us. All it takes is one click to get the zip containing your desired information!
 #### Sign In
 Our sign in page is crucial. Signing in precedes most of our websites functionalities, including the account page, project page and hardware page. If you don't yet have an account, the sign in page will give you an option to direct to the registration page.
 #### Registration
 Our registration page allows a new coming user to register a new account with us.You will have to provide the unique username, email and password.
-#### Datasets
-Our datasets page allows you to download various types of databases to use with the hardware you check out from us. All it takes is one click to get the zip containing your desired information!
 #### Dropdown Menu
-Signed in users will be able to see the dropdown menu which can direct to "My Projects", "Hardware" and "Account Settings" pages.
+Signed in users will be able to see the dropdown menu which can direct to "Account Settings", "My Projects" and "Hardware" pages.
+##### Account Settings
+This page displays for you your username, email, and user id. You also have the capability to changing your username or email by clicking the edit profile button.
 ##### My Projects
 This page contains all the projects you've started with us as well as projects created by others that you've joined. Using this page, you can create new projects, join existing ones, or edit the information associated with your current projects. Projects are important because they allow you to check out hardware.
 ##### Hardware
 The hardware page allows you to check in and check out our different types of hardware for your projects. Our graph at the top gives a quick view of what we have available and how much of that hardware you've checked out personally for the selected project. By selecting one of your projects, you can alter this graph view and procede to check in or check out hardware. What ever you decide to do with the hardware at this point will be tied to the project you selected. 
-##### Account Settings
-This page displays for you your username, email, and user id. You also have the capability to changing your username or email by clicking the edit profile button.
 ### Footer
-We create our proof of concept footer for our WIRE powerderless app.
-
+We designed our proof of concept footer for our WIRE powerderless app.
 
 
 
