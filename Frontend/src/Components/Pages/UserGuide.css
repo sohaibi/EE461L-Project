@@ -1,0 +1,44 @@
+#user_guide {
+    text-align: center;
+    color: #f8971f;
+}
+#user_guide_container{
+    margin-left: 8%;
+    margin-right: 8%;
+    margin-top: 10px;
+    margin-bottom: 2%;
+
+    /* text-indent: 50px; */
+}
+
+#intro{
+    /* text-indent: 50px; */
+}
+#user_guide_content{
+    margin-top: 10px;
+}
+
+.first{
+    margin-top: 10px;
+}
+
+.text_for_first{
+    /* text-indent: 50px; */
+}
+
+.second{
+    text-indent: 20px;
+}
+
+.text_for_second{
+    text-indent: 20px;
+}
+
+.third{
+    text-indent: 40px;
+}
+
+.text_for_third{
+    text-indent: 40px;
+}
+

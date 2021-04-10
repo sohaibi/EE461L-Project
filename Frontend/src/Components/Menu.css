@@ -1,0 +1,36 @@
+ul {
+    background-color: #333f48;
+    list-style: none;
+    width: fit-content;
+    height: fit-content;
+    margin: 0px;
+    display: flexbox;
+    padding: 0px;
+}
+
+li {
+    background-color: #333f48;
+    margin: 0px;
+    flex-direction: column;
+    width: fit-content;
+}
+
+.menu_link {
+    color: white;
+    text-decoration: none;
+}
+
+.list_item_div {
+    background-color: #41505C;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+    width: 180px;
+    padding: 20px 20px;
+}
+
+.list_item_div:hover {
+    background-color: #536775;
+    transition: 0.3s;
+}
+
