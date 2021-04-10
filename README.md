@@ -80,7 +80,7 @@ We create our proof of concept footer for our WIRE powerderless app.
 
 ## Coding Logistics
 
-The 'Frontend' folder contains the frontend code written in reactJS.
-The 'data_service' folder contains code to read and write to the mongoDB database.
-<b>app.py</b> file contains the server side code in flask framework.
-Proxy connection between reactJS and flask is done via fetch method in js file.
+The 'Frontend' folder contains the frontend code written in reactJS.<br>
+The 'data_service' folder contains code to read and write to the mongoDB database.<br>
+<b>app.py</b> file contains the server side code in flask framework.<br>
+Proxy connection between reactJS and flask is done via fetch method in js file.<br>
