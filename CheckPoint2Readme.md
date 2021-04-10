@@ -75,6 +75,10 @@ We designed our proof of concept footer for our WIRE powerderless app.
   * Handle the download request more dynamically. Using wfdb functions, we are able to download the files for a database into our own project folder. The database is then zipped. When the user clicks the button to download as part of a submit through a form datatype, this grabbing of the zip from Physionet ensues. The zip is then saved into a variable, the files within our project folder are deleted, and the zip variable is returned, initiating the process of downloading. This functionality is currently inactive but is intended to be expanded upon in Phase 3.
 
 
+## Known Issues at checkpoint2:
+* After the user succefully checks in/out the hardware, before the user is re-directed to the project page, there will be a "flash" of of login page. This is because the hardware page and project page's login status is passed by props from the parent component App.js. When the hardware page refreshes, the hardware page loaded before the App.js's login status is passed to hardware page component, so in our design, if status isLogin is not true, instantly user will be directed to login page. After the login page is loaded, finally the App.js' login status is passed to the login component as isLogin=true, so in our design, if a user is login, that user will be directed to project page. So we kind of making use of this design 'flaw' to let user get re-directed to project page after hardware checkin/out, with a flash of login page. This can be fixed if we added a case when state "isLogin" is undefined,  render a loding image, and only when the "isLogin" is passed from App.js again, with the hardware chekcin/out is done, direct the user to the project page. In that case this issue can be solved. We will fix this issue in phase 3.
+* There is a loading lag for the hardware bar graph. This can be improved if we render a loading image or gif when the bar graph is still loading. We can fix that in phase 3.
+
 
 ## Coding Logistics
 
