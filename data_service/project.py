@@ -115,6 +115,5 @@ def delete_project(project_id: str):
     """
     delete project_id
     :param project_id: project_id
-
     """
     collection.delete_one({"_id": ObjectId(project_id)})
