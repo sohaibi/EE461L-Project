@@ -10,6 +10,8 @@ import io
 import os
 import shutil
 
+from helpers import projects_helper
+
 
 
 def create_app(test_config=None):
@@ -31,7 +33,7 @@ def create_app(test_config=None):
             if "user" in session:
                 user_id = session['user']
                 # print(user_id)
-                app.logger.debug('I have been here 1')
+            
                 project_ids = user.get_projects(
                     user_id)   # list of project id strings
                 # print(project_ids)
@@ -41,7 +43,7 @@ def create_app(test_config=None):
                     name = proj_info['project_name']
                     hardware_dict = proj_info['hardware_set_dict']
                     HW_info = []
-                    app.logger.debug('I have been here 2')
+             
                     for HW_id in hardware_dict.keys():
                         temp_dict = {}
                         temp_dict = {'HW_use': hardware_dict[HW_id]}
@@ -50,17 +52,17 @@ def create_app(test_config=None):
                         temp_dict['HW_id'] = HW_id
                         HW_info.append(temp_dict)
                     # credits = 80  # TODO: calculate credit
-                    app.logger.debug('I have been here 3')
+               
                     proj = {
                         "name": name,
                         "id": projID,
                         "hardware": HW_info,
                         # "credits": credits
                     }
-                    app.logger.debug('I have been here 4')
+              
                     # print(proj)
                     projects.append(proj)
-                    app.logger.debug('I have been here 5')
+               
                 app.logger.debug(projects)
                 return jsonify( {"message": "success", "projects": tuple(projects)})
             else:
@@ -252,49 +254,26 @@ def create_app(test_config=None):
             # print(user_id)
             if data['action'] == 'delete':
                 project_id = data['project_id']
-                # delete from user proj list and project db
-
-                # first to check if all the hardware has been returned
-                hardware_set_dict = project.handle_get_project_info(project_id)[
-                    "hardware_set_dict"]
-                # if all the hardware has been returned, delete this project from user's projects list directly
-                if len(hardware_set_dict) > 0:
-                    # check if this user is the only one person to manage this project
-                    team_list = project.handle_get_project_info(project_id)['team']
-                    if len(team_list) == 1:
-                        return jsonify({'message': 'As the only manager for this project please return the hardware before delete it. This project will be permanently deleted afterwards.'})
-                # remove project_id from user's projects list
-                user.delete_projects(user_id, project_id)
-                # remove member from project team
-                project.handle_update_project_team(project_id, user_id, "-")
-                team_list = project.handle_get_project_info(project_id)['team']
-                # delete one project only when no one is managing that, and all the HW has been returned
-                if len(team_list) == 0:
-                    project.delete_project(project_id)
-                # print("succefully deleted!")
-
+                res = projects_helper.delete_project(project_id, user_id)
+                if res:
+                    return res
+    
             if data['action'] == 'create':
                 project_name = data['project_name']
                 comment = data['comment']
-                proj_id = project.handle_project_creation(
-                    project_name, user_id, comment)  # create new proj
-                # also need to add proj_id to user's project list!!
-                user.add_projects(user_id, proj_id)
+                projects_helper.create_project(project_name, user_id, comment)
 
             if data['action'] == 'update':
                 project_id = data['project_id']
                 project_name = data['project_name']
                 comment = data['comment']
-                project.handle_update_project(project_id, project_name, comment)
+                projects_helper.update_project(project_id, project_name, comment)
 
             if data['action'] == 'join':
                 project_id = data['project_id']
-                # print(ObjectId.is_valid(project_id))
-                if (not ObjectId.is_valid(project_id)) or (not project.handle_get_project_info(project_id)):
-                    return jsonify({'message': 'Project ID does not exist!'})
-                # if project does exist
-                user.add_projects(user_id, project_id)
-                project.handle_update_project_team(project_id, user_id, "+")
+                res = projects_helper.join_project(project_id, user_id)
+                if res:
+                    return res
 
         # Either POST OR GET: (display project list)
         project_dict = user.get_projects(user_id)
