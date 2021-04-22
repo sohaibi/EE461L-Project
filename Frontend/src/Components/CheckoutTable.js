@@ -113,7 +113,7 @@ function CheckoutTable(props) {
                     <tr key={index}>
                         <td>{HW_names[index]}</td>
                         <td>{HWSet_use_dict[HW_ids[index]] > 0 ? HWSet_use_dict[HW_ids[index]] : 0}</td>
-                        <td>
+                        <td >
                             <input
                                 type="number"
                                 className="hw-input"
