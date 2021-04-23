@@ -31,6 +31,7 @@ function CheckoutTable(props) {
 
     useEffect(() => {
         // initialize the checkoutList
+        
         if (HW_names.length > 0 && HW_ids.length > 0 && availabilities.length > 0 && checkoutList.length != availabilities.length) {
             let list = [];
             for (var i = 0; i < HW_names.length; i++) {
@@ -59,9 +60,11 @@ function CheckoutTable(props) {
 
         // initialize the return list
         let temp = {};
-        for (var i = 0; i < props.HWSet_rent_list.length; i++) {
-            temp[props.HWSet_rent_list[i].HW_id] = props.HWSet_rent_list[i].HW_use;
-        }
+        if (props.HWSet_rent_list !== undefined){ //add undefined condition for jest testing
+            for (var i = 0; i < props.HWSet_rent_list.length; i++) {
+                temp[props.HWSet_rent_list[i].HW_id] = props.HWSet_rent_list[i].HW_use;
+            }
+        }   
         setHWSet_use_dict(temp);
         console.log("initialized current in use dict", temp);
 
@@ -115,6 +118,7 @@ function CheckoutTable(props) {
                         <td>{HWSet_use_dict[HW_ids[index]] > 0 ? HWSet_use_dict[HW_ids[index]] : 0}</td>
                         <td >
                             <input
+                                data-testid='outArrow'
                                 type="number"
                                 className="hw-input"
                                 min={"0"}
@@ -122,7 +126,8 @@ function CheckoutTable(props) {
                                 defaultValue={"0"}
                                 onChange={handleInput(index)}
                                 onKeyDown={(event) => { event.preventDefault(); }}
-                                disabled={disable}>
+                                disabled={disable}
+                                data-testid="test_arrow">
                             </input>
                             <label>/{max}</label>
                         </td>

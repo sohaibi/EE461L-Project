@@ -12,7 +12,8 @@ function CheckinTable(props) {
 
 
     useEffect(() => {
-        // get all the checkin HW infos
+        if (props.HWSet_rent_list !== undefined){  //add undefined condition for jest testing
+                    // get all the checkin HW infos
         setHWSet_rent_list(props.HWSet_rent_list);
         console.log(props.HWSet_rent_list);
         // console.log("list updated!");
@@ -28,6 +29,9 @@ function CheckinTable(props) {
         }
         setCheckinList(list);
         console.log("initialized checkin list", list);
+
+        }
+
 
     }, [props.HWSet_rent_list]);
 
@@ -56,18 +60,21 @@ function CheckinTable(props) {
 
                 return (
                     <>
+                    
                         <tr key={index.toString()}>
                             {/* <td>{HW_names[index]}</td> */}
                             <td>{hw.HW_name}</td>
                             <td>
                                 <input
+                                    // data-testid='inArrow'
                                     type="number"
                                     className="hw-input"
                                     min={"0"}
                                     max={max}
                                     defaultValue={"0"}
                                     onChange={handleInput(index)}
-                                    onKeyDown={(event) => { event.preventDefault(); }}>
+                                    onKeyDown={(event) => { event.preventDefault(); }}
+                                    >
                                 </input>
                                 <label>/{max}</label>
                             </td>
@@ -84,7 +91,8 @@ function CheckinTable(props) {
 
     return (
         <>
-            {/* <p>{JSON.stringify(checkinList)}</p> */}
+            <p>{JSON.stringify(checkinList)}</p>
+            {JSON.stringify(HWSet_rent_list)}
             <h3 className="io-heading">Hardware Check-In</h3>
             <div className="check-table-container">
                 <p className="check-text"
@@ -113,7 +121,7 @@ function CheckinTable(props) {
         </>
 
 
-        // "hi"
+
 
     );
 }

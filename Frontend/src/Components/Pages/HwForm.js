@@ -209,6 +209,7 @@ function HwForm(props) {
 
             <>
                 {/* <p>{JSON.stringify(HWSet_rent_list)}</p> */}
+                {JSON.stringify(projects)}
                 <div id="hardware-container">
                     <h1>Hardware Rental Services</h1>
                     <HwTable HWSet_rent_list={HWSet_rent_list} project={projects[projIndex]} />
@@ -269,7 +270,8 @@ function HwForm(props) {
                                     <input type="checkbox"
                                         id="inBox"
                                         onChange={toggleCheckIn}
-                                        disabled={disable2} />
+                                        disabled={disable2}
+                                         />
                                     <label id="inBox-label"
                                         htmlFor="inBox">
                                         Checking In
@@ -278,6 +280,7 @@ function HwForm(props) {
 
                                     <input type="checkbox"
                                         id="outBox"
+                                        data-testid='outBox'
                                         onChange={toggleCheckOut}
                                         disabled={disable2} />
                                     <label id="outBox-label"
