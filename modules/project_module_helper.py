@@ -1,6 +1,11 @@
-import sys
-sys.path.append("..")
-from data_service import project, user
+import logging
+from data_service import hardware, user, project, dataset
+from bson import ObjectId, json_util
+
+
+
+def test_this():
+    return "this is a helper test!"
 
 
 def delete_project(project_id : str, user_id : str):  

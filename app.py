@@ -2,15 +2,18 @@ import logging
 from flask_cors import CORS, cross_origin
 from flask import Flask, jsonify, request, session, send_from_directory, send_file
 from data_service import hardware, user, project, dataset
-
 from passlib.hash import pbkdf2_sha256
-from bson import ObjectId
-from bson import json_util
+from bson import ObjectId, json_util
 import io
 import os
 import shutil
 
-from helpers import projects_helper
+
+# import all the modules
+from modules.hardware_module import hardware_module
+from modules.user_module import user_module
+from modules.project_module import project_module
+from modules.dataset_module import dataset_module
 
 
 
@@ -26,305 +29,10 @@ def create_app(test_config=None):
     app.config['snippets'] = os.path.dirname(os.path.abspath(__file__))+'/snippets/'
 
 
-    @app.route('/check',  methods=['POST', 'GET'])
-    def check():
-        # GET
-        if request.method == 'GET':  # send list of user's projects to React side
-            if "user" in session:
-                user_id = session['user']
-                # print(user_id)
-            
-                project_ids = user.get_projects(
-                    user_id)   # list of project id strings
-                # print(project_ids)
-                projects = []
-                for projID in project_ids:
-                    proj_info = project.handle_get_project_info(projID)
-                    name = proj_info['project_name']
-                    hardware_dict = proj_info['hardware_set_dict']
-                    HW_info = []
-             
-                    for HW_id in hardware_dict.keys():
-                        temp_dict = {}
-                        temp_dict = {'HW_use': hardware_dict[HW_id]}
-                        each_name = hardware.get_HWSet_name(HW_id)
-                        temp_dict['HW_name'] = each_name
-                        temp_dict['HW_id'] = HW_id
-                        HW_info.append(temp_dict)
-                    # credits = 80  # TODO: calculate credit
-               
-                    proj = {
-                        "name": name,
-                        "id": projID,
-                        "hardware": HW_info,
-                        # "credits": credits
-                    }
-              
-                    # print(proj)
-                    projects.append(proj)
-               
-                app.logger.debug(projects)
-                return jsonify( {"message": "success", "projects": tuple(projects)})
-            else:
-                return jsonify({'message': "not login"})
-        # POST
-        data = request.get_json(force=True)
-        if not data:
-            return jsonify({'message': 'Null request'})
-        # get the project id and the HWSet to be updated
-        project_id = data['project_id']
-        update_dict = data['update']
-        # print(project_id)
-        log = {}
-        for each in update_dict.items():
-            print(each[0], each[1])
-            code = hardware.set_HWSet_availability(each[0], each[1])
-            if code == -1:
-                log[each[0]] = "This hardware set id does not exist! Please try again."
-            elif code == -2:
-                log[each[0]] = "Check out hardware set " + hardware.get_HWSet_name(
-                    each[0]) + " result in negative availability! Please try again."
-            # update in project object, note that sign should be flipped
-            else:
-                project.handle_update_hardware(project_id, each[0], -each[1])
-
-        if len(log) == 0:
-            return jsonify({'message': 'success'})
-        else:
-            return jsonify({'message': 'The hardware listed in the log are not successfully checked in/out.',
-                            'log': log})
-
-
-    @app.route('/hardware')
-    def send_hardware_info():
-        data_list = hardware.get_HWSet_collection_info()
-        # return jsonify({'result': hardware.get_hardware_availability("test1")})
-        data_dict = {}
-        HW_name = []
-        HW_ava = []
-        HW_cap = []
-        HW_id = []
-        for index in range(len(data_list)):
-            HW_name.append(data_list[index]['HWSet_name'])
-            HW_ava.append(data_list[index]['availability'])
-            HW_cap.append(data_list[index]['capacity'])
-            HW_id.append(str(data_list[index]['_id']))
-        data_dict['HW_name'] = HW_name
-        data_dict['HW_ava'] = HW_ava
-        data_dict['HW_cap'] = HW_cap
-        data_dict['HW_id'] = HW_id
-        return jsonify(data_dict)
-
-
-    @app.route('/login', methods=['POST', 'GET'])
-    @cross_origin()
-    def login():
-        # GET
-        # app.logger.debug('this is a DEBUG message')
-        # app.logger.info('this is an INFO message')
-        # app.logger.warning('this is a WARNING message')
-        # app.logger.error('this is an ERROR message')
-        # app.logger.critical('this is a CRITICAL message')
-        if request.method == 'GET':
-            if "user" in session:
-                return jsonify({
-                    'ans': 'Y',
-                    'userID': session['user']
-                })
-            else:
-                return jsonify(
-                {
-                    'ans': 'N',
-                }
-            )
- 
-
-        # POST
-        data = request.get_json(force=True)
-        # print(data)
-        app.logger.debug("data received as:")
-        app.logger.debug(request)
-        app.logger.debug(data)
-        if not data:
-            return jsonify({'message': 'Null request'})
-        if data:
-            username = data['username']
-            password = data['password']
-            # compare user data in MongoDB
-            client = user.get_user(username)
-            # print(client)
-            if client == -1:
-                return jsonify({'message': 'Username does not exist'})
-
-            if not pbkdf2_sha256.verify(password, client['password']):
-                return jsonify({'message': 'Username and password does not match'})
-
-            # # success login, send userID back
-
-            session['user'] = str(client['_id'])  # make jsonID serializable
-            # print(client)
-            if "user" in session:
-                return jsonify(
-                    {'message': 'success', 'userID': session['user']})
-            return jsonify({'message': 'something wrong'})
-
-
-    @app.route('/register', methods=['POST', 'GET'])
-    def register():
-        # GET:
-        if request.method == 'GET':
-            return jsonify({"message": "This will not happen"})
-        # POST:
-        data = request.get_json(force=True)
-        if not data:
-            return jsonify({'message': 'Null request'})
-        # data is valid:
-        username = data['username']
-        en_password = pbkdf2_sha256.encrypt(data['password'])
-        email = data['email']
-        res = user.create_user(username, en_password, email)
-        if res[0] == -1:
-            return jsonify({'message': 'Username already exists'})
-        if res[1] == -1:
-            return jsonify({'message': 'Email address already exists'})
-        # success register, send userID back
-        client = user.get_user(username)
-        session['user'] = str(client['_id'])
-        response = jsonify({
-            'message': 'success',
-            'userID': session['user']
-        })
-        return response
-
-
-    @app.route('/logout', methods=['POST', 'GET'])
-    def logout():
-        if request.method == 'POST':
-            if "user" in session:
-                session.clear()
-                return jsonify({'message': 'logout successfully'})
-            else:
-                return jsonify({'message': 'not logged in'})
-        return jsonify({'message': 'get request will not be handled'})
-
-
-    @app.route('/userProfile', methods=['POST', 'GET'])
-    def userProfile():
-        # GET:
-        if request.method == 'GET':
-            if 'user' in session:
-                user_id = session['user']
-                client = user.get_user_byID(user_id)
-                return jsonify(
-                    {"message": "success", "username": client['username'], "email": client['email']})
-            else:
-                return jsonify({'message': 'not login'})
-        # POST:
-        data = request.get_json(force=True)
-        if not data:
-            return jsonify({'message': 'Null request'})
-        # data is valid:
-        print(data)
-        username = data['username']
-        email = data['email']
-        user_id = session['user']
-        res = user.update_user(username, "", email, user_id)
-        if res[0] == -1:
-            return jsonify({'message': 'Username already exists'})
-        if res[1] == -1:
-            return jsonify({'message': 'Email address already exists'})
-        # successfully edited profile, send 'success' back
-        # client = user.get_user(username)
-        response = jsonify({
-            'message': 'success',
-        })
-        return response
-
-
-    @app.route('/project', methods=['POST', 'GET'])
-    def projectAccess():
-        if 'user' not in session:
-            return jsonify({'message': 'cannot access project without login'})
-        user_id = session['user']
-        # POST: (update/create new project)
-        if request.method == 'POST':
-            data = request.get_json(force=True)
-            if not data:
-                return jsonify({'message': 'Null request'})
-            # print(user_id)
-            if data['action'] == 'delete':
-                project_id = data['project_id']
-                res = projects_helper.delete_project(project_id, user_id)
-                if res:
-                    return res
-    
-            if data['action'] == 'create':
-                project_name = data['project_name']
-                comment = data['comment']
-                projects_helper.create_project(project_name, user_id, comment)
-
-            if data['action'] == 'update':
-                project_id = data['project_id']
-                project_name = data['project_name']
-                comment = data['comment']
-                projects_helper.update_project(project_id, project_name, comment)
-
-            if data['action'] == 'join':
-                project_id = data['project_id']
-                res = projects_helper.join_project(project_id, user_id)
-                if res:
-                    return res
-
-        # Either POST OR GET: (display project list)
-        project_dict = user.get_projects(user_id)
-        project_list = []  # [] of {}
-        for proj_id in project_dict:
-            proj_info = project.handle_get_project_info(proj_id)
-            if proj_info:  # if project can be found
-                proj_info['_id'] = str(proj_info['_id'])  # make ObjectID jsonable
-                project_list.append(proj_info)
-        # print("proj list: ", project_list
-        return jsonify({'message': 'success', 'records': tuple(project_list)})
-        # return json.loads(json_util.dumps(project_list))
-
-
-
-    #Returns the names of each dataset for display
-    @app.route('/dataset_names', methods=['GET', 'POST'])
-    def datasetNames():
-        # GET:
-        if request.method == 'GET':
-            data_names = dataset.getDatasetNames()
-            return jsonify(data_names)
-        
-    #returns the keys to each Dataset
-    @app.route('/dataset_titles', methods=['GET', 'POST'])
-    def datasetTitles():
-        # GET:
-        if request.method == 'GET':
-            data_titles = dataset.getDatasetTitles()
-            return jsonify(data_titles)
-
-    #Handles zip download
-    @app.route('/uploads', methods=['GET', 'POST'])
-    def download():
-        if request.method == 'POST':
-            file_name = request.form['filepath']
-            if dataset.getZip(file_name) == True:
-                #grabs zip from snippets folder
-                zip = send_from_directory(directory=app.config['snippets'], filename=file_name, as_attachment=True)
-                #deletes data folder and data zip from /snippets
-                partial_path = app.config['snippets']
-                data_folder_path = partial_path+file_name[:-4]
-                zip_path = partial_path+file_name
-                shutil.rmtree(data_folder_path)
-                #zip.close()
-                if os.path.exists(zip_path):
-                    os.remove(zip_path)
-                #returns the saved zip file
-                return zip
-        return "hello"
-
+    app.register_blueprint(hardware_module, url_prefix="")
+    app.register_blueprint(user_module, url_prefix="")
+    app.register_blueprint(project_module, url_prefix="")
+    app.register_blueprint(dataset_module, url_prefix="")
 
 
     @app.after_request
@@ -345,5 +53,5 @@ def create_app(test_config=None):
         gunicorn_logger = logging.getLogger('gunicorn.error')
         app.logger.handlers = gunicorn_logger.handlers
         app.logger.setLevel(gunicorn_logger.level)
-    # Adding Project Route
+ 
     return app

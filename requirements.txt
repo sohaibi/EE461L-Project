@@ -6,3 +6,5 @@ passlib==1.7.4
 gunicorn==20.1.0
 certifi==2020.12.5
 wfdb==3.3.0
+pytest==6.2.3
+pytest-check==1.0.1

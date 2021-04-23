@@ -140,7 +140,19 @@ def set_HWSet_capacity(HWSet_id: str, amt_of_hardware: int) -> int:
 def get_HWSet_collection_info():
     docs = hardware_set.find({})
     return list(docs)
-# get_hardware_info()
+# print(get_HWSet_collection_info())
+
+
+# delete hardware_set, this is for test_hardware.py only -----------------------------------------------------------------------------------------------------
+def delete_HWSet(HWSet_id: str) -> str:
+    """
+    delete HWSet, for test_hardware.py only
+    :param HWSet_id: HWSet_id in str type
+    :returns: None
+    """
+    hardware_set.delete_one({"_id": ObjectId(HWSet_id)})  
+
+
 # DEMOs:-----------------------------------------------------------------------------------------------------------
 #create_new_hardware_set(hardware_name="test", capacity=100)
 # get_hardware_id("Device5")
