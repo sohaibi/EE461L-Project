@@ -2,12 +2,18 @@
     margin: 5% auto;
     width: 80px;
     height: 80px;
-    background-image: url(../../Media/website_logo.svg);
+    background-image: url(../Media/website_logo.svg);
     background-color: #ffffff;
     background-size: 80px 80px;
     background-position: center;
     background-repeat: no-repeat;
 }
+
+#error_message{
+    color: crimson;
+
+}
+
 
 .div-login {
     width: 300px;
@@ -37,6 +43,25 @@ button {
     width: 100%;
     margin: 5px 0;
     background-color:#f8971f;
+    font-family: 'Open Sans Condensed', sans-serif;
+    padding: 5px;
+}
+
+#username, #password, #new_user, #new_email, #new_pwd, #new_pwd1 {
+    width: 95%;
+    border: 1px solid #dbdbdb;
+    padding: 5px;
+    margin: 2px 0;
+    border-radius: 5px;
+    background-color: #fafafa;
+    box-shadow: none;
+    font-family: 'Open Sans Condensed', sans-serif;
+}
+
+.Log-In {
+    width: 100%;
+    margin: 5px 0;
+    background-color: #f8971f;
     font-family: 'Open Sans Condensed', sans-serif;
     padding: 5px;
 }

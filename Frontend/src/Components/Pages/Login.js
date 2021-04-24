@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import './Login.css';
 import { Redirect } from 'react-router-dom';
+import UserForm from '../UserForm';
 
 
 class Login extends React.Component {
@@ -72,28 +72,30 @@ class Login extends React.Component {
         if (!this.state.isLogin) {
             return (
 
-                <div className='div-login'>
-                    {/* <p>{this.props.isLogin.toString()}</p> */}
+                <UserForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} error_message={this.state.error_message} type={'login'} />
+                // <div className='div-login'>
 
-                    <div id="homeLogo-login"></div>
-                    <form onSubmit={this.handleSubmit}>
-                        <label for='username'>Username</label>
-                        <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
-                        <label for='password'>Password</label>
-                        <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
+                //     {/* <p>{this.props.isLogin.toString()}</p> */}
 
-                        <p id='error_message'>{this.state.error_message}</p>
+                //     <div id="homeLogo-login"></div>
+                //     <form onSubmit={this.handleSubmit}>
+                //         <label for='username'>Username</label>
+                //         <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
+                //         <label for='password'>Password</label>
+                //         <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
 
-                        <button onSubmit={this.handleSubmit}>Log In</button>
-                        <Link to="/register"
-                            className="register">
-                            <button Link>Register</button>
-                        </Link>
-                    </form>
+                //         <p id='error_message'>{this.state.error_message}</p>
+
+                //         <button onSubmit={this.handleSubmit}>Log In</button>
+                //         <Link to="/register"
+                //             className="register">
+                //             <button Link>Register</button>
+                //         </Link>
+                //     </form>
 
 
 
-                </div>
+                // </div>
             )
         }
         // already login

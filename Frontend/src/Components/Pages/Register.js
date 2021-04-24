@@ -1,7 +1,7 @@
 import React from 'react';
-import './Register.css';
 import { Redirect } from 'react-router-dom';
-
+import '../UserForm'
+import UserForm from '../UserForm';
 class Register extends React.Component {
     constructor(props) {
         super(props);
@@ -23,8 +23,6 @@ class Register extends React.Component {
             this.setState({ isLogin: nextProps.isLogin })
         }
     }
-
-
 
     handleChange = (e) => {
         const { name, value } = e.target
@@ -91,24 +89,25 @@ class Register extends React.Component {
     render() {
         if (!this.state.isLogin) {
             return (
+                <UserForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} error_message={this.state.error_message} type={'register'} />
 
-                <div className='div-login'>
-                    <div className>
-                        <div id="homeLogo-login"></div>
-                        <form onSubmit={this.handleSubmit}>
-                            <label for='username' >Username:</label>
-                            <input id='username' maxlength='20' type='Username' name='Username' placeholder='Username' required onChange={this.handleChange} />
-                            <label for='email'>Email address:</label>
-                            <input id='email' type='Email' name='Email' placeholder='Email Address...' required onChange={this.handleChange} />
-                            <label for='password' >Password:</label>
-                            <input id='password' minlength='6' maxlength='20' type='Password' name='Password' placeholder='password...' required onChange={this.handleChange} />
-                            <label for='password' >Confirm password:</label>
-                            <input id='password' minlength='6' maxlength='20' type='Password' name='ConfirmPassword' placeholder='Confirm password...' required onChange={this.handleChange} />
-                            <p id='error_message'>{this.state.error_message}</p>
-                            <button onSubmit={this.handleSubmit}>Sign Up</button>
-                        </form>
-                    </div>
-                </div>
+                // <div className='div-login'>
+                //     <div className>
+                //         <div id="homeLogo-login"></div>
+                //         <form onSubmit={this.handleSubmit}>
+                //             <label for='username' >Username:</label>
+                //             <input id='username' maxlength='20' type='Username' name='Username' placeholder='Username' required onChange={this.handleChange} />
+                //             <label for='email'>Email address:</label>
+                //             <input id='email' type='Email' name='Email' placeholder='Email Address...' required onChange={this.handleChange} />
+                //             <label for='password' >Password:</label>
+                //             <input id='password' minlength='6' maxlength='20' type='Password' name='Password' placeholder='password...' required onChange={this.handleChange} />
+                //             <label for='password' >Confirm password:</label>
+                //             <input id='password' minlength='6' maxlength='20' type='Password' name='ConfirmPassword' placeholder='Confirm password...' required onChange={this.handleChange} />
+                //             <p id='error_message'>{this.state.error_message}</p>
+                //             <button onSubmit={this.handleSubmit}>Sign Up</button>
+                //         </form>
+                //     </div>
+                // </div>
             )
         }
         // already login
