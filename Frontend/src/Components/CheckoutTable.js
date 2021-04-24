@@ -118,7 +118,7 @@ function CheckoutTable(props) {
                         <td>{HWSet_use_dict[HW_ids[index]] > 0 ? HWSet_use_dict[HW_ids[index]] : 0}</td>
                         <td >
                             <input
-                                data-testid='outArrow'
+                                data-testid="outArrow"
                                 type="number"
                                 className="hw-input"
                                 min={"0"}
@@ -129,7 +129,7 @@ function CheckoutTable(props) {
                                 disabled={disable}
                                 data-testid="test_arrow">
                             </input>
-                            <label>/{max}</label>
+                            <label  data-testid="outArrow" >/{max}</label>
                         </td>
                     </tr>
                 </>
@@ -141,6 +141,7 @@ function CheckoutTable(props) {
         <>
             {/* <p>{JSON.stringify(checkoutList)}</p> */}
             {/* <p>{(checkoutList.length === 0).toString()}</p> */}
+            {/* {JSON.stringify(props)} */}
             <h3 className="io-heading">Hardware Check-Out</h3>
             <div className="check-table-container">
                 {/* <p className="check-text">

@@ -66,7 +66,7 @@ function CheckinTable(props) {
                             <td>{hw.HW_name}</td>
                             <td>
                                 <input
-                                    // data-testid='inArrow'
+                                    data-testid='inArrow'
                                     type="number"
                                     className="hw-input"
                                     min={"0"}

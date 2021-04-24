@@ -269,6 +269,7 @@ function HwForm(props) {
                                 <div className="hw-form-prompts" id="hw-checkboxes">
                                     <input type="checkbox"
                                         id="inBox"
+                                        data-testid='inBox'
                                         onChange={toggleCheckIn}
                                         disabled={disable2}
                                          />
