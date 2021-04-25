@@ -28,6 +28,17 @@ def getDatasetTitles():
         dataset_list.append(str(dbs[i][0])+".zip")
     return dataset_list
 
+#return test for both names and keys
+def getDatasetInfo():
+    dbs = wfdb.get_dbs()
+    dataset_keys = []
+    dataset_names = []
+    for i in range(0, len(dbs)):
+        dataset_keys.append(str(dbs[i][0]))
+        dataset_names.append(str(dbs[i][1]))
+    total_info = [dataset_keys, dataset_names]
+    return total_info
+
 #downloads data into folder, creates zip
 def generateZip(database_name, dir):
     #if __name__ == '__main__':

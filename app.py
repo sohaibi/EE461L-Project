@@ -325,6 +325,14 @@ def create_app(test_config=None):
         if request.method == 'GET':
             data_titles = dataset.getDatasetTitles()
             return jsonify(data_titles)
+    
+    #test for returning both keys and names
+    @app.route('/dataset_info', methods=['GET', 'POST'])
+    def datasetInfo():
+        # GET:
+        if request.method == 'GET':
+            data_info = dataset.getDatasetInfo()
+            return jsonify(data_info)
 
     #Handles zip download
     @app.route('/uploads', methods=['GET', 'POST'])
