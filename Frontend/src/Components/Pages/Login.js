@@ -2,11 +2,13 @@ import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './Login.css';
 import { Redirect } from 'react-router-dom';
+import UserForm from './UserForm';
 
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
+        /*
         this.state = {
             username: '',
             pwd: '',
@@ -14,18 +16,24 @@ class Login extends React.Component {
             isLogin: props.isLogin
 
         }
+        */
+        /*
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        */
+    
     }
 
+    /*
     componentWillReceiveProps(nextProps) {
         if (nextProps.isLogin !== this.props.isLogin) {
             console.log('prop.isLogin changed:', this.props.isLogin.toString());
             this.setState({ isLogin: nextProps.isLogin })
         }
     }
+    */
 
-
+    /*
     handleChange = (e) => {
         const { name, value } = e.target
         this.setState({ [name]: value })
@@ -67,6 +75,8 @@ class Login extends React.Component {
 
     }
 
+    */
+    
 
     render() {
         if (!this.state.isLogin) {
@@ -76,15 +86,15 @@ class Login extends React.Component {
                     {/* <p>{this.props.isLogin.toString()}</p> */}
 
                     <div id="homeLogo-login"></div>
-                    <form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.props.handleSubmit}>
                         <label for='username'>Username</label>
-                        <input id='username' type='username' name='username' placeholder='username' required onChange={this.handleChange} />
+                        <input id='username' type='username' name='username' placeholder='username' required onChange={this.props.handleChange} />
                         <label for='password'>Password</label>
-                        <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.handleChange} />
+                        <input id='password' type='password' name='pwd' placeholder='password' required onChange={this.props.handleChange} />
 
-                        <p id='error_message'>{this.state.error_message}</p>
+                        <p id='error_message'>{this.props.error_message}</p>
 
-                        <button onSubmit={this.handleSubmit}>Log In</button>
+                        <button onSubmit={this.props.handleSubmit}>Log In</button>
                         <Link to="/register"
                             className="register">
                             <button Link>Register</button>
