@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CheckinTable from './CheckinTable';
-import renderTable from './CheckoutTable';
+// import renderTable from './CheckoutTable';
 import interval from './CheckoutTable';
 import CheckoutTable from './CheckoutTable';
 import HwForm from './../Components/Pages/HwForm';
@@ -93,6 +93,54 @@ describe('Functionality Tests',()=>{
         expect(out_checkbox.checked).toEqual(false);
     });
 
+
+    // jest.mock('./CheckoutTable.js');
+    //essentially set functions inside CheckoutTable.js to [export const <fn_name> = jest.fn();]
+    
+    test("mock test: renderTable()",()=>{
+        CheckinTable.renderTable = jest.fn(()=>"table will render");
+        CheckinTable.renderTable();
+        expect(CheckinTable.renderTable).toHaveBeenCalledTimes(1);
+        expect(CheckinTable.renderTable()).toBe("table will render");
+    })
+
+    //restore original implementation
+    test("mock test: spyOn",()=>{
+        CheckoutTable.renderTable =jest.fn();
+        const spy = jest.spyOn(CheckoutTable,"renderTable");
+
+        spy.mockImplementation(()=>"override implementation");
+        expect(CheckoutTable.renderTable()).toBe("override implementation");
+        spy.mockRestore();
+        expect(CheckoutTable.renderTable()).toBe(undefined);
+    })
+
+describe("Mock examples",()=>{
+
+    test("test with mock",()=>{
+        const mock = jest.fn();
+        let result = mock("foo");
+        expect(result).toBeUndefined();
+        expect(mock).toHaveBeenCalled();
+        expect(mock).toHaveBeenCalledTimes(1);
+        expect(mock).toHaveBeenCalledWith("foo");
+    });
+
+    test("mock test1",()=>{
+        const mock = jest.fn(() => "bar");
+        expect(mock("foo")).toBe("bar");
+        expect(mock).toHaveBeenCalledWith("foo");
+    })
+    
+    test("mock test2",()=>{
+        const mock = jest.fn().mockImplementationOnce(()=>"bar");
+        expect(mock("foo")).toBe("bar");
+        expect(mock).toHaveBeenCalledWith("foo");
+
+        expect(mock("boo")).toBe(undefined);
+        expect(mock).toHaveBeenCalledWith("boo");
+    })
+})
     // const checkoutTable = new CheckoutTable();
     // const func = checkoutTable.renderTable();
     
@@ -105,18 +153,4 @@ describe('Functionality Tests',()=>{
     //     const outArrow= getByTestId("outArrow");
     // })
 })
-  
-
-// const renderTable = jest.fn();
-// it("mocking",()=>{
-//     // expect(renderTable()).not.toBeNull;
-//     expect(renderTable).toHaveBeenCalledTimes(1);
-// })
-
-//   it('test up arrow',()=>{
-//     const {getByTestId}= render(<CheckoutTable />);
-//     // const selector = getByTestId("upArrow");
-//     const renderta=getByTestId.renderTable()
-//     expect(renderTable.getByTestId("inArrow")).not.toBeNull
-//   })
   
