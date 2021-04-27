@@ -115,6 +115,29 @@ describe('Functionality Tests',()=>{
         expect(CheckoutTable.renderTable()).toBe(undefined);
     })
 
+    test("test CheckInTable.js with dummy data",()=>{
+        // function handleCheckIn(childList) {
+        //     setCIList(childList);
+        //     // console.log("received checkin list from child!")
+        // }
+        // const HWSet_rent_list = {"HW_id":"0","HW_name":"test0","HW_use":8};
+        // const div = document.createElement('div');
+        // ReactDOM.render(<CheckinTable 
+        //     HWSet_rent_list={HWSet_rent_list}
+        //     handleList={handleCheckIn} />, div);
+        // const {getByText} = getQueriesForElement(div);
+        
+        const div = document.createElement('div');
+        ReactDOM.render(<CheckinTable />, div);
+        const {getByText} = getQueriesForElement(div);
+
+        let hw_data = [{"HW_id":"1","HW_name":"hello","HW_use":6},{"HW_id":"2","HW_name":"world","HW_use":9}];
+        expect(CheckinTable.HWSet_rent_list).not.toBeNull;
+        expect(CheckinTable.checkHW).toBe(true);
+        expect(CheckinTable.HWSet_rent_list).toBe(hw_data);
+        
+    })
+
 describe("Mock examples",()=>{
 
     test("test with mock",()=>{
@@ -144,7 +167,7 @@ describe("Mock examples",()=>{
     // const checkoutTable = new CheckoutTable();
     // const func = checkoutTable.renderTable();
     
-    //const hwset={"HWSet_rent_list":[{"HW_id":"60620d7601d2dff8efbed3c1","HW_name":"test2","HW_use":4}]}
+    // const hwset={"HWSet_rent_list":[{"HW_id":"60620d7601d2dff8efbed3c1","HW_name":"test2","HW_use":4}]}
     // it("hook result",()=>{
     //     const div = document.createElement('div');
     //     const {getByTestId} =render(<CheckoutTable />, div);

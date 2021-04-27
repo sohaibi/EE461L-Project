@@ -323,8 +323,11 @@ function HwForm(props) {
                             <CheckinTable
                                 HWSet_rent_list={HWSet_rent_list}
                                 handleList={handleCheckIn}
+                                
                             />
+                            
                         </div>
+                        
 
                         {/* Check Out Form */}
                         <div id=

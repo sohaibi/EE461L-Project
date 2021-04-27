@@ -19,6 +19,7 @@ function CheckoutTable(props) {
         const interval = setInterval(() => {
             fetch('/hardware').then(res => res.json()).then(data => {
                 setAvailabilities(data.HW_ava);
+                console.log(data);
                 setHW_names(data.HW_name);
                 setHW_ids(data.HW_id);
             }).catch((error) => {
