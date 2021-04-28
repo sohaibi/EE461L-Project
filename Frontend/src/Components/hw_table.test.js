@@ -11,6 +11,7 @@ import {renderHook} from '@testing-library/react-hooks'
 
  afterEach(cleanup);
 
+
 describe("Rendering Tests",()=>{
 
     //success rendering
@@ -115,26 +116,71 @@ describe('Functionality Tests',()=>{
         expect(CheckoutTable.renderTable()).toBe(undefined);
     })
 
-    test("test CheckInTable.js with dummy data",()=>{
-        // function handleCheckIn(childList) {
-        //     setCIList(childList);
-        //     // console.log("received checkin list from child!")
-        // }
-        // const HWSet_rent_list = {"HW_id":"0","HW_name":"test0","HW_use":8};
-        // const div = document.createElement('div');
-        // ReactDOM.render(<CheckinTable 
-        //     HWSet_rent_list={HWSet_rent_list}
-        //     handleList={handleCheckIn} />, div);
-        // const {getByText} = getQueriesForElement(div);
-        
-        const div = document.createElement('div');
-        ReactDOM.render(<CheckinTable />, div);
-        const {getByText} = getQueriesForElement(div);
+    // var checkList=[];
+    // var checkout=[];
 
+    // function handleCheckIn(childlist){
+    //     checkinList = childlist;
+    //     console.log("handle check in")
+    // }
+
+   
+
+    // test("test CheckInTable.js with dummy data",()=>{
+      
+
+    //     const div = document.createElement('div');
+    //     let hw_data = [{"HW_id":"1","HW_name":"hello","HW_use":6},{"HW_id":"2","HW_name":"world","HW_use":9}];
+    //     let dummy_data = [{HW_changeNum: 3, HW_id: "1", HW_name: "hello"},{HW_changeNum: 3, HW_id: "2", HW_name: "world"}];
+
+    //     // const checkTable= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+    //     //const table1= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+    //     var checkList=[];
+    //     function testCheckIn(childlist){
+    //         checkList=[...childlist];
+    //         console.log("check list childlist received")
+    //     }
+
+    //     const {getByTestId} = render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+    //     expect(checkList).toStrictEqual(dummy_data);
+     
+
+    //     // expect(table1.HWSet_rent_list).not.toBeNull; //undefine: never initialized
+    //     // expect(table1.checkHW).toBe(true);
+        
+    // })
+
+    test("test stepUp in CheckinTable.js ",()=>{
+
+        const div = document.createElement('div');
         let hw_data = [{"HW_id":"1","HW_name":"hello","HW_use":6},{"HW_id":"2","HW_name":"world","HW_use":9}];
-        expect(CheckinTable.HWSet_rent_list).not.toBeNull;
-        expect(CheckinTable.checkHW).toBe(true);
-        expect(CheckinTable.HWSet_rent_list).toBe(hw_data);
+        let dummy_data = [{HW_changeNum: 2, HW_id: "1", HW_name: "hello"},{HW_changeNum: 4, HW_id: "2", HW_name: "world"}];
+
+        // const checkTable= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+        //const table1= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+        var checkList=[];
+        function testCheckIn(childlist){
+            checkList=[...childlist];
+            console.log("check list childlist received")
+        }
+        act(()=>{
+            render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+        });
+        
+
+        //use setUp
+        // const input = queryAllByText("inArrow");
+        // const selectElement = document.querySelector('.ice-cream');
+        const input = div.querySelectorAll(".hw-input");
+        expect(input).toHaveLength(0);
+        let checkin_number=0;
+        for(var i=0; i<input.length; i++){
+            checkin_number+=2
+            input[i].stepUp(checkin_number);
+            expect(input[i].value).toBe(checkin_number);
+        }
+        expect(checkList).toStrictEqual(dummy_data);
+  
         
     })
 
