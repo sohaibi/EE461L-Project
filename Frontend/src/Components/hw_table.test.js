@@ -1,16 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import CheckinTable from './CheckinTable';
-// import renderTable from './CheckoutTable';
-import interval from './CheckoutTable';
 import CheckoutTable from './CheckoutTable';
 import HwForm from './../Components/Pages/HwForm';
 import {fireEvent, getByTestId, getQueriesForElement, queryByTestId} from '@testing-library/dom'
-import {render, cleanup, act} from '@testing-library/react'; 
-import {renderHook} from '@testing-library/react-hooks'
-
- afterEach(cleanup);
-
+import {render, act} from '@testing-library/react'; 
 
 describe("Rendering Tests",()=>{
 
@@ -116,73 +110,92 @@ describe('Functionality Tests',()=>{
         expect(CheckoutTable.renderTable()).toBe(undefined);
     })
 
-    // var checkList=[];
-    // var checkout=[];
-
-    // function handleCheckIn(childlist){
-    //     checkinList = childlist;
-    //     console.log("handle check in")
-    // }
-
    
 
-    // test("test CheckInTable.js with dummy data",()=>{
+    test("test CheckInTable.js against dummy data",()=>{
       
-
-    //     const div = document.createElement('div');
-    //     let hw_data = [{"HW_id":"1","HW_name":"hello","HW_use":6},{"HW_id":"2","HW_name":"world","HW_use":9}];
-    //     let dummy_data = [{HW_changeNum: 3, HW_id: "1", HW_name: "hello"},{HW_changeNum: 3, HW_id: "2", HW_name: "world"}];
-
-    //     // const checkTable= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
-    //     //const table1= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
-    //     var checkList=[];
-    //     function testCheckIn(childlist){
-    //         checkList=[...childlist];
-    //         console.log("check list childlist received")
-    //     }
-
-    //     const {getByTestId} = render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
-    //     expect(checkList).toStrictEqual(dummy_data);
-     
-
-    //     // expect(table1.HWSet_rent_list).not.toBeNull; //undefine: never initialized
-    //     // expect(table1.checkHW).toBe(true);
-        
-    // })
-
-    test("test stepUp in CheckinTable.js ",()=>{
 
         const div = document.createElement('div');
         let hw_data = [{"HW_id":"1","HW_name":"hello","HW_use":6},{"HW_id":"2","HW_name":"world","HW_use":9}];
-        let dummy_data = [{HW_changeNum: 2, HW_id: "1", HW_name: "hello"},{HW_changeNum: 4, HW_id: "2", HW_name: "world"}];
+        let dummy_data = [{HW_changeNum: 3, HW_id: "1", HW_name: "hello"},{HW_changeNum: 3, HW_id: "2", HW_name: "world"}];
 
-        // const checkTable= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
-        //const table1= ReactDOM.render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
         var checkList=[];
         function testCheckIn(childlist){
             checkList=[...childlist];
             console.log("check list childlist received")
         }
-        act(()=>{
-            render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
-        });
-        
 
-        //use setUp
-        // const input = queryAllByText("inArrow");
-        // const selectElement = document.querySelector('.ice-cream');
-        const input = div.querySelectorAll(".hw-input");
-        expect(input).toHaveLength(0);
-        let checkin_number=0;
-        for(var i=0; i<input.length; i++){
-            checkin_number+=2
-            input[i].stepUp(checkin_number);
-            expect(input[i].value).toBe(checkin_number);
-        }
+        const {toStrictEqual} = render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
         expect(checkList).toStrictEqual(dummy_data);
-  
         
     })
+
+
+    test("test stepUp/Down in CheckinTable.js ",()=>{
+
+        // setHWSet_rent_list(props.HWSet_rent_list); 
+        //overwrites dummy data, must comment out in checkin.js IF initialize useState to dummy data & want to observe visual output
+
+        const div = document.createElement('div');
+        let hw_data = [{"HW_id":"1","HW_name":"hello","HW_use":6},{"HW_id":"2","HW_name":"world","HW_use":9}];
+        let dummy_data = [{HW_changeNum: 5, HW_id: "1", HW_name: "hello"},{HW_changeNum: 7, HW_id: "2", HW_name: "world"}];
+
+        var checkList=[];
+        function testCheckIn(childlist){
+            checkList=[...childlist];
+            console.log("check list childlist received")
+        }
+            const {getByTestId, getByText,getByRole,queryAllByTestId}=render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+        
+        // expect(checkList).toStrictEqual(dummy_data);
+        
+        //check correct max value
+        let input = queryAllByTestId("inArrow");
+        expect(input.length).toBe(2);
+        let hello_row = input[0];
+        let hello_bytext = getByText("hello"); //return <td>hello</td>
+        expect(hello_row.max).toBe ("6");
+
+        let world_row = input[1];
+        let world_bytext = getByText("world"); //return <td>hello</td>
+        expect(world_row.max).toBe ("9");
+
+        //check stepUp functionality
+        let checkin_number=0; //checkin number increment by two for each hardware
+        for(let i=0; i<input.length; i++){
+            checkin_number+=2;
+            input[i].stepUp(checkin_number);
+            expect(input[i].value).toBe(checkin_number.toString()); //number input box functions correctly
+        }
+        
+        //"rerender" after increment
+        let input_afterincre = queryAllByTestId("inArrow");
+        expect(input_afterincre.length).toBe(2);
+        expect(input_afterincre[0].value).toBe("2");
+        expect(input_afterincre[1].value).toBe("4");
+
+        //decrement input value
+        let decrement=0;
+        for(let i=0; i<input.length; i++){
+            decrement+=10;
+            input_afterincre[i].stepDown(decrement);
+            expect(input[i].value).toBe("0"); //min value must be 0 == no negative hardware amt allowed
+            const algebraic_output = parseInt(input_afterincre[i].value) - parseInt(decrement);
+            expect(input_afterincre[i].value).not.toBe(algebraic_output.toString()); //number input box functions correctly
+        }
+
+        //"rerender" after decrement
+        let input_afterdecre = queryAllByTestId("inArrow");
+        expect(input_afterdecre.length).toBe(2);
+        expect(input_afterdecre).not.toBeNull();
+        expect(input_afterdecre[0].value).toBe("0");
+        expect(input_afterdecre[1].value).toBe("0");
+    
+    })
+
+
+
+
 
 describe("Mock examples",()=>{
 
@@ -210,16 +223,6 @@ describe("Mock examples",()=>{
         expect(mock).toHaveBeenCalledWith("boo");
     })
 })
-    // const checkoutTable = new CheckoutTable();
-    // const func = checkoutTable.renderTable();
-    
-    // const hwset={"HWSet_rent_list":[{"HW_id":"60620d7601d2dff8efbed3c1","HW_name":"test2","HW_use":4}]}
-    // it("hook result",()=>{
-    //     const div = document.createElement('div');
-    //     const {getByTestId} =render(<CheckoutTable />, div);
-    //     //const {getByTestId} = div.querySelector("input")
-    //     // expect(div.querySelector("input").defaultValue).toEqual(0);
-    //     const outArrow= getByTestId("outArrow");
-    // })
+
 })
   

@@ -127,8 +127,7 @@ function CheckoutTable(props) {
                                 defaultValue={"0"}
                                 onChange={handleInput(index)}
                                 onKeyDown={(event) => { event.preventDefault(); }}
-                                disabled={disable}
-                                data-testid="test_arrow">
+                                disabled={disable}>
                             </input>
                             <label  data-testid="outArrow" >/{max}</label>
                         </td>
