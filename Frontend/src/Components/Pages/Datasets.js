@@ -8,8 +8,11 @@ export default function Datasets() {
     const [data_keys, setData_Keys] = useState([]);
     const [data_names, setData_Names] = useState([]);
     const [datasets, setDatasets] = useState([]);
-    const index = [0,1,2,3,4,5,6,7,8,9];
 
+    //Grabs all the dataset information from the back end
+    // daya_keys holds the dictionary keys to the dataset names
+    //datasets holds the nice looking dataset names that are displayed
+    //data_names hold the names of datasets formated to work properly in urls
     useEffect(() => {
 
         fetch('/dataset_info').then(res=> res.json()).then(
@@ -36,6 +39,7 @@ export default function Datasets() {
                     if(i==11){
                         i=6;
                     }
+
                 }
             }
         ).catch(error => {
@@ -44,10 +48,25 @@ export default function Datasets() {
 
     }, []);
 
-    async function handleClick(number, id){
-        var url = "https://www.physionet.org/static/published-projects/"+data_keys[number]+"/"+data_names[number]+"-1.0.0.zip";
-        document.getElementById(id).setAttribute("href", url);
-    }
+    //The function used to generate the table, including the url links
+     async function renderTableData(id_table, id_button) {
+        var myTable = document.getElementById(id_table);
+        var button = document.getElementById(id_button);
+        button.parentNode.removeChild(button);
+        for(var i = 0; i<10; i++){
+            var new_row = myTable.insertRow(i+1);
+            var dataset_name = new_row.insertCell(0);
+            var dataset_link = new_row.insertCell(1);
+            dataset_name.innerHTML = String(datasets[i]);
+            var url = "https://www.physionet.org/static/published-projects/"+data_keys[i]+"/"+data_names[i]+"-1.0.0.zip";
+            dataset_link.innerHTML = "<a id='id' href=''>Download</a>";
+            var temp = dataset_link.getElementsByTagName('a')[0];
+            temp.setAttribute("href", url);
+            console.log(dataset_link);
+            console.log(datasets[i]);
+        }
+        console.log(myTable.rows.length);
+     }
 
 
     //Returns table with dataset names and download buttons
@@ -55,99 +74,26 @@ export default function Datasets() {
         <div class='Datasets'>
             {/* <h1>Datasets</h1>
             <p>  Select Datasets to download.</p> */}
-            <table id='dataset_table'>
+            <h1 >How to Download Datasets</h1>
+            <p>The datasets provided by our website are taken from a website called PhysioNet. They download in the form of a zip and once expanded contains
+                 .cvs, .hea, and .dat. As well as others. All screening of specific document data is done by PhysioNet. If you would like ot continue please press
+                 the button below. </p>
+            <table id="dynamic_table">
                 <thead>
                     <tr>
                         <th>Datasets</th>
-                        <th>Click to Download</th>
+                        <th>Download</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <p>{datasets[0]}</p>
-                        </td>
-                        <td>
-                            {/*https://www.physionet.org/static/published-projects/aami-ec13/ansiaami-ec13-test-waveforms-1.0.0.zip*/ }
-                            <a id="link0" href="" onClick={() => handleClick(0, "link0")}>Download</a>
                         </td>
                     </tr>
-                    <tr>
-                        <td> 
-                            <p>{datasets[1]}</p>
-                        </td>
 
-                        <td>
-                        <a id="link1" href="" onClick={()=> handleClick(1, "link1")}>Download</a>
-                        </td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[2]}</p>
-                        </td>
-                        <td>
-                            <a id="link2" href="" onClick={()=> handleClick(2, "link2")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[3]}</p>
-                        </td>
-                        <td>
-                            <a id="link3" href="" onClick={()=> handleClick(3, "link3")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[4]}</p>
-                        </td>
-                        <td>
-                            <a id="link4" href="" onClick={()=> handleClick(4, "link4")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[5]}</p>
-                        </td>
-                        <td>
-                            <a id="link5" href="" onClick={()=> handleClick(5, "link5")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <   td>
-                            <p>{datasets[6]}</p>
-                        </td>
-                        <td>
-                            <a id="link6" href="" onClick={()=> handleClick(6, "link6")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[7]}</p>
-                        </td>
-                        <td>
-                            <a id="link7" href="" onClick={()=> handleClick(7, "link7")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[8]}</p>
-                        </td>
-                        <td>
-                            <a id="link8" href="" onClick={()=> handleClick(8, "link8")}>Download</a>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <p>{datasets[9]}</p>
-                        </td>
-                        <td>
-                            <a id="link9" href="" onClick={()=> handleClick(9, "link9")}>Download</a>
-                        </td>
-                    </tr>
                 </tbody>
             </table>
+            <button id="button" onClick={()=>renderTableData("dynamic_table", "button")}>Continue to Dataset Options</button>
 
         </div>
     )
