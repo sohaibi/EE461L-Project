@@ -2,32 +2,28 @@ import React, { useState, useEffect } from 'react';
 import './CheckInOut.css';
 
 function CheckoutTable(props) {
-
-
-    // const [credits, setCredit] = useState(props.credits); 
     const [checkoutList, setCheckoutList] = useState([]);
     const [HWSet_use_dict, setHWSet_use_dict] = useState({});
     // const [inError, setInError] = useState(false);
     // const [error, setError] = useState("");
 
     // /** Hardware Availabilities, Names and ids */
-    const [availabilities, setAvailabilities] = useState([]);
-    const [HW_names, setHW_names] = useState([]);
-    const [HW_ids, setHW_ids] = useState([]);
+    const [availabilities, setAvailabilities] = useState([100,200,300,400]);
+    const [HW_names, setHW_names] = useState(["set1","set2","set3","set4"]);
+    const [HW_ids, setHW_ids] = useState(["0","1","2","3"]);
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-            fetch('/hardware').then(res => res.json()).then(data => {
-                setAvailabilities(data.HW_ava);
-                setHW_names(data.HW_name);
-                setHW_ids(data.HW_id);
-            }).catch((error) => {
-                console.error(error);
-            });
-        }, 1000);
-        return () => clearInterval(interval);
-
-    }, []);
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //         fetch('/hardware').then(res => res.json()).then(data => {
+    //             setAvailabilities(data.HW_ava);
+    //             setHW_names(data.HW_name);
+    //             setHW_ids(data.HW_id);
+    //         }).catch((error) => {
+    //             console.error(error);
+    //         });
+    //     }, 1000);
+    //     return () => clearInterval(interval);
+    // }, []);
 
     useEffect(() => {
         // initialize the checkoutList
@@ -41,14 +37,12 @@ function CheckoutTable(props) {
                 });
             }
             console.log("initialized checkout list", list);
-            // console.log(checkoutList);
+            console.log(checkoutList);
 
             setCheckoutList(list);
-            // console.log("initialized checkout list", list);
-
-
+            props.handleList(list);
+            console.log("initialized checkout list", list);
         }
-
     }, [availabilities]);
 
 
@@ -75,31 +69,9 @@ function CheckoutTable(props) {
         list[index].HW_changeNum = input;
 
         setCheckoutList(list);
-        // console.log(list);
+        console.log("UPDATED LIST");
+        console.log(list);
         props.handleList(list);
-
-
-
-        /*will implement credit in phase 3*/
-        // var diff = input - checkoutList[index];
-
-        // setInError(false);
-        // setError("");
-
-        // if(credits - diff < 0) { // check if there are enough credits
-        //     event.target.value = checkoutList[index].toString();
-        //     setInError(true);
-        //     setError("You do not have enough credits.");
-        // } 
-        // else {    
-        //     setCredit(credits - diff);
-
-        //     let list = [...checkoutList];
-        //     list[index] = input;
-        //     setList(list);
-        //     props.handleList(list);
-        // }
-
     }
 
     // // creates form table
@@ -134,15 +106,8 @@ function CheckoutTable(props) {
 
     return (
         <>
-            {/* <p>{JSON.stringify(checkoutList)}</p> */}
-            {/* <p>{(checkoutList.length === 0).toString()}</p> */}
             <h3 className="io-heading">Hardware Check-Out</h3>
             <div className="check-table-container">
-                {/* <p className="check-text">
-                You currently have&nbsp;
-                <span className="hw-spanText">{credits.toString()}</span> 
-                &nbsp;credits remaining for this project.
-            </p> */}
                 <table className="checked_table">
                     <tbody>
                         <tr>
@@ -153,10 +118,8 @@ function CheckoutTable(props) {
                         {renderTable()}
                     </tbody>
                 </table>
-                {/* <p className={inError ? 'showError' : 'hideError'}>{error}</p> */}
             </div>
         </>
-        // "checkout nothing"
     );
 }
 
