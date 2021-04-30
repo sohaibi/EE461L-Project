@@ -9,7 +9,7 @@ import Checkout from '../CheckoutTable';
 var checkinList = [];
 var checkoutList = [];
 
-// callback functions
+// callback functions for rendering
 function handleCheckIn(childList) {
     checkinList = childList;
     console.log("received checkin list from child!")
@@ -228,17 +228,26 @@ function funcCheckOut() {
         for(i=0; i<inputs.length; i++) {
             act(() => {
                 inputs[i].stepUp(1000);
-                container.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+                inputs[i].dispatchEvent(new MouseEvent("click", { bubbles: true }));
               });
             let actual = (i + 1) * 100;
+
+            //
+            let inputs2 = container.querySelectorAll(".hw-input");
+            expect(inputs2[i].value).toBe(actual.toString());
+            console.log(inputs2[i].value);
+            //
+            
+            console.log("HELLO WORLD 3\n" + inputs[i]);
             expect(inputs[i].value).toBe(actual.toString());
         }
+
 
         // compare expected against the actual 
         expect(checkList).toHaveLength(4);
         for(i=0; i<checkList.length; i++) {
             let actual = (i + 1) * 100;
-            expect(checkList[i].value).toBe(actual.toString());
+            expect(checkList[i].HW_changeNum).toBe(actual);
         }
     });
 
