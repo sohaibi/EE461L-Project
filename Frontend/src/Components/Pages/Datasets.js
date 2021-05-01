@@ -10,7 +10,7 @@ export default function Datasets() {
     const [datasets, setDatasets] = useState([]);
 
     //Grabs all the dataset information from the back end
-    // daya_keys holds the dictionary keys to the dataset names
+    //data_keys holds the dictionary keys to the dataset names
     //datasets holds the nice looking dataset names that are displayed
     //data_names hold the names of datasets formated to work properly in urls
     useEffect(() => {

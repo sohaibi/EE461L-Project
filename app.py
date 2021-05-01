@@ -308,23 +308,6 @@ def create_app(test_config=None):
         return jsonify({'message': 'success', 'records': tuple(project_list)})
         # return json.loads(json_util.dumps(project_list))
 
-
-
-    #Returns the names of each dataset for display
-    @app.route('/dataset_names', methods=['GET', 'POST'])
-    def datasetNames():
-        # GET:
-        if request.method == 'GET':
-            data_names = dataset.getDatasetNames()
-            return jsonify(data_names)
-        
-    #returns the keys to each Dataset
-    @app.route('/dataset_titles', methods=['GET', 'POST'])
-    def datasetTitles():
-        # GET:
-        if request.method == 'GET':
-            data_titles = dataset.getDatasetTitles()
-            return jsonify(data_titles)
     
     #test for returning both keys and names
     @app.route('/dataset_info', methods=['GET', 'POST'])
