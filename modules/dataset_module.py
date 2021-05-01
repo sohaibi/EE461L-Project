@@ -15,21 +15,13 @@ dataset_module = Blueprint("dataset_module", __name__)
 def second():
     return "dataset_module"
 
-#Returns the names of each dataset for display
-@dataset_module.route('/dataset_names', methods=['GET', 'POST'])
-def datasetNames():
+#test for returning both keys and names
+@dataset_module.route('/dataset_info', methods=['GET', 'POST'])
+def datasetInfo():
     # GET:
     if request.method == 'GET':
-        data_names = dataset.getDatasetNames()
-        return jsonify(data_names)
-    
-#returns the keys to each Dataset
-@dataset_module.route('/dataset_titles', methods=['GET', 'POST'])
-def datasetTitles():
-    # GET:
-    if request.method == 'GET':
-        data_titles = dataset.getDatasetTitles()
-        return jsonify(data_titles)
+        data_info = dataset.getDatasetInfo()
+        return jsonify(data_info)
 
 #Handles zip download
 @dataset_module.route('/uploads', methods=['GET', 'POST'])
