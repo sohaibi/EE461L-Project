@@ -69,7 +69,6 @@ function CheckinTable(props) {
                             <td>
                                 <input
                                     data-testid='inArrow'
-                                    role ='inArrow'
                                     type="number"
                                     className="hw-input"
                                     min={"0"}

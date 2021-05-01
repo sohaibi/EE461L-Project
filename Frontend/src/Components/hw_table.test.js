@@ -22,9 +22,7 @@ describe("Rendering Tests",()=>{
         ReactDOM.render(<CheckinTable />, div);
         const {getByText} = getQueriesForElement(div);
         expect(getByText("Hardware Check-In")).not.toBeNull();
-        // expect(getByText("Hardware ")).not.toBeNull();
-        // expect(getByText("Check In")).not.toBeNull();
-    
+       
     })
 
     //html testing
@@ -32,7 +30,6 @@ describe("Rendering Tests",()=>{
         const div = document.createElement('div');
         ReactDOM.render(<CheckinTable />, div);
         expect(div.querySelector("h3").textContent).toBe("Hardware Check-In");
-        // expect(div.querySelector("td").textContent).toBe("Hardware");
     })
 
 
@@ -45,10 +42,6 @@ describe("Rendering Tests",()=>{
         expect(getByText("Hardware Check-Out")).not.toBeNull();
         expect(getByText("Current Amount")).not.toBeNull();
         expect(getByText("Check Out")).not.toBeNull();
-        // expect(getByText("test1")).not.toBeNull();
-        // expect(getByText("test2")).not.toBeNull();
-        // expect(getByText("test3")).not.toBeNull();
-        // expect(getByText("test4")).not.toBeNull();
     })
 
     it("render checkbox labels",()=>{
@@ -68,11 +61,9 @@ describe("Rendering Tests",()=>{
 
 //Functionality Test Cases
 describe('Functionality Tests',()=>{
+
     it('test checkbox response', () => {
-        // const div = document.createElement('div');
-        // ReactDOM.render(<HwForm isLogin="true" userID={"60601c82cdd298d4ea3c5a04"} />, div); //<Redirect> <react> issue solve by passing props
         const {getByTestId} = render(<HwForm isLogin="true" userID={"60601c82cdd298d4ea3c5a04"} />);
-        // const {getByText} = getQueriesForElement(div);
         const in_checkbox = getByTestId("inBox"); //'check in' checkbox
         expect(in_checkbox.checked).toEqual(false);
         fireEvent.click(in_checkbox);
@@ -92,23 +83,23 @@ describe('Functionality Tests',()=>{
     // jest.mock('./CheckoutTable.js');
     //essentially set functions inside CheckoutTable.js to [export const <fn_name> = jest.fn();]
     
-    test("mock test: renderTable()",()=>{
-        CheckinTable.renderTable = jest.fn(()=>"table will render");
-        CheckinTable.renderTable();
-        expect(CheckinTable.renderTable).toHaveBeenCalledTimes(1);
-        expect(CheckinTable.renderTable()).toBe("table will render");
-    })
+    // test("mock test: renderTable()",()=>{
+    //     CheckinTable.renderTable = jest.fn(()=>"table will render");
+    //     CheckinTable.renderTable();
+    //     expect(CheckinTable.renderTable).toHaveBeenCalledTimes(1);
+    //     expect(CheckinTable.renderTable()).toBe("table will render");
+    // })
 
-    //restore original implementation
-    test("mock test: spyOn",()=>{
-        CheckoutTable.renderTable =jest.fn();
-        const spy = jest.spyOn(CheckoutTable,"renderTable");
+    // //restore original implementation
+    // test("mock test: spyOn",()=>{
+    //     CheckoutTable.renderTable =jest.fn();
+    //     const spy = jest.spyOn(CheckoutTable,"renderTable");
 
-        spy.mockImplementation(()=>"override implementation");
-        expect(CheckoutTable.renderTable()).toBe("override implementation");
-        spy.mockRestore();
-        expect(CheckoutTable.renderTable()).toBe(undefined);
-    })
+    //     spy.mockImplementation(()=>"override implementation");
+    //     expect(CheckoutTable.renderTable()).toBe("override implementation");
+    //     spy.mockRestore();
+    //     expect(CheckoutTable.renderTable()).toBe(undefined);
+    // })
 
    
 
@@ -145,7 +136,7 @@ describe('Functionality Tests',()=>{
             checkList=[...childlist];
             console.log("check list childlist received")
         }
-            const {getByTestId, getByText,getByRole,queryAllByTestId}=render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
+            const {getByText,queryAllByTestId}=render(<CheckinTable HWSet_rent_list={hw_data} handleList={testCheckIn}/>, div);
         
         // expect(checkList).toStrictEqual(dummy_data);
         
@@ -197,32 +188,32 @@ describe('Functionality Tests',()=>{
 
 
 
-describe("Mock examples",()=>{
+// describe("Mock examples",()=>{
 
-    test("test with mock",()=>{
-        const mock = jest.fn();
-        let result = mock("foo");
-        expect(result).toBeUndefined();
-        expect(mock).toHaveBeenCalled();
-        expect(mock).toHaveBeenCalledTimes(1);
-        expect(mock).toHaveBeenCalledWith("foo");
-    });
+//     test("test with mock",()=>{
+//         const mock = jest.fn();
+//         let result = mock("foo");
+//         expect(result).toBeUndefined();
+//         expect(mock).toHaveBeenCalled();
+//         expect(mock).toHaveBeenCalledTimes(1);
+//         expect(mock).toHaveBeenCalledWith("foo");
+//     });
 
-    test("mock test1",()=>{
-        const mock = jest.fn(() => "bar");
-        expect(mock("foo")).toBe("bar");
-        expect(mock).toHaveBeenCalledWith("foo");
-    })
+//     test("mock test1",()=>{
+//         const mock = jest.fn(() => "bar");
+//         expect(mock("foo")).toBe("bar");
+//         expect(mock).toHaveBeenCalledWith("foo");
+//     })
     
-    test("mock test2",()=>{
-        const mock = jest.fn().mockImplementationOnce(()=>"bar");
-        expect(mock("foo")).toBe("bar");
-        expect(mock).toHaveBeenCalledWith("foo");
+//     test("mock test2",()=>{
+//         const mock = jest.fn().mockImplementationOnce(()=>"bar");
+//         expect(mock("foo")).toBe("bar");
+//         expect(mock).toHaveBeenCalledWith("foo");
 
-        expect(mock("boo")).toBe(undefined);
-        expect(mock).toHaveBeenCalledWith("boo");
-    })
-})
+//         expect(mock("boo")).toBe(undefined);
+//         expect(mock).toHaveBeenCalledWith("boo");
+//     })
+// })
 
 })
   
