@@ -82,7 +82,7 @@ def test_hardware_module_checkout(client):
     # test if the change in Hardware equals the change of HWSet info
     new_HW_ava = get_hwtable(client).get_json(force = True)['HW_ava'][hw_set_idx]
     check.equal(-checkout_amount,new_HW_ava-original_HWSet_ava)
-    # test if the change in Hardware equals the change in project info
+    # test if the change in hardware amount in the projectsinfo equals the change in project info
     HW_info_list = get_projects(client).get_json(force = True)['projects'][i]["hardware"]
     new_HW_use = 0
     for each in HW_info_list:
@@ -126,7 +126,7 @@ def test_hardware_module_checkin(client):
     if proj_id == '':
         return
 
-    # randomly pick up a checkout ammount to checkin
+    # randomly pick up a checkin ammount to checkin
     checkin_amount = randint(0, original_HW_use)
     # get original HW_ava
     hwtable = client.get('/hardware', follow_redirects=True).get_json(force = True)
