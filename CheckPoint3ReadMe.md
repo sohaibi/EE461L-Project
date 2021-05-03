@@ -27,13 +27,13 @@ def set_HWSet_capacity(HWSet_id: str, amt_of_hardware: int) -> int:
     :returns: new capacity if success; error code as int. -1 when hardware cannot be found ; -2 when decrease of capacity exceeds current availability
     """
 ```
-to enable the feature as to create new hardware and expand the capacity of existing hardware set, respectively.
+to enable the feature as to create new hardware and expand the capacity of existing hardware set, respectively. <br>
 **Web UI:** <br>
 This feature can be easily implemented by add a new button 'Add Hardware Resources' on hardware web page(https://wirepowderless.herokuapp.com/hardware).
-### Tailer the Look and Feel of Web UI by Stakeholders
+### Tailer the Look and Feel of Web UI by Stakeholders <br>
 **TODO: RACHEL**<br>
 
-### View Billing Information by Client
+### View Billing Information by Client<br>
 **Database:**<br>
 - Add a 'credit' attibute in 'Project' collection in MongoDB <br>
 This 'credit' attribute will be in integer or float datatype, to indicate how many credits this project currently has. If intially every project has 300 free credits, then its value will be 300. When 'credit' becomes 0, it can be increased again by charging Client's credit card.
@@ -49,8 +49,8 @@ HWSet_id_2:[
 (2021-04-23 15:30 , 4),
  ]
 }'). <br>
-When hardware is returned, we calculate the total billed credit = sum(price per hour* time span). The deducted hardware rent information and credits value will be reflected on the 'HWSet_dict' and the 'credits' accordingly.
-**Web UI:**
+When hardware is returned, we calculate the total billed credit = sum(price per hour* time span). The deducted hardware rent information and credits value will be reflected on the 'HWSet_dict' and the 'credits' accordingly.<br>
+**Web UI:**<br>
 On project webpage(https://wirepowderless.herokuapp.com/project), we can add a column to indicate the 'credit' amount for each project. The history of checkin and checkout log can also be stored and displayed if necessary.
 
 ## Continuous Improvement
@@ -63,6 +63,7 @@ In checkpoint3, we refractored some duplicated codes. Examples are:
 The login page(https://wirepowderless.herokuapp.com/login) and register page(https://wirepowderless.herokuapp.com/register) basically contains the same rendering code. Therefore, we made a seperate component 'UserForm.js' which will render different form upon receiving different props, either from Login.js or from Register.js.By doing this we duplicated codes are reduces, same for the duplicated css file.
 - Dataset Page <br>
 **TODO: MONA**
+<br>
 
 ###Information Hiding
 **Frontend**<br>
@@ -77,8 +78,10 @@ In project page(https://wirepowderless.herokuapp.com/project), we created sepera
 In the '/projects' route of flask end, to handle the post request regarding differetn actions('create','update','delete',etc) takes quite large amounts of code while actually doing a simple task. In order to make the code more compact, we move that bunch of code into a seperate helper python file 'project_module_helper.py'.
 
 ## Testing Coverage
-We selected the hardware module to test with, and tested the react end and flask end, respectively.
-**Frontend**<br>
+We selected the hardware module to test with, and tested the react end and flask end, respectively. 
+<br>
+**Frontend**
+<br>
 To test the react front end we imported the package react testing libary.
 - Testing the rendering of hardware page <br>
 The testing code is in 'test-react-hardwareModule-rendering' branch. To run the test, do: <br>
@@ -95,7 +98,9 @@ $ git checkout test-react-hardwareModule-functionality
 $ cd Frontend
 $ npm test
 ```
-**TODO: Rachel: what has been tested, how many test passed, I(Yue) have added the testing for checkin functionality into it as well, since I noticed that Lian's code is more about rendering. So these codes covers all the functionality case** <br>
+<br>
+**TODO: Rachel: what has been tested, how many test passed, I(Yue) have added the testing for checkin functionality into it as well, since I noticed that Lian's code is more about rendering. So these codes covers all the functionality case** 
+<br>
 
 **Backend**<br>
 We adopted the in-built flask testing module to test the rendering and functionality.
