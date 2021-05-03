@@ -19,7 +19,7 @@ function HW_Table(props) {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            fetch('/hardware').then(res => res.json()).then(data => {
+            fetch('/api/hardware').then(res => res.json()).then(data => {
                 setAvailabilities(data.HW_ava);
                 setCapacities(data.HW_cap);
                 setHW_names(data.HW_name);

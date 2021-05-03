@@ -26,7 +26,7 @@ export default function UserProfile(props) {
 
         if (isLogin) {
             //fetch user profile data
-            fetch('/userProfile',
+            fetch('/api/userProfile',
                 {
                     method: "GET",
                     cache: 'default',
@@ -82,7 +82,7 @@ export default function UserProfile(props) {
             newProfile.Email = '';
         }
         console.log(newProfile);
-        fetch('/userProfile',
+        fetch('/api/userProfile',
             {
                 method: "POST",
                 cache: 'force-cache',

@@ -45,7 +45,7 @@ function HwForm(props) {
     // load projects & hardware info when mouted
     useEffect(() => {
         if (isLogin) {
-            fetch('/check',
+            fetch('/api/check',
                 {
                     method: "GET",
                     cache: 'default',
@@ -162,7 +162,7 @@ function HwForm(props) {
          */
         console.log(updateDict);
         console.log(projects[projIndex]['id']);
-        fetch('/check',
+        fetch('/api/check',
             {
                 method: "POST",
                 cache: 'force-cache',

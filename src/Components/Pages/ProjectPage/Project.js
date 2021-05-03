@@ -82,7 +82,7 @@ function Project(props) {
 
     // load user's project data 
     useEffect(() => {
-        fetch('/project', {
+        fetch('/api/project', {
 
             method: "GET",
             cache: 'default',
@@ -135,7 +135,7 @@ function Project(props) {
         console.log("request", request)
 
 
-        fetch('/project', {
+        fetch('/api/project', {
 
             method: "POST",
             cache: 'force-cache',

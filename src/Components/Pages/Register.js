@@ -38,7 +38,7 @@ class Register extends React.Component {
             this.setState({ error_message: 'Password does not match with confirmed password' });
         } else {
             console.log("making request to register")
-            fetch('/register',
+            fetch('/api/register',
                 {
                     method: "POST",
                     cache: 'force-cache',

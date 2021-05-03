@@ -35,7 +35,7 @@ class Login extends React.Component {
         e.preventDefault();
         console.log("making request to login")
         // console.log(this.state.username)
-        fetch('/login',
+        fetch('/api/login',
             {
                 method: "POST",
                 cache: 'force-cache',

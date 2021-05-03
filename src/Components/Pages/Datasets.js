@@ -15,7 +15,7 @@ export default function Datasets() {
     //data_names hold the names of datasets formated to work properly in urls
     useEffect(() => {
 
-        fetch('/dataset_info').then(res => res.json()).then(
+        fetch('/api/dataset_info').then(res => res.json()).then(
             data => {
                 setData_Names(data_names, []);
                 setData_Keys(data_keys, []);

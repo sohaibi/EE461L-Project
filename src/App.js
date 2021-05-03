@@ -25,7 +25,7 @@ function App() {
   // check login status from backend server when mount
   useEffect(() => {
 
-    fetch('/login',
+    fetch('/api/login',
       {
         method: "GET",
         cache: 'default',

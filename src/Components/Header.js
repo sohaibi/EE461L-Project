@@ -16,7 +16,7 @@ function Header(props) {
     // setUser(false);    // if Sign Out is clicked, set to Guest Mode
     {
         if (isUser) {
-            fetch('/logout',
+            fetch('/api/logout',
                 {
                     method: "POST",
                     cache: 'force-cache',

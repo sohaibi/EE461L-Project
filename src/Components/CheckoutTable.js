@@ -17,7 +17,7 @@ function CheckoutTable(props) {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            fetch('/hardware').then(res => res.json()).then(data => {
+            fetch('/api/hardware').then(res => res.json()).then(data => {
                 setAvailabilities(data.HW_ava);
                 setHW_names(data.HW_name);
                 setHW_ids(data.HW_id);
