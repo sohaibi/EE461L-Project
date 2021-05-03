@@ -65,7 +65,7 @@ Therefore, we made a seperate component 'UserForm.js' which will render differen
 - Dataset Page <br>
 **TODO: MONA** <br>
 
-###Information Hiding <br>
+### Information Hiding <br>
 **Frontend**<br>
 Earlier in checkpoint 2 we have adopted the information hiding principle when imporve our codes. Examples are: <br>
 - Hareware Page <br>
