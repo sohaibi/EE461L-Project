@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-  
-=======
->>>>>>> main
 import logging
 from flask_cors import CORS, cross_origin
 from flask import Flask, jsonify, request, session, send_from_directory, send_file
