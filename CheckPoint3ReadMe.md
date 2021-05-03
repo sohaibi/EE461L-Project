@@ -74,7 +74,7 @@ Earlier in checkpoint 2 we have adopted the information hiding principle when im
 In hardware page(https://wirepowderless.herokuapp.com/hardware), we created seperate child components as CheckinTable.js and CheckoutTable.js to be called from page HWForm.js to render different tables.
 - Project Page <br>
 **[Lian]**<br>
-In project page(https://wirepowderless.herokuapp.com/project), we created seperate child components as UseTable.js and UseForm.js to be called from page Project.js to render the table needed and form needed for parent component Project.js.
+In project page(https://wirepowderless.herokuapp.com/project), we created seperate child components as UseTable.js and UseForm.js to be called from page Project.js to render the table needed and form needed for parent component Project.js. <br>
 **Backend**<br>
 In the '/projects' route of flask end, to handle the post request regarding differetn actions('create','update','delete',etc) takes quite large amounts of code while actually doing a simple task. In order to make the code more compact, we move that bunch of code into a seperate helper python file 'project_module_helper.py'.
 
