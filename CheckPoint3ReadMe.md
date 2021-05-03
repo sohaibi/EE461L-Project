@@ -125,8 +125,8 @@ $ git checkout test-flask-rendering-functionality
 $ pytest test_app.py
 ```
 A test client is created to test the hardware module. Four tests are conduted: <br>
-(1) test_hardware_module_hwtable(client)   # test the rendering and length of hardware table <br>
-(2) test_hardware_module_get_projects(client) # test projects can be retrived from database for the test client<br>
-(3) test_hardware_module_checkout(client)  # pick up a random project to checkout random amount for randowm existing hardware set, check if the changed hardware amount in the 'Project' colleciton and 'HWSet' collection in MongoDB meets expected checkout value.<br>
-(4) test_hardware_module_checkin(client) # pick up a random project which has hardware in rent to checkin random amount for randowm existing hardware set, check if the changed hardware amount in the 'Project' colleciton and 'HWSet' collection in MongoDB meets expected checkout value.<br>
+    ✓ test_hardware_module_hwtable(client)   # test the rendering and length of hardware table <br>
+    ✓ test_hardware_module_get_projects(client) # test projects can be retrived from database for the test client<br>
+    ✓ test_hardware_module_checkout(client)  # pick up a random project to checkout random amount for randowm existing hardware set, check if the changed hardware amount in the 'Project' colleciton and 'HWSet' collection in MongoDB meets expected checkout value.<br>
+    ✓ test_hardware_module_checkin(client) # pick up a random project which has hardware in rent to checkin random amount for randowm existing hardware set, check if the changed hardware amount in the 'Project' colleciton and 'HWSet' collection in MongoDB meets expected checkout value.<br>
 All tests passed, which indicates the rendering and functionality of hardware module in flask backend works normally.
