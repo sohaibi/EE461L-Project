@@ -56,7 +56,8 @@ On project webpage(https://wirepowderless.herokuapp.com/project), we can add a c
 ## Continuous Improvement
 ### Refractor 
 <br>
-**Backend**<br>
+**Backend**
+<br>
 In checkpoint2, all the routes are defined in the app.py file, which makes the app.py extremely long and hard to debug. In checkpoint3, we seperated the code into 4 modules adopting flask's 'Blueprint' feature. Now the code in each modules(user module, project module, hardware module, dataset module) are saved in different py files in 'modules' folder, which makes the whole structure more organized and easier to check and debug.
 <br>
 **Frontend**
