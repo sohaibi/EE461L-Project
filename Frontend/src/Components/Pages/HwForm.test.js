@@ -306,10 +306,190 @@ function funcCheckOut() {
     });
 }
 
+
+function funcCheckIn() {
+    let container = null;
+    beforeEach(() => {
+        // setup a DOM element as a render target
+        container = document.createElement("div");
+        document.body.appendChild(container);
+    });
+
+    afterEach(() => {
+        // cleanup on exiting
+        unmountComponentAtNode(container);
+        container.remove();
+        container = null;
+    });
+
+    // checked in hardware when no hardware is in use
+    let test = [
+        { "HW_id": "0", "HW_name": "set1", "HW_use": 0 },
+        { "HW_id": "1", "HW_name": "set2", "HW_use": 0 },
+        { "HW_id": "2", "HW_name": "set3", "HW_use": 0 },
+        { "HW_id": "3", "HW_name": "set4", "HW_use": 0 }
+    ];
+
+    // test for when no hardware is in use for all the projects
+    it("CheckinTable Functionality: no hardware is in use", () => {
+        // callback function for props
+        let checkList = [];
+        function testCheckIn(childList) {
+            checkList = [...childList];
+            console.log("received checkout list from child!")
+        }
+
+        // render Checkin
+        act(() => {
+            render(<Checkin
+                HWSet_rent_list={test}
+                handleList={testCheckIn}
+            />, container);
+        });
+
+        // set the values of the number inputs
+        const checkText = container.querySelector('.check-text');
+        expect(checkText.id).toBe('hidePara');
+    });
+
+    // test for when hardware is in use and input is negative
+    test = [
+        { "HW_id": "0", "HW_name": "set1", "HW_use": 10 },
+        { "HW_id": "1", "HW_name": "set2", "HW_use": 20 },
+        { "HW_id": "2", "HW_name": "set3", "HW_use": 30 },
+        { "HW_id": "3", "HW_name": "set4", "HW_use": 40 }
+    ];
+
+    it("CheckinTable Functionality: checkin exceeding the max value", () => {
+        // callback function for props
+        let checkList = [];
+        function testCheckIn(childList) {
+            checkList = [...childList];
+            console.log("received checkin list from child!")
+        }
+
+        // render Checkout
+        act(() => {
+            render(<Checkin
+                HWSet_rent_list={test}
+                handleList={testCheckIn}
+            />, container);
+        });
+
+        // set the values of the number inputs
+        const inputs = container.querySelectorAll(".hw-input");
+        expect(inputs).toHaveLength(4);
+
+        var i;
+        for (i = 0; i < inputs.length; i++) {
+            var expectedValue = inputs[i].max;
+            act(() => {
+                inputs[i].stepUp(parseInt(expectedValue) + 10);
+                let event = new Event('input', { bubbles: true });
+                event.simulated = true;
+                inputs[i].dispatchEvent(event);
+            });
+            expect(inputs[i].value).toBe(expectedValue);
+            // console.log(checkList);
+            expect(checkList[i].HW_changeNum).toBe(parseInt(expectedValue));
+
+        }
+
+
+    });
+
+
+    // when hardware is in use 
+    test = [
+        { "HW_id": "0", "HW_name": "set1", "HW_use": 10 },
+        { "HW_id": "1", "HW_name": "set2", "HW_use": 20 },
+        { "HW_id": "2", "HW_name": "set3", "HW_use": 30 },
+        { "HW_id": "3", "HW_name": "set4", "HW_use": 40 }
+    ];
+
+    // test when checkin input is negative
+
+    it("CheckinTable Functionality: negative checkin", () => {
+        // callback function for props
+        let checkList = [];
+        function testCheckIn(childList) {
+            checkList = [...childList];
+            console.log("received checkin list from child!")
+        }
+
+        // render Checkout
+        act(() => {
+            render(<Checkin
+                HWSet_rent_list={test}
+                handleList={testCheckIn}
+            />, container);
+        });
+
+        // set the values of the number inputs
+        const inputs = container.querySelectorAll(".hw-input");
+        expect(inputs).toHaveLength(4);
+
+        var i;
+        for (i = 0; i < inputs.length; i++) {
+            act(() => {
+                inputs[i].stepDown(100);
+                let event = new Event('input', { bubbles: true });
+                event.simulated = true;
+                inputs[i].dispatchEvent(event);
+            });
+            expect(inputs[i].value).toBe("0");
+            console.log(checkList);
+            // expect(checkList[i]).toBe([]);
+
+        }
+
+
+    });
+
+    // test for when all HWSet types have been used for the project, in normal checkin case
+    it("CheckinTable Functionality: normal checkin", () => {
+        // callback function for props
+        let checkList = [];
+        function testCheckIn(childList) {
+            checkList = [...childList];
+            console.log("received checkout list from child!")
+        }
+
+        // render Checkout
+        act(() => {
+            render(<Checkin
+                HWSet_rent_list={test}
+                handleList={testCheckIn}
+            />, container);
+        });
+
+        // set the values of the number inputs
+        const inputs = container.querySelectorAll(".hw-input");
+        expect(inputs).toHaveLength(4);
+
+        var i;
+        for (i = 0; i < inputs.length; i++) {
+            var expectValue = "5";
+            act(() => {
+                inputs[i].stepUp(parseInt(expectValue));
+                let event = new Event('input', { bubbles: true });
+                event.simulated = true;
+                inputs[i].dispatchEvent(event);
+            });
+            expect(inputs[i].value).toBe(expectValue);
+            expect(checkList[i].HW_changeNum).toBe(parseInt(expectValue));
+        }
+    });
+
+
+}
+
+
 function main() {
     renderCheckin();
     renderCheckout();
     funcCheckOut();
+    funcCheckIn();
 }
 
 main();

@@ -14,7 +14,7 @@ function CheckinTable(props) {
     useEffect(() => {
         // get all the checkin HW infos
         setHWSet_rent_list(props.HWSet_rent_list);
-        console.log(props.HWSet_rent_list);
+        // console.log(props.HWSet_rent_list);
         // console.log("list updated!");
 
         // initialize the return list
@@ -27,7 +27,7 @@ function CheckinTable(props) {
             });
         }
         setCheckinList(list);
-        console.log("initialized checkin list", list);
+        // console.log("initialized checkin list", list);
 
     }, [props.HWSet_rent_list]);
 
@@ -45,7 +45,7 @@ function CheckinTable(props) {
 
         props.handleList(list);
         // console.log("For now I will do nothing");
-        console.log(list);
+        // console.log(list);
     };
 
     // creates form table
