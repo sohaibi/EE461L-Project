@@ -50,6 +50,7 @@ HWSet_id_2:[
  ]
 }'). <br>
 When hardware is returned, we calculate the total billed credit = sum(price per hour* time span). The deducted hardware rent information and credits value will be reflected on the 'HWSet_dict' and the 'credits' accordingly.<br>
+
 **Web UI:**<br>
 On project webpage(https://wirepowderless.herokuapp.com/project), we can add a column to indicate the 'credit' amount for each project. The history of checkin and checkout log can also be stored and displayed if necessary.
 
