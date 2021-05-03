@@ -54,25 +54,16 @@ When hardware is returned, we calculate the total billed credit = sum(price per 
 On project webpage(https://wirepowderless.herokuapp.com/project), we can add a column to indicate the 'credit' amount for each project. The history of checkin and checkout log can also be stored and displayed if necessary.
 
 ## Continuous Improvement
-### Refractor 
-<br>
-**Backend**
-<br>
-In checkpoint2, all the routes are defined in the app.py file, which makes the app.py extremely long and hard to debug. In checkpoint3, we seperated the code into 4 modules adopting flask's 'Blueprint' feature. Now the code in each modules(user module, project module, hardware module, dataset module) are saved in different py files in 'modules' folder, which makes the whole structure more organized and easier to check and debug.
-<br>
-**Frontend**
-<br>
-In checkpoint3, we refractored some duplicated codes. Examples are:
-<br>
-- Login Page and Register Page 
-<br>
-The login page(https://wirepowderless.herokuapp.com/login) and register page(https://wirepowderless.herokuapp.com/register) basically contains the same rendering code. 
-<br>
-Therefore, we made a seperate component 'UserForm.js' which will render different form upon receiving different props, either from Login.js or from Register.js.By doing this we duplicated codes are reduces, same for the duplicated css file.
-<br>
+### Refractor <br>
+**Backend** <br>
+In checkpoint2, all the routes are defined in the app.py file, which makes the app.py extremely long and hard to debug. In checkpoint3, we seperated the code into 4 modules adopting flask's 'Blueprint' feature. Now the code in each modules(user module, project module, hardware module, dataset module) are saved in different py files in 'modules' folder, which makes the whole structure more organized and easier to check and debug. <br>
+**Frontend** <br>
+In checkpoint3, we refractored some duplicated codes. Examples are: <br>
+- Login Page and Register Page  <br>
+The login page(https://wirepowderless.herokuapp.com/login) and register page(https://wirepowderless.herokuapp.com/register) basically contains the same rendering code. <br>
+Therefore, we made a seperate component 'UserForm.js' which will render different form upon receiving different props, either from Login.js or from Register.js.By doing this we duplicated codes are reduces, same for the duplicated css file. <br>
 - Dataset Page <br>
-**TODO: MONA**
-<br>
+**TODO: MONA** <br>
 
 ###Information Hiding
 **Frontend**<br>
