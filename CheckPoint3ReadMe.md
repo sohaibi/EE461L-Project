@@ -73,7 +73,7 @@ Earlier in checkpoint 2 we have adopted the information hiding principle when im
 **TODO: RACHEL: add any if you like**<br>
 In hardware page(https://wirepowderless.herokuapp.com/hardware), we created seperate child components as CheckinTable.js and CheckoutTable.js to be called from page HWForm.js to render different tables.
 - Project Page <br>
-**TODO: Lian: add any if you like**<br>
+**[Lian]**<br>
 In project page(https://wirepowderless.herokuapp.com/project), we created seperate child components as UseTable.js and UseForm.js to be called from page Project.js to render the table needed and form needed for parent component Project.js.
 **Backend**<br>
 In the '/projects' route of flask end, to handle the post request regarding differetn actions('create','update','delete',etc) takes quite large amounts of code while actually doing a simple task. In order to make the code more compact, we move that bunch of code into a seperate helper python file 'project_module_helper.py'.
@@ -91,8 +91,22 @@ $ git checkout test-react-hardwareModule-rendering
 $ cd Frontend
 $ npm test
 ```
-**TODO: Lian: what has been tested, how many test passed** <br>
+**Jest Testing** <br>
 - Testing the functionality of hardware page <br>
+-  Rendering Tests<br>
+    ✓ both check in/out renders without crashing<br>
+    ✓ render CheckIn heading (user-friendly) <br>
+    ✓ render CheckIn heading <br>
+    ✓ render CheckOut heading <br>
+    ✓ render checkbox labels <br>
+
+-  Functionality Tests<br>
+    ✓ test checkbox response <br>
+    ✓ test CheckInTable.js against dummy data <br>
+    ✓ test stepUp/Down in CheckinTable.js  <br>
+    
+  Test Suites: 1 passed, 1 total.    Tests: 8 passed, 8 total<br>
+  
 The testing code is in 'test-react-hardwareModule-functionality' branch. To run the test, do: <br>
 ```
 $ git checkout test-react-hardwareModule-functionality
