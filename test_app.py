@@ -23,7 +23,7 @@ def client():
 def test_hardware_module_hwtable(client):
     rv = get_hwtable(client)
     data= rv.get_json(force = True)
-    # check.equal(data['HW_ava'][1], 187)
+    check.equal(len(data), 4)
 
 
 
