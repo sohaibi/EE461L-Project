@@ -54,7 +54,7 @@ When hardware is returned, we calculate the total billed credit = sum(price per 
 On project webpage(https://wirepowderless.herokuapp.com/project), we can add a column to indicate the 'credit' amount for each project. The history of checkin and checkout log can also be stored and displayed if necessary.
 
 ## Continuous Improvement
-###Refractor 
+### Refractor 
 <br>
 **Backend**<br>
 In checkpoint2, all the routes are defined in the app.py file, which makes the app.py extremely long and hard to debug. In checkpoint3, we seperated the code into 4 modules adopting flask's 'Blueprint' feature. Now the code in each modules(user module, project module, hardware module, dataset module) are saved in different py files in 'modules' folder, which makes the whole structure more organized and easier to check and debug.
@@ -106,7 +106,6 @@ $ git checkout test-react-hardwareModule-functionality
 $ cd Frontend
 $ npm test
 ```
-<br>
 **TODO: Rachel: what has been tested, how many test passed, I(Yue) have added the testing for checkin functionality into it as well, since I noticed that Lian's code is more about rendering. So these codes covers all the functionality case** 
 <br>
 
