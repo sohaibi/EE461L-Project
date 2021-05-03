@@ -60,6 +60,7 @@ In checkpoint2, all the routes are defined in the app.py file, which makes the a
 **Frontend** <br>
 In checkpoint3, we refractored some duplicated codes. Examples are: <br>
 - Login Page and Register Page  <br>
+- **TODO: Sohaib: add any if you like**<br>
 The login page(https://wirepowderless.herokuapp.com/login) and register page(https://wirepowderless.herokuapp.com/register) basically contains the same rendering code. <br>
 Therefore, we made a seperate component 'UserForm.js' which will render different form upon receiving different props, either from Login.js or from Register.js.By doing this we duplicated codes are reduces, same for the duplicated css file. <br>
 - Dataset Page <br>
