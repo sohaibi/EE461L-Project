@@ -31,7 +31,10 @@ to enable the feature as to create new hardware and expand the capacity of exist
 **Web UI:** <br>
 This feature can be easily implemented by add a new button 'Add Hardware Resources' on hardware web page(https://wirepowderless.herokuapp.com/hardware).
 ### Tailer the Look and Feel of Web UI by Stakeholders <br>
-**TODO: RACHEL**<br>
+Updating the Web UI can be done as follows:
+- For more general styling like font style, colors, sizes, and background, make changes to App.css.
+- For more specific styling of pages or components, make changes to their individual CSS files. 
+<br>
 
 ### View Billing Information by Client<br>
 **Database:**<br>
