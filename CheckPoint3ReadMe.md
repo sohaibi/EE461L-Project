@@ -127,8 +127,11 @@ $ git checkout test-react-hardwareModule-functionality
 $ cd Frontend
 $ npm test
 ```
-**TODO: Rachel: what has been tested, how many test passed, I(Yue) have added the testing for checkin functionality into it as well, since I noticed that Lian's code is more about rendering. So these codes covers all the functionality case** 
-<br>
+**Hardware Frontend Testing Details** <br>
+- Rendering Tests <br>
+In order to test the Hardware page rendering, inputs represent the hardware sets and the user's project hardware info. The CheckinTable and CheckouTable were then rendered and the values inside their rows were compared against the expected. <br>
+- Functionality Tests <br>
+In order to test the Check-In and Check-Out functionality, similar test inputs were used as above. In addition, events were fired to imitate a user filling out the number fields to check-in or check-out hardware. Then, the values of these fields and the callback function's array that held the updated hardware arrays were compared against the expected.<br>
 
 **Backend**<br>
 We adopted the in-built flask testing module to test the rendering and functionality.
