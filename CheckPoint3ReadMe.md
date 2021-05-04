@@ -74,9 +74,18 @@ Therefore, we made a seperate component 'UserForm.js' which will render differen
 ### Information Hiding <br>
 **Frontend**<br>
 Earlier in checkpoint 2 we have adopted the information hiding principle when imporve our codes. Examples are: <br>
-- Hareware Page <br>
-**TODO: RACHEL: add any if you like**<br>
-In hardware page(https://wirepowderless.herokuapp.com/hardware), we created seperate child components as CheckinTable.js and CheckoutTable.js to be called from page HWForm.js to render different tables.
+- Hardware Page <br>
+In hardware page(https://wirepowderless.herokuapp.com/hardware), we created seperate child components as CheckinTable.js and CheckoutTable.js to be called from page HWForm.js to render either or both tables, depending on user's input. <br>
+Tables that are not requested by the user are hidden by toggling their CSS properties: <br>
+```
+.table-disabled {
+    visibility: collapse;
+    display: none;
+    height: 0px;
+}
+```
+The same above is applied to the containers of errors when their appearance needs to be toggled based on if an error in the user input is detected. <br>
+
 - Project Page <br>
 In project page(https://wirepowderless.herokuapp.com/project), we created seperate child components as UseTable.js and UseForm.js to be called from page Project.js to render the table needed and form needed for parent component Project.js. <br>
 
