@@ -30,8 +30,11 @@ def set_HWSet_capacity(HWSet_id: str, amt_of_hardware: int) -> int:
 to enable the feature as to create new hardware and expand the capacity of existing hardware set, respectively. <br>
 **Web UI:** <br>
 This feature can be easily implemented by add a new button 'Add Hardware Resources' on hardware web page(https://wirepowderless.herokuapp.com/hardware).
-### Tailer the Look and Feel of Web UI by Stakeholders <br>
-**TODO: RACHEL**<br>
+### Tailor the Look and Feel of Web UI by Stakeholders
+Updating the Web UI can be done as follows:
+- For more general styling like font style, colors, sizes, and background, make changes to App.css.
+- For more specific styling of pages or components, make changes to their individual CSS files. 
+<br>
 
 ### View Billing Information by Client<br>
 **Database:**<br>
@@ -70,7 +73,16 @@ Therefore, we made a seperate component 'UserForm.js' which will render differen
 **Frontend**<br>
 Earlier in checkpoint 2 we have adopted the information hiding principle when imporve our codes. Examples are: <br>
 - Hareware Page <br>
-**TODO: RACHEL: add any if you like**<br>
+In hardware page(https://wirepowderless.herokuapp.com/hardware), we created seperate child components as CheckinTable.js and CheckoutTable.js to be called from page HWForm.js to render either or both tables, depending on user's input. <br>
+Tables that are not requested by the user are hidden by toggling their CSS properties: <br>
+```
+.table-disabled {
+    visibility: collapse;
+    display: none;
+    height: 0px;
+}
+```
+The same above is applied to the containers of errors when their appearance needs to be toggled based on if an error in the user input is detected. <br>
 In hardware page(https://wirepowderless.herokuapp.com/hardware), we created seperate child components as CheckinTable.js and CheckoutTable.js to be called from page HWForm.js to render different tables.
 - Project Page <br>
 In project page(https://wirepowderless.herokuapp.com/project), we created seperate child components as UseTable.js and UseForm.js to be called from page Project.js to render the table needed and form needed for parent component Project.js. <br>
@@ -113,7 +125,11 @@ $ git checkout test-react-hardwareModule-functionality
 $ cd Frontend
 $ npm test
 ```
-**TODO: Rachel: what has been tested, how many test passed, I(Yue) have added the testing for checkin functionality into it as well, since I noticed that Lian's code is more about rendering. So these codes covers all the functionality case** 
+**Hardware Frontend Testing Details** <br>
+- Rendering Tests <br>
+In order to test the Hardware page rendering, inputs represent the hardware sets and the user's project hardware info. The CheckinTable and CheckouTable were then rendered and the values inside their rows were compared against the expected. <br>
+- Functionality Tests <br>
+In order to test the Check-In and Check-Out functionality, similar test inputs were used as above. In addition, events were fired to imitate a user filling out the number fields to check-in or check-out hardware. Then, the values of these fields and the callback function's array that held the updated hardware arrays were compared against the expected.
 <br>
 
 **Backend**<br>
