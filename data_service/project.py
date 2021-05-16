@@ -3,7 +3,7 @@ from pymongo import MongoClient
 import datetime
 from bson import ObjectId
 
-cluster = MongoClient("mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/SemesterProject?retryWrites=true&w=majority",
+cluster = MongoClient("mongodb+srv://ProjectGroup3:UTAustin!@free-cluster.nmjzk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",
                       ssl=True, ssl_cert_reqs='CERT_NONE')
 db = cluster["SemesterProject"]
 collection = db["Project"]
@@ -74,7 +74,7 @@ def handle_get_project_info(project_id: str):
     project = collection.find_one({"_id": ObjectId(project_id)})
     return project
 
-# print(handle_get_project_info("6064f8a60eb2ea5f785136dc"))
+# print(handle_get_project_info("6064f85e0eb2ea5f785136db"))
 
 
 def handle_update_project(project_id: str, project_name: str, comment: str):

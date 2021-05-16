@@ -3,7 +3,7 @@ from bson import ObjectId
 import certifi
 
 client = MongoClient(
-    "mongodb+srv://ProjectGroup3:UTAustin!@semesterprojectcluster.nmjzk.mongodb.net/test",  tlsCAFile=certifi.where())
+    "mongodb+srv://ProjectGroup3:UTAustin!@free-cluster.nmjzk.mongodb.net/myFirstDatabase?retryWrites=true&w=majority",  tlsCAFile=certifi.where())
 
 # get database
 mydb = client["SemesterProject"]
